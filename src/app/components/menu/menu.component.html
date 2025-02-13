@@ -1,0 +1,18 @@
+<ion-content  [fullscreen]="true" class="menu-content">
+  <ion-list>
+    <ion-item (click)="navigateTo('profile')">
+      <ion-icon name="person-outline" slot="start"></ion-icon>
+      Profile
+    </ion-item>
+    <ion-item (click)="navigateTo('settings')">
+      <ion-icon name="settings-outline" slot="start"></ion-icon>
+      Settings
+    </ion-item>
+    <ion-item (click)="logout()">
+      <ion-icon name="log-out-outline" slot="start"></ion-icon>
+      Logout
+    </ion-item>
+  </ion-list>
+  <ion-button expand="full" (click)="closeMenu()">Close</ion-button>
+</ion-content>
+

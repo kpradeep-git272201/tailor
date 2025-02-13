@@ -1,0 +1,25 @@
+<ion-header [translucent]="true">
+  <ion-toolbar color="primary">
+    <ion-buttons slot="start">
+      <ion-back-button defaultHref="/tabs/tailor"></ion-back-button>
+    </ion-buttons>
+    <ion-title>New Orders</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content [fullscreen]="true">
+  <ion-card *ngFor="let order of orders">
+    <ion-card-header>
+      <ion-card-title>{{ order.customerName }}</ion-card-title>
+    </ion-card-header>
+    <ion-card-content>
+      <p><strong>Service:</strong> {{ order.service }}</p>
+      <p><strong>Price:</strong> ₹{{ order.price }}</p>
+      <p><strong>Date:</strong> {{ order.date }}</p>
+    </ion-card-content>
+    <ion-row class="ion-justify-content-between ion-padding">
+      <ion-button class="green-button" (click)="acceptOrder(order.id)">Accept</ion-button>
+      <ion-button color="danger" (click)="rejectOrder(order.id)">Reject</ion-button>
+    </ion-row>
+  </ion-card>
+</ion-content>

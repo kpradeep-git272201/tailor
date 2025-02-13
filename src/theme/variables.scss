@@ -1,0 +1,42 @@
+:root {
+    /* Primary Color */
+    --ion-color-primary: #673ab7;
+    --ion-color-primary-rgb: 103, 58, 183;
+    --ion-color-primary-contrast: #ffffff;
+    --ion-color-primary-contrast-rgb: 255, 255, 255;
+    --ion-color-primary-shade: #5e35b1;
+    --ion-color-primary-tint: #7e57c2;
+  
+    /* Secondary Color */
+    --ion-color-secondary: #9d0054;
+    --ion-color-secondary-rgb: 157, 0, 84;
+    --ion-color-secondary-contrast: #ffffff;
+    --ion-color-secondary-contrast-rgb: 255, 255, 255;
+    --ion-color-secondary-shade: #88004a;
+    --ion-color-secondary-tint: #b3005e;
+  
+    --ion-color-green: rgb(5, 167, 5);
+    /* Custom Theme Colors */
+    --ion-color-my-theme-bg: #2c3e50;
+    --ion-color-my-theme-bg-rgb: 44, 62, 80;
+    --ion-color-my-theme-bg-contrast: #ffffff;
+    --ion-color-my-theme-bg-contrast-rgb: 255, 255, 255;
+    --ion-color-my-theme-bg-shade: #263646;
+    --ion-color-my-theme-bg-tint: #3a4e64;
+  
+    /* Custom Colors */
+    --ion-color-overdue-bg: #FF5151;
+    --ion-color-incomplete-bg: #ff9800;
+    --ion-color-upcoming-bg: #D5B60A;
+  
+    /* Badge Colors */
+    --ion-color-incomplete-badge-bg: #F57C00;
+    --ion-color-overdue-badge-bg: #E53935;
+    --ion-color-upcoming-badge-bg: #a6860a;
+  
+    /* Badge Text Colors */
+    --ion-color-overdue-badge-txt: #000000; 
+    --ion-color-incomplete-badge-txt: #000000; 
+    --ion-color-upcoming-badge-txt: #000000;
+  }
+  

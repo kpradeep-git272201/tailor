@@ -1,0 +1,42 @@
+<ion-header [translucent]="true">
+  <ion-toolbar color="primary">
+    <ion-buttons slot="start">
+      <ion-back-button defaultHref="/tabs/customer/tailors"></ion-back-button>
+    </ion-buttons>
+    <ion-title>Explore Tailors</ion-title>
+  </ion-toolbar>
+  <ion-header>
+</ion-header>
+
+  <ion-content [fullscreen]="true">
+    <ion-searchbar [(ngModel)]="searchQuery" (ionInput)="filterTailors()" 
+    placeholder="Search Tailors"></ion-searchbar>
+   <!-- Filter Options -->
+   <ion-segment [(ngModel)]="selectedFilter" (ionChange)="applyFilter()">
+    <ion-segment-button value="all">
+      <ion-label>All</ion-label>
+    </ion-segment-button>
+    <ion-segment-button value="high-rating">
+      <ion-label>Top Rated</ion-label>
+    </ion-segment-button>
+    <ion-segment-button value="experienced">
+      <ion-label>Experienced</ion-label>
+    </ion-segment-button>
+  </ion-segment>
+
+  <!-- Tailor List -->
+  <ion-list>
+    <ion-item *ngFor="let tailor of filteredTailors">
+      <ion-avatar slot="start">
+        <img [src]="tailor.image" alt="Tailor Profile">
+      </ion-avatar>
+      <ion-label>
+        <h3>{{ tailor.name }}</h3>
+        <p>{{ tailor.specialization }}</p>
+        <ion-badge color="success">{{ tailor.rating }} ⭐</ion-badge>
+      </ion-label>
+      <ion-button fill="outline" (click)="viewProfile(tailor)">View Profile</ion-button>
+      <!-- routerLink="/tailor/{{tailor.id}}" -->
+    </ion-item>
+  </ion-list>
+  </ion-content>

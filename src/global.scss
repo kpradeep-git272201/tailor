@@ -1,0 +1,103 @@
+/*
+ * App Global CSS
+ * ----------------------------------------------------------------------------
+ * Put style rules here that you want to apply globally. These styles are for
+ * the entire app and not just one component. Additionally, this file can be
+ * used as an entry point to import other CSS/Sass files to be included in the
+ * output CSS.
+ * For more information on global stylesheets, visit the documentation:
+ * https://ionicframework.com/docs/layout/global-stylesheets
+ */
+
+/* Core CSS required for Ionic components to work properly */
+@import "@ionic/angular/css/core.css";
+
+/* Basic CSS for apps built with Ionic */
+@import "@ionic/angular/css/normalize.css";
+@import "@ionic/angular/css/structure.css";
+@import "@ionic/angular/css/typography.css";
+@import "@ionic/angular/css/display.css";
+
+/* Optional CSS utils that can be commented out */
+@import "@ionic/angular/css/padding.css";
+@import "@ionic/angular/css/float-elements.css";
+@import "@ionic/angular/css/text-alignment.css";
+@import "@ionic/angular/css/text-transformation.css";
+@import "@ionic/angular/css/flex-utils.css";
+
+/**
+ * Ionic Dark Mode
+ * -----------------------------------------------------
+ * For more info, please see:
+ * https://ionicframework.com/docs/theming/dark-mode
+ */
+
+/* @import "@ionic/angular/css/palettes/dark.always.css"; */
+/* @import "@ionic/angular/css/palettes/dark.class.css"; */
+@import '@ionic/angular/css/palettes/dark.system.css';
+
+:root {
+  --primary-color: #673ab7;
+  --secondary-color: #9d0054;
+  --primary-font-color: #ffffff;
+  --over-layer-color: rgba(190, 186, 186, 0.8);
+  --rem-to-px: 10px;
+  --overdue-bg-color: #FF5151;
+  --incomplete-bg-color:#ff9800;
+  --upcoming-bg-color: #D5B60A;
+  --incomplete-badge-bg-color: #F57C00;
+  --overdue-badge-bg-color: #E53935;
+  --upcoming-badge-bg-color: #a6860a;
+  --overdue-badge-txt-color: #000000; 
+  --incomplete-badge-txt-color: #000000; 
+  --upcoming-badge-txt-color: #000000;
+  --my-theme-bg: #2c3e50
+}
+.logo-container {
+    display: flex;
+    align-items: center;
+  }
+  
+.logo-thumbnail {
+    width: 40px;  /* Adjust size as needed */
+    height: 40px;
+    border-radius: 50%; /* Makes it circular */
+    overflow: hidden; /* Ensures the image stays inside the circle */
+    margin-right: 10px; /* Adds spacing between logo and text */
+}
+  
+.logo-thumbnail img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover; /* Ensures the image covers the circle properly */
+}
+  
+.title-text {
+    font-size: 1.2rem;
+    font-weight: bold;
+}
+
+
+.char-avatar {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    margin-right: 18px;
+    background-color: #6200ea; /* Background when logged in */
+  }
+  
+  .avatar-text {
+    font-size: 18px;
+    font-weight: bold;
+    color: white;
+  }
+  
+  .default-avatar {
+    width: 100%;
+    height: 100%;
+    border-radius: 50%; /* Ensures the image stays circular */
+  }
+  

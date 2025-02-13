@@ -1,0 +1,109 @@
+<ion-header [translucent]="true">
+  <ion-toolbar color="primary">
+    <ion-title>
+      <div class="logo-container">
+        <ion-thumbnail class="logo-thumbnail">
+          <img src="/assets/logo/eComm-logo.png" />
+        </ion-thumbnail>
+        <span class="title-text">Dashboard</span>
+      </div>
+    </ion-title>
+    <ion-avatar *ngIf="isLoggedIn" slot="end" 
+      (click)="openMenu($event, '185ms', '90ms')" class="char-avatar">
+      <ng-container *ngIf="isLoggedIn">
+        <div class="avatar-text">{{ userInitial }}</div>
+      </ng-container>
+    </ion-avatar>
+    <ion-buttons *ngIf="!isLoggedIn" slot="end">
+      <ion-button (click)="navigateTo()">Login</ion-button>
+    </ion-buttons>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content [fullscreen]="true">
+<!-- Hero Section -->
+<div class="hero">
+  <h1>Find the Best Tailors for Alteration & Stitching!</h1>
+  <p>Get your clothes stitched or altered by professional tailors near you.</p>
+  <ion-button expand="full" color="secondary" (click)="getExpTailors()" >Explore Tailors</ion-button>
+</div>
+<!-- routerLink="/tailors" -->
+<!-- Services Section -->
+<div class="services">
+  <h2>Our Services</h2>
+  <ion-grid>
+    <ion-row>
+      <ion-col size="4">
+        <!-- routerLink="/service/alteration" -->
+        <ion-card >
+          <ion-icon name="cut" size="large"></ion-icon>
+          <p>Alteration</p>
+        </ion-card>
+      </ion-col>
+      <ion-col size="4">
+        <!-- routerLink="/service/stitching" -->
+        <ion-card>
+          <ion-icon name="shirt" size="large"></ion-icon>
+          <p>Stitching</p>
+        </ion-card>
+      </ion-col>
+      <ion-col size="4">
+        <!-- routerLink="/service/measurement" -->
+        <ion-card >
+          <ion-icon name="shirt" size="large"></ion-icon>
+          <p>Measurement</p>
+        </ion-card>
+      </ion-col>
+    </ion-row>
+  </ion-grid>
+</div>
+
+<!-- Popular Tailors Section -->
+<div class="tailors">
+  <h2 style="text-align: center;">Top Rated Tailors</h2>
+  <ion-list>
+    <ion-item *ngFor="let tailor of tailors">
+      <ion-avatar slot="start">
+        <img [src]="tailor.image" alt="Tailor Profile">
+      </ion-avatar>
+      <ion-label>
+        <h3>{{ tailor.name }}</h3>
+        <p>{{ tailor.specialization }}</p>
+        <ion-badge color="success">{{ tailor.rating }} ⭐</ion-badge>
+      </ion-label>
+      <ion-button fill="outline" (click)="viewProfile(tailor)">View</ion-button>
+    </ion-item>
+  </ion-list>
+</div>
+<!-- routerLink="/tailor/{{tailor.id}}" -->
+<!-- How It Works Section -->
+<div class="how-it-works">
+  <h2>How It Works</h2>
+  <ion-row>
+    <ion-col size="4">
+      <ion-card>
+        <ion-icon name="search" size="large"></ion-icon>
+        <p>Browse Tailors</p>
+      </ion-card>
+    </ion-col>
+    <ion-col size="4">
+      <ion-card>
+        <ion-icon name="calendar" size="large"></ion-icon>
+        <p>Book Service</p>
+      </ion-card>
+    </ion-col>
+    <ion-col size="4">
+      <ion-card>
+        <ion-icon name="checkmark-circle" size="large"></ion-icon>
+        <p>Get It Done</p>
+      </ion-card>
+    </ion-col>
+  </ion-row>
+</div>
+
+</ion-content>
+<ion-footer>
+  <ion-toolbar>
+    <ion-title style="font-size: 0.75rem;">© 2025 Tailor App. All Rights Reserved.</ion-title>
+  </ion-toolbar>
+</ion-footer>

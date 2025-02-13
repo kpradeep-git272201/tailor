@@ -1,0 +1,34 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-buttons slot="start">
+      <ion-back-button defaultHref="/tabs/auth/login"></ion-back-button>
+    </ion-buttons>
+    <ion-title>OTP Verification</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content [fullscreen]="true" class="ion-padding">
+  <div class="header">
+    <img src="assets/logo/eComm-logo.png" alt="e-commerce" />
+  </div>
+
+  <div class="otp-container">
+    <h2>Verification Code</h2>
+    <p>Please enter the 4-digit code sent to <strong>{{ phoneNumber }}</strong></p>
+
+    <!-- OTP Input Fields -->
+    <div class="otp-input-container">
+      <input #otp0 maxlength="1" type="text" class="otp-input" [(ngModel)]="otp[0]" (input)="moveToNext($event, 0)" (keydown)="handleBackspace($event, 0)" />
+      <input #otp1 maxlength="1" type="text" class="otp-input" [(ngModel)]="otp[1]" (input)="moveToNext($event, 1)" (keydown)="handleBackspace($event, 1)" />
+      <input #otp2 maxlength="1" type="text" class="otp-input" [(ngModel)]="otp[2]" (input)="moveToNext($event, 2)" (keydown)="handleBackspace($event, 2)" />
+      <input #otp3 maxlength="1" type="text" class="otp-input" [(ngModel)]="otp[3]" (input)="moveToNext($event, 3)" (keydown)="handleBackspace($event, 3)" />
+    </div>
+
+    <div class="timer">
+      <ion-text *ngIf="!resendAvailable" color="medium">{{ timerDisplay }}</ion-text>
+      <ion-button *ngIf="resendAvailable" color="primary" expand="block" size="small" (click)="resendOtp()">Resend OTP</ion-button>
+    </div>
+
+    <ion-button expand="block" [disabled]="!isOtpComplete()" (click)="verifyOtp()">Verify OTP</ion-button>
+  </div>
+</ion-content>

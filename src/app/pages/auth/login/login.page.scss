@@ -1,0 +1,124 @@
+.login-page {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    height: 100%;
+    padding: 20px;
+    box-sizing: border-box;
+    position: relative; /* To position the skip button relative to this container */
+  
+    .header {
+      margin-top: 20px;
+      text-align: center;
+  
+      img {
+        width: 60px;
+        max-width: 100px;
+      }
+  
+      h1 {
+        font-size: 18px;
+        margin: 10px 0;
+        font-weight: 600;
+      }
+  
+      p {
+        color: gray;
+        font-size: 14px;
+      }
+    }
+  
+    .login-form {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      margin-top: 30px;
+      width: 100%;
+      max-width: 400px;
+  
+      .phone-input {
+        width: 100%; /* Ensure the input takes the full width of the container */
+  
+        ion-item {
+          border-radius: 10px;
+          margin-bottom: 20px;
+          display: flex;
+          align-items: center;
+  
+          .country-code {
+            display: flex;
+            align-items: center;
+            margin-right: 10px;
+  
+            .flag {
+              width: 20px;
+              height: 15px;
+              margin-right: 5px;
+            }
+  
+            .code {
+              font-size: 16px;
+            }
+          }
+  
+          ion-input {
+            font-size: 16px;
+          }
+        }
+      }
+  
+      ion-button {
+        // --background: #0078ff;
+        --border-radius: 8px;
+        // --padding: 10px;
+        font-size: 16px;
+      }
+    }
+  
+    ion-button[fill="clear"] {
+      position: absolute;
+      bottom: 20px;
+      right: 20px;
+      color: #0078ff;
+      font-size: 14px;
+      border: 1px solid;
+      border-radius: 8px;
+    }
+  }
+  
+  /* Center the input field */
+  .ionItem {
+    border: 1px solid lightgray;
+    margin:15px;
+    height: 45px;
+    border-radius: 8px;
+    // width: 100%; /* Stretch to fill container width */
+  }
+  
+  .mobile {
+    border-left: 1px solid lightgray;
+    margin-left: 10px;
+  }
+  
+  /* Adjust input spacing */
+  ::ng-deep .input-wrapper.sc-ion-input-md input.sc-ion-input-md {
+    margin-left: 16px !important;
+  }
+  .casing{
+    text-transform: capitalize;
+  }
+  
+  .radio-row {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 16px; /* Adjust the gap between items */
+    margin-left: 21px;
+    margin-right: 21px;
+  }
+  
+  .radio-row ion-item {
+    flex: 1;
+    --padding-start: 0px; /* Remove extra padding */
+  }

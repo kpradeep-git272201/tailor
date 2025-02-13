@@ -1,0 +1,26 @@
+<ion-header [translucent]="true">
+  <ion-toolbar color="primary">
+    <ion-buttons slot="start">
+      <ion-back-button defaultHref="/tabs/tailor"></ion-back-button>
+    </ion-buttons>
+    <ion-title>accept-reject-orders</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content [fullscreen]="true">
+  <ion-list *ngIf="orders.length > 0; else noOrders">
+    <ion-item *ngFor="let order of orders">
+      <ion-label>
+        <h2>{{ order.customerName }}</h2>
+        <p>Service: {{ order.service }}</p>
+        <p>Date: {{ order.orderDate | date:'short' }}</p>
+        <p>Address: {{ order.address }}</p>
+      </ion-label>
+      <ion-button color="success" (click)="updateOrderStatus(order.id, 'accepted')">Accept</ion-button>
+      <ion-button color="danger" (click)="updateOrderStatus(order.id, 'rejected')">Reject</ion-button>
+    </ion-item>
+  </ion-list>
+  <ng-template #noOrders>
+    <p style="text-align: center; margin-top: 20px;">No pending orders</p>
+  </ng-template>
+</ion-content>
