@@ -29,3 +29,29 @@
     text-align: center;
   }
   
+  #service {
+    text-align: center;
+    height: 150px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+    p{
+      font-size: 1.25rem; color: white;
+    }
+  }
+  .with-fabric{
+    background: url('/assets/images/with_fabric.jpeg') no-repeat center center/cover;
+  }
+  .with-out-fabric{
+    background: url('/assets/images/with_out_fabric.jpeg') no-repeat center center/cover;
+  }
+  .alteration{
+    background: url('/assets/images/Alteration.jpg') no-repeat center center/cover;
+  }
+  .stitching{
+    background: url('/assets/images/Stitching.jpg') no-repeat center center/cover;
+  }
+  .measurement{
+    background: url('/assets/images/Measurement.jpg') no-repeat center center/cover;
+  }

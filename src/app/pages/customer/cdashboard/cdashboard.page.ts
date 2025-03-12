@@ -138,4 +138,8 @@ export class CdashboardPage implements OnInit {
       }
     });
   }
+
+  getService(action:any){
+    this.router.navigate(['/tabs/customer/'+action]);
+  }
 }
