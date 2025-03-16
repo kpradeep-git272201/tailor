@@ -8,5 +8,47 @@
 </ion-header>
 
 <ion-content [fullscreen]="true">
+  <ion-searchbar [(ngModel)]="searchQuery" class="search-text"></ion-searchbar>
+  <div class="category-list">
+    <div class="category-item" *ngFor="let menu of masterMenu">
+      <ion-thumbnail class="articles">
+        <img [src]="menu.imageUrl" [alt]="menu.articleName" />
+      </ion-thumbnail>
+      <p class="thumbnail-text">{{ menu.articleName }}</p>
+    </div>
+  </div>
 
+  <div *ngIf="masterBrandData">
+    <ngb-carousel
+      #carousel
+      [interval]="2000"
+      [pauseOnFocus]="pauseOnFocus"
+      (slide)="onSlide($event)"
+      class="carousel-container carousel"
+    >
+      <ng-template ngbSlide *ngFor="let brand of masterBrandData; let i = index">
+        <div class="carousel-slide">
+          <div class="carousel-caption">
+            <h3>{{brand.brandName}}</h3>
+          </div>
+          <a>
+            <div class="picsum-img-wrapper">
+              <img [src]="brand.logoUrl" [alt]="brand.description" height="250px" width="500px" />
+            </div>
+          </a>
+        </div>
+      </ng-template>
+    </ngb-carousel>
+  </div>
+
+  <!-- Fabric cards -->
+  <h2 style="margin-left: 10px;">Fabric</h2>
+  <div class="category-list">
+    <div class="category-item" *ngFor="let fabric of FabricMaster">
+      <ion-thumbnail class="fabrics">
+        <img [src]="fabric.imageUrl" [alt]="fabric.fabricType" />
+      </ion-thumbnail>
+      <p class="fabric-text">{{ fabric.fabricType }}</p>
+    </div>
+  </div>
 </ion-content>

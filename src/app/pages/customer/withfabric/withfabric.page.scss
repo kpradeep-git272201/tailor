@@ -1,0 +1,50 @@
+.category-list {
+  display: flex;
+  overflow-x: auto;
+  gap: 0.625rem;
+  padding: 0.625rem;
+}
+.category-item {
+  flex: 0 0 auto;
+  text-align: center;
+}
+.category-item ion-thumbnail.large-thumbnail {
+  width: 6.25rem;
+  height: 6.25rem;
+}
+.article-text {
+  text-align: center;
+  margin-top: 0.313rem;
+  font-size: 0.875rem;
+}
+.fabric-text {
+  text-align: center;
+  margin-top: 0.313rem;
+  font-size: 1.375rem;
+}
+.articles {
+  --size: 5.938rem;
+  --border-radius: 0.875rem;
+  border: 1px solid; 
+}
+.fabrics {
+  --size: 11.938rem;
+  --border-radius: 0.875rem;
+  border: 1px solid; 
+}
+.search-text::after {
+  // content: "|";
+  animation: blink 1s step-start infinite;
+}
+
+@keyframes blink {
+  50% {
+    opacity: 0;
+  }
+}
+
+.carousel{
+  margin: 0.625rem;
+}
+
+
