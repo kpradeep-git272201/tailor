@@ -24,6 +24,10 @@ export const routes: Routes = [
   {
     path: 'withoutfabric',
     loadComponent: () => import('./pages/customer/withoutfabric/withoutfabric.page').then( m => m.WithoutfabricPage)
+  },  {
+    path: 'article',
+    loadComponent: () => import('./pages/customer/article/article.page').then( m => m.ArticlePage)
   },
+
 
 ];

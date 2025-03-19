@@ -1,0 +1,37 @@
+<ion-header [translucent]="true">
+  <ion-toolbar color="primary">
+    <ion-buttons slot="start">
+      <ion-back-button defaultHref="/tabs/customer/with-fabric"></ion-back-button>
+    </ion-buttons>
+    <ion-title *ngIf="article" >{{article.articleName}}</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content [fullscreen]="true">
+  <div *ngIf="article" class="container mt-2 text-center">
+    <ngb-carousel
+      #carousel
+      [interval]="2000"
+      class="carousel-container carousel"
+    >
+      <ng-template ngbSlide *ngIf="article">
+        <div class="carousel-slide">
+          <div class="carousel-caption">
+            <h3>{{article.articleName}}</h3>
+          </div>
+          <a>
+            <div class="picsum-img-wrapper">
+              <img [src]="article.imageUrl" [alt]="article.articleName" height="250px" width="250px" />
+            </div>
+          </a>
+        </div>
+      </ng-template>
+    </ngb-carousel>
+  </div>
+  <div class="container">
+    <p>Color</p>
+    <p>Brand</p>
+    <p>Fabric</p>
+    <p>Show Tailor</p>
+  </div>
+</ion-content>

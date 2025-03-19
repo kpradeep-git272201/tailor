@@ -1,10 +1,10 @@
 import { Component, OnInit } from '@angular/core';
 import { SharedModule } from 'src/app/sharedmodule/sharedmodule.module';
 import { ViewChild } from '@angular/core';
-import { NgbCarousel, NgbCarouselModule, NgbSlideEvent, NgbSlideEventSource } from '@ng-bootstrap/ng-bootstrap';
-import { FormsModule } from '@angular/forms';
+import { NgbCarousel, NgbSlideEvent, NgbSlideEventSource } from '@ng-bootstrap/ng-bootstrap';
 import { CommonService } from 'src/app/services/common.service';
 import { WithfabricService } from 'src/app/services/withfabric.service';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-withfabric',
@@ -54,7 +54,9 @@ export class WithfabricPage implements OnInit {
   masterMenu: any[] | any;
   FabricMaster: any[] | any;
 
-  constructor(private commonService: CommonService, private wfService: WithfabricService) {
+  constructor(private commonService: CommonService, 
+    private wfService: WithfabricService,
+    private router: Router) {
    
    
   }
@@ -124,4 +126,12 @@ export class WithfabricPage implements OnInit {
 			this.togglePaused();
 		}
 	}
+
+  goToArticle(article:any){
+    this.router.navigate(['/tabs/customer/with-fabric', article.articleName],{
+      queryParams: {
+        article: JSON.stringify(article)
+      }
+    });
+  }
 }

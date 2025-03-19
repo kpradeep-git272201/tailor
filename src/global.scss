@@ -53,6 +53,21 @@
   --upcoming-badge-txt-color: #000000;
   --my-theme-bg: #2c3e50
 }
+
+.category-list {
+  display: flex;
+  overflow-x: auto;
+  gap: 0.625rem;
+  padding: 0.625rem;
+}
+.category-item {
+  flex: 0 0 auto;
+  text-align: center;
+}
+.category-item ion-thumbnail.large-thumbnail {
+  width: 6.25rem;
+  height: 6.25rem;
+}
 .logo-container {
     display: flex;
     align-items: center;

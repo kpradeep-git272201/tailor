@@ -11,7 +11,7 @@
   <ion-searchbar [(ngModel)]="searchQuery" class="search-text"></ion-searchbar>
   <div class="category-list">
     <div class="category-item" *ngFor="let menu of masterMenu">
-      <ion-thumbnail class="articles">
+      <ion-thumbnail class="articles" (click)="goToArticle(menu)">
         <img [src]="menu.imageUrl" [alt]="menu.articleName" />
       </ion-thumbnail>
       <p class="thumbnail-text">{{ menu.articleName }}</p>
