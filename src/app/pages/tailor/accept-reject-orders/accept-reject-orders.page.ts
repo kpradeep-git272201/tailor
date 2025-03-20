@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
-import { AlertService } from 'src/app/services/alert.service';
 import { ApiService } from 'src/app/services/api.service';
+import { TostService } from 'src/app/services/tost.service';
 import { SharedModule } from 'src/app/sharedmodule/sharedmodule.module';
 
 @Component({
@@ -14,7 +14,7 @@ export class AcceptRejectOrdersPage implements OnInit {
 
   orders: any[] = [];
 
-  constructor(private apiService: ApiService, private alertService:AlertService) {}
+  constructor(private apiService: ApiService, private tostService:TostService) {}
 
   ngOnInit() {
     this.loadOrders();
@@ -26,9 +26,9 @@ export class AcceptRejectOrdersPage implements OnInit {
 
   updateOrderStatus(orderId: string, status: string) {
     if(status=="accepted"){
-      this.alertService.showSnackbar(`Order ${status}`, "success");
+      this.tostService.presentToast(`Order ${status}`, "success");
     }else{
-      this.alertService.showSnackbar(`Order ${status}`, "danger");
+      this.tostService.presentToast(`Order ${status}`, "danger");
     }
     // Need this code
     // this.apiService.post(`orders/${orderId}/update-status`, { status }).subscribe(async () => {

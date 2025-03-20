@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
-import { AlertService } from 'src/app/services/alert.service';
 import { ApiService } from 'src/app/services/api.service';
+import { TostService } from 'src/app/services/tost.service';
 import { SharedModule } from 'src/app/sharedmodule/sharedmodule.module';
 
 @Component({
@@ -12,7 +12,7 @@ import { SharedModule } from 'src/app/sharedmodule/sharedmodule.module';
 })
 export class ProfileMngtPage implements OnInit {
   profile: any = {};
-  constructor(private apiService: ApiService, private alerService: AlertService) { }
+  constructor(private apiService: ApiService, private tostService: TostService) { }
 
   ngOnInit() {
     this.loadProfile();
@@ -25,12 +25,12 @@ export class ProfileMngtPage implements OnInit {
     // this.profileService.updateProfile(this.profile).subscribe(() => {
     //   alert('Profile updated successfully!');
     // });
-    this.alerService.showSnackbar("Profile updated successfully!", "success");
+    this.tostService.presentToast("Profile updated successfully!", "success");
   }
 
   uploadImage() {
     // alert('Image upload functionality coming soon!');
-    this.alerService.showSnackbar("Image upload functionality coming soon!", "warning");
+    this.tostService.presentToast("Image upload functionality coming soon!", "warning");
   }
 
 }

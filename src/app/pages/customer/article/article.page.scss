@@ -3,3 +3,34 @@
     --border-radius: 0.875rem;
     border: 1px solid; 
 }
+
+ion-grid{
+    padding: 0px;
+}
+ion-row{
+    padding: 0px;
+}
+ion-col{
+    padding: 0px;
+}
+.size-chart{
+    color: red;
+    text-align: right;
+}
+#size-chart-icon{
+    margin-bottom: -4px !important;
+    color: red;
+}
+.color{
+    text-align: left;
+}
+
+.bottom-modal {
+    --border-radius: 16px 16px 0 0; /* Rounded top corners */
+    --height: auto; /* Adjust height dynamically */
+    --width: 100%; /* Full width */
+}
+
+// .color-box{
+
+// }

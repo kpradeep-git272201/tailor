@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
-import { AlertService } from 'src/app/services/alert.service';
 import { ApiService } from 'src/app/services/api.service';
+import { TostService } from 'src/app/services/tost.service';
 import { SharedModule } from 'src/app/sharedmodule/sharedmodule.module';
 
 @Component({
@@ -13,7 +13,7 @@ import { SharedModule } from 'src/app/sharedmodule/sharedmodule.module';
 export class EarningsDashboardPage implements OnInit {
   totalEarnings = 0;
   payments : any;
-  constructor(private apiService: ApiService, private alertService: AlertService) { }
+  constructor(private apiService: ApiService, private tostService: TostService) { }
 
   ngOnInit() {
     this.loadEarnings();
@@ -26,6 +26,6 @@ export class EarningsDashboardPage implements OnInit {
 
   requestWithdrawal() {
     this.apiService.requestWithdrawal();
-    this.alertService.showSnackbar("Withdrawal request submitted successfully!", "success");
+    this.tostService.presentToast("Withdrawal request submitted successfully!", "success");
   }
 }

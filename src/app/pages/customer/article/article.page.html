@@ -3,17 +3,13 @@
     <ion-buttons slot="start">
       <ion-back-button defaultHref="/tabs/customer/with-fabric"></ion-back-button>
     </ion-buttons>
-    <ion-title *ngIf="article" >{{article.articleName}}</ion-title>
+    <ion-title *ngIf="article">{{article.articleName}}</ion-title>
   </ion-toolbar>
 </ion-header>
 
 <ion-content [fullscreen]="true">
-  <div *ngIf="article" class="container mt-2 text-center">
-    <ngb-carousel
-      #carousel
-      [interval]="2000"
-      class="carousel-container carousel"
-    >
+  <div *ngIf="article" class="container card mt-2 text-center">
+    <ngb-carousel #carousel [interval]="2000" class="carousel-container carousel">
       <ng-template ngbSlide *ngIf="article">
         <div class="carousel-slide">
           <div class="carousel-caption">
@@ -28,10 +24,36 @@
       </ng-template>
     </ngb-carousel>
   </div>
+
+  <!-- Responsive Two-Column Layout -->
+  <ion-grid>
+    <ion-row>
+      <ion-col size="6" size-md="6" class="ion-padding">
+        <div class="container text-center">
+          <h3 class="color">Color</h3>
+        </div>
+      </ion-col>
+      <ion-col size="6" size-md="6" class="ion-padding">
+        <div class="container text-center">
+          <h3 class="size-chart" (click)="openSizeChartModal()">Size Chart <ion-icon id="size-chart-icon" name="chevron-forward"></ion-icon></h3>
+        </div>
+      </ion-col>
+    </ion-row>
+  </ion-grid>
   <div class="container">
-    <p>Color</p>
-    <p>Brand</p>
-    <p>Fabric</p>
-    <p>Show Tailor</p>
+    <div class="category-list">
+      <div class="category-item" *ngFor="let color of colorClassificatioMaster">
+        <ion-thumbnail class="color-box">
+          
+        </ion-thumbnail>
+        <p class="thumbnail-text">{{ color.colorName }}</p>
+      </div>
+    </div>
+  </div>
+  <div class="container">
+    <h3>Brand</h3>
+  </div>
+  <div class="container">
+    <h3>Fabric</h3>
   </div>
 </ion-content>

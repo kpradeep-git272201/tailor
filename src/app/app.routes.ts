@@ -28,6 +28,10 @@ export const routes: Routes = [
     path: 'article',
     loadComponent: () => import('./pages/customer/article/article.page').then( m => m.ArticlePage)
   },
+  {
+    path: 'chart-model',
+    loadComponent: () => import('./pages/customer/chart-model/chart-model.page').then( m => m.ChartModelPage)
+  },
 
 
 ];
