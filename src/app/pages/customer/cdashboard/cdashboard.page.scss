@@ -14,7 +14,7 @@
     padding: 15px;
   }
   
-  .tailors ion-item {
+  .top-rated ion-item {
     --background: #f9f9f9;
     border-radius: 10px;
     margin: 10px 0;
@@ -40,18 +40,51 @@
       font-size: 1.25rem; color: white;
     }
   }
-  .with-fabric{
-    background: url('/assets/images/with_fabric.jpeg') no-repeat center center/cover;
+
+  .service {
+    --size: 9.938rem;
+    --border-radius: 0.875rem;
+    border: 1px solid; 
   }
-  .with-out-fabric{
-    background: url('/assets/images/with_out_fabric.jpeg') no-repeat center center/cover;
+.fabric-thumb{
+  --size: 5.938rem;
+  --border-radius: 0.875rem;
+    border: 1px solid; 
+}
+  .text-service{
+    text-align: center;
+    color: black;
+    font-size: 1.3rem;
+    font-weight: 500;
+    background-color: white;
+    border-radius: 5px;
   }
-  .alteration{
-    background: url('/assets/images/Alteration.jpg') no-repeat center center/cover;
+  // .with-fabric{
+  //   background: url('/assets/images/with_fabric1.jpeg') no-repeat center center/cover;
+  // }
+  // .with-out-fabric{
+  //   background: url('/assets/images/with_out_fabric1.jpeg') no-repeat center center/cover;
+  // }
+  // .alteration{
+  //   background: url('/assets/images/Alteration.jpg') no-repeat center center/cover;
+  // }
+  // .stitching{
+  //   background: url('/assets/images/Stitching.jpg') no-repeat center center/cover;
+  // }
+  // .measurement{
+  //   background: url('/assets/images/Measurement.jpg') no-repeat center center/cover;
+  // }
+
+  .location-icon {
+    font-size: 24px;
+    margin-left: 8px; /* Adds space between Login and Location */
+    color: white; /* Match toolbar color */
   }
-  .stitching{
-    background: url('/assets/images/Stitching.jpg') no-repeat center center/cover;
+
+  .align-right {
+    display: flex;
+    justify-content: flex-end;
+    align-items: center; /* Ensures vertical alignment */
+    padding: 0px;
   }
-  .measurement{
-    background: url('/assets/images/Measurement.jpg') no-repeat center center/cover;
-  }
+  

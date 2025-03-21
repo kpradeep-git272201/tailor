@@ -14,8 +14,6 @@ import { Router } from '@angular/router';
   imports: [SharedModule]
 })
 export class WithfabricPage implements OnInit {
-  images = [62, 83, 466, 965, 982, 1043, 738].map((n) => `https://picsum.photos/id/${n}/900/500`);
-
 	paused = false;
 	unpauseOnArrow = false;
 	pauseOnIndicator = false;

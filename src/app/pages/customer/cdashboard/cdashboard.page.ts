@@ -1,10 +1,13 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewChild } from '@angular/core';
 import { SharedModule } from 'src/app/sharedmodule/sharedmodule.module';
 import { addIcons } from 'ionicons';
-import { person, personOutline, settingsOutline, logOutOutline, cut, shirt, search, calendar, checkmarkCircle } from 'ionicons/icons';
+import { person, location, personOutline, settingsOutline, logOutOutline, cut, shirt, search, calendar, checkmarkCircle } from 'ionicons/icons';
 import { MenuComponent } from 'src/app/components/menu/menu.component';
 import { MatDialog } from '@angular/material/dialog';
 import { Router } from '@angular/router';
+import { NgbCarousel, NgbSlideEvent, NgbSlideEventSource } from '@ng-bootstrap/ng-bootstrap';
+import { CommonService } from 'src/app/services/common.service';
+import { WithfabricService } from 'src/app/services/withfabric.service';
 
 
 @Component({
@@ -15,10 +18,43 @@ import { Router } from '@angular/router';
   imports: [SharedModule]
 })
 export class CdashboardPage implements OnInit {
-  isLoggedIn = false; // Change to true when user logs in
-  userName = 'Customer'; // This will be fetched dynamically when the user logs in
+  isLoggedIn = false; 
+  userName = 'Customer'; 
   userInitial = this.userName.charAt(0).toUpperCase();
   appRole: any;
+
+  /*** Permotional Banner use by carosel */
+  paused = false;
+	unpauseOnArrow = false;
+	pauseOnIndicator = false;
+	pauseOnHover = true;
+	pauseOnFocus = true;
+
+	@ViewChild('carousel', { static: true }) carousel: NgbCarousel | any;
+  permotionalBanner:any=[];
+  interval: any;
+  searchQuery:any="";
+  searchQueryAuto: string = 'Search for ';
+  items: any[] = [
+    { name: 'Shirts' },
+    { name: 'Jeans' },
+    { name: 'T-Shirts' },
+    { name: 'Casual Shoes' },
+    { name: 'Sports Shoes' },
+    { name: 'Kurta Sets' },
+    { name: 'Tops' },
+    { name: 'Hydrating Serum' }
+  ];
+  filteredItems: any[] = [];
+  autoSearchTexts: string[] = ['Shirts', 'Jeans', 'T-Shirts', 'Casual Shoes'];
+  searchIndex: number = 0;
+  masterMenu: any[] | any;
+  isTyping: boolean = false;
+  displayedFabrics:any = [];
+  showAllFabric = false;
+  itemsPerRow = 3; 
+  itemsPerPage = this.itemsPerRow * 2; 
+
 
   tailors = [
     { 
@@ -73,17 +109,128 @@ export class CdashboardPage implements OnInit {
       ] 
     }
   ];
+  fabricMaster: any=[];
+
   
-  constructor(public dialog: MatDialog, private router: Router  ) {
-    addIcons({cut, shirt,search,calendar,checkmarkCircle,personOutline,settingsOutline,logOutOutline,person});
+  constructor(public dialog: MatDialog, private router: Router, 
+    private wfService: WithfabricService,private commonService: CommonService  ) {
+    addIcons({cut, shirt,search,calendar,location, checkmarkCircle,personOutline,settingsOutline,logOutOutline,person});
+
   }
 
   ngOnInit() {
-  
+    this.fabricMaster = this.wfService.getFabricMasterDate();
+    this.permotionalBanner=this.commonService.getMasterBrand();
+    this.startAutoTyping();
+    this.updateDisplayedFabrics();
   }
+
+
   ionViewDidEnter() {
     this.loadUserInfo();
   }
+
+
+  ngOnDestroy() {
+    clearInterval(this.interval);
+  }
+
+
+  updateDisplayedFabrics() {
+    this.displayedFabrics = this.showAllFabric ? this.fabricMaster : this.fabricMaster.slice(0, this.itemsPerPage);
+  }
+
+  toggleViewMore() {
+    this.showAllFabric = true;
+    this.updateDisplayedFabrics();
+  }
+startAutoTyping() {
+  if (this.isTyping) return; 
+  this.interval = setInterval(() => {
+    this.typeText("Search for " + this.autoSearchTexts[this.searchIndex]);
+    this.searchIndex = (this.searchIndex + 1) % this.autoSearchTexts.length;
+  }, 5000);
+}
+
+stopAutoTyping() {
+  this.isTyping = true;
+  clearInterval(this.interval);
+}
+
+restartAutoTyping() {
+  if (!this.searchQuery) {
+    this.isTyping = false;
+    this.startAutoTyping();
+  }
+}
+
+typeText(text: string) {
+  let index = 0;
+  this.searchQueryAuto = '';
+  const typingInterval = setInterval(() => {
+    if (index < text.length) {
+      this.searchQueryAuto += text.charAt(index);
+      index++;
+    } else {
+      clearInterval(typingInterval);
+      /** this.filterItems({ target: { value: this.searchQueryAuto } }); */
+    }
+  }, 200);
+}
+  // startAutoTyping() {
+  //   this.interval = setInterval(() => {
+  //     this.typeText("Search for "+this.autoSearchTexts[this.searchIndex]);
+  //     this.searchIndex = (this.searchIndex + 1) % this.autoSearchTexts.length;
+  //   }, 5000);
+  // }
+  // typeText(text: string) {
+  //   let index = 0;
+  //   this.searchQueryAuto = '';
+  //   const typingInterval = setInterval(() => {
+  //     if (index < text.length) {
+  //       this.searchQueryAuto += text.charAt(index);
+  //       index++;
+  //     } else {
+  //       clearInterval(typingInterval);
+  //       this.filterItems({ target: { value: this.searchQueryAuto } });
+  //     }
+  //   }, 200);
+  // }
+
+  filterItems(event: any) {
+    const searchTerm = event.target.value.toLowerCase();
+    if (searchTerm && searchTerm.trim() !== '') {
+      this.filteredItems = this.masterMenu.filter((item:any) =>
+        item.articleName.toLowerCase().includes(searchTerm)
+      );
+    } else {
+      this.filteredItems = this.masterMenu;
+    }
+  }
+
+
+  togglePaused() {
+      if (this.paused) {
+        this.carousel.cycle();
+      } else {
+        this.carousel.pause();
+      }
+      this.paused = !this.paused;
+    }
+  
+    onSlide(slideEvent: NgbSlideEvent) {
+      if (
+        this.unpauseOnArrow &&
+        slideEvent.paused &&
+        (slideEvent.source === NgbSlideEventSource.ARROW_LEFT || slideEvent.source === NgbSlideEventSource.ARROW_RIGHT)
+      ) {
+        this.togglePaused();
+      }
+      if (this.pauseOnIndicator && !slideEvent.paused && slideEvent.source === NgbSlideEventSource.INDICATOR) {
+        this.togglePaused();
+      }
+    }
+
   loadUserInfo() {
     const userInfoString = localStorage.getItem("userInfo");
     if (userInfoString) {

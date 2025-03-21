@@ -19,10 +19,7 @@
   --border-radius: 0.875rem;
   border: 1px solid; 
 }
-.search-text::after {
-  // content: "|";
-  animation: blink 1s step-start infinite;
-}
+
 
 @keyframes blink {
   50% {
@@ -30,8 +27,6 @@
   }
 }
 
-.carousel{
-  margin: 0.625rem;
-}
+
 
 
