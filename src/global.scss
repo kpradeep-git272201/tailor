@@ -117,31 +117,31 @@
   }
   
 
-ion-content {
-    --background: url('/assets/images/background/Background5.jpg') no-repeat center center / cover !important;
-    background-attachment: fixed !important;  /* Keeps the background fixed */
-}
+// ion-content {
+//     --background: url('/assets/images/background/Background5.jpg') no-repeat center center / cover !important;
+//     background-attachment: fixed !important;  /* Keeps the background fixed */
+// }
 
 /* For small screens (mobile phones) */
-@media (max-width: 600px) {
-  ion-content {
-    --background: url('/assets/images/background/Background5.jpg') no-repeat center center / cover !important;
-  }
-}
+// @media (max-width: 600px) {
+//   ion-content {
+//     --background: url('/assets/images/background/Background5.jpg') no-repeat center center / cover !important;
+//   }
+// }
 
 /* For tablets mediuam imgae*/
-@media (min-width: 601px) and (max-width: 1024px) {
-  ion-content {
-    --background: url('/assets/images/background/Background1.jpg') no-repeat center center / cover !important;
-  }
-}
+// @media (min-width: 601px) and (max-width: 1024px) {
+//   ion-content {
+//     --background: url('/assets/images/background/Background1.jpg') no-repeat center center / cover !important;
+//   }
+// }
 
 /* For large screens largs size  */
-@media (min-width: 1025px) {
-  ion-content {
-    --background: url('/assets/images/background/Background2.jpg') no-repeat center center / cover !important;
-  }
-}
+// @media (min-width: 1025px) {
+//   ion-content {
+//     --background: url('/assets/images/background/Background2.jpg') no-repeat center center / cover !important;
+//   }
+// }
 
 // Banner
 .search-text::after {

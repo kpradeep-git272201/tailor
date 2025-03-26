@@ -30,43 +30,48 @@
 </ion-header>
 
 <ion-content [fullscreen]="true">
-  <ion-searchbar
-    [(ngModel)]="searchQuery"
-    (click)="stopAutoTyping()"
-    (ionBlur)="restartAutoTyping()"
-    [placeholder]="searchQueryAuto"
-    class="search-text"
-  ></ion-searchbar>
-  <div *ngIf="permotionalBanner">
+  <div class="search-container">
+    <ion-searchbar
+      [(ngModel)]="searchQuery"
+      (click)="stopAutoTyping()"
+      (ionBlur)="restartAutoTyping()"
+      [placeholder]="searchQueryAuto"
+      class="custom-searchbar"
+    ></ion-searchbar>
+  </div>
+
+  <div *ngIf="permotionalBanner.length > 0">
     <ngb-carousel
       #carousel
       [interval]="2000"
       [pauseOnFocus]="pauseOnFocus"
       (slide)="onSlide($event)"
-      class="carousel-container carousel"
+      [showNavigationArrows]="true"
+      [showNavigationIndicators]="false"
+      class="carousel-container custom-carousel"
     >
-      <ng-template
-        ngbSlide
-        *ngFor="let brand of permotionalBanner; let i = index"
-      >
+      <ng-template ngbSlide *ngFor="let brand of permotionalBanner">
         <div class="carousel-slide">
-          <div class="carousel-caption">
-            <h3>{{brand.brandName}}</h3>
+          <!-- Image -->
+          <div class="picsum-img-wrapper">
+            <img
+              [src]="brand.logoUrl"
+              [alt]="brand.brandName"
+              height="250px"
+              width="500px"
+            />
           </div>
-          <a>
-            <div class="picsum-img-wrapper">
-              <img
-                [src]="brand.logoUrl"
-                [alt]="brand.description"
-                height="250px"
-                width="500px"
-              />
-            </div>
-          </a>
+
+          <!-- Overlay Text (Brand Name + Discount) -->
+          <div class="carousel-caption">
+            <p class="h2"><strong>{{ brand.brandName }}</strong></p>
+            <p>Get up to <strong>{{ brand.discount }}% OFF</strong>!</p>
+          </div>
         </div>
       </ng-template>
     </ngb-carousel>
   </div>
+
   <!-- Hero Section -->
   <!-- <div class="hero">
   <h1>Find the Best Tailors for Alteration & Stitching!</h1>
@@ -75,11 +80,11 @@
 </div> -->
   <!-- routerLink="/tailors" -->
   <!-- Services Section -->
-  <div class="services">
-    <div class="card">
+  <!-- <div class="services"> -->
+    <!-- <div class="card p-2">
       <h2 style="margin: 6px;">Our Services</h2>
-    </div>
-    <ion-grid style="padding: 0px; padding-top: 18px; padding-bottom: 18px;">
+    </div> -->
+    <!-- <ion-grid style="padding: 0px; padding-top: 18px; padding-bottom: 18px;">
       <ion-row style="padding: 0px;">
         <ion-col size="6" (click)="getService('with-fabric')" style="padding: 0px;">
           <ion-thumbnail class="service">
@@ -94,61 +99,47 @@
           </ion-thumbnail>
         </ion-col>
       </ion-row>
+    </ion-grid> -->
+  <!-- </div> -->
+  <div class="grid grid-cols-2 gap-6 p-2" style="margin-top: 25px;">
+    <ion-grid *ngIf="ourService">
+      <ion-row class="flex justify-center items-center gap-6">
+        <ion-col
+          *ngFor="let service of ourService; let i = index"
+          (click)="getService(service.serviceType)"
+          size="6"
+          class="flex flex-col items-center"
+        >
+          <div
+            (click)="getService('with-fabric')"
+            class="bg-white rounded-[10px] shadow-lg p-3 transform hover:scale-105 transition duration-300"
+            style="margin: 7px; border-radius: 10px"
+          >
+            <img
+              [src]="service.image"
+              [alt]="service.alt"
+              class="w-full h-40 object-cover rounded-[10px]"
+            />
+            <div
+              class="text-black font-bold text-center mt-2 text-base sm:text-lg"
+            >
+              {{ service.serviceType }}
+            </div>
+          </div>
+        </ion-col>
+      </ion-row>
     </ion-grid>
   </div>
 
   <!-- Popular Tailors Section -->
-  <div class="top-rated">
-    <div class="card" style="margin-left: 20px; margin-right: 20px; margin-bottom: 18px;">
-      <h2 style="text-align: center; margin: 6px;">Top Rated Tailors</h2>
-    </div>
+  <!-- Top Rated Fabric -->
+  <app-top-rated-fabric></app-top-rated-fabric>
+  <!-- Top rated Tailor -->
+   <app-top-rated-tailor></app-top-rated-tailor>
 
-    <!-- <ion-list style="margin-left: 20px; margin-right: 20px;">
-      <ion-item *ngFor="let tailor of tailors">
-        <ion-avatar slot="start">
-          <img [src]="tailor.image" alt="Tailor Profile" />
-        </ion-avatar>
-        <ion-label>
-          <h3>{{ tailor.name }}</h3>
-          <p>{{ tailor.specialization }}</p>
-          <ion-badge color="success">{{ tailor.rating }} ⭐</ion-badge>
-        </ion-label>
-        <ion-button fill="outline" (click)="viewProfile(tailor)"
-          >View</ion-button
-        >
-      </ion-item>
-    </ion-list> -->
-  </div>
-  <div class="top-rated">
-    <div class="card" style="margin-left: 20px; margin-right: 20px; margin-bottom: 18px;">
-      <h2 style="text-align: center; margin: 6px;">Top Rated Fabrics</h2>
-    </div>
-    <ion-grid style="padding: 20px; margin-bottom: 20px;" *ngIf="fabricMaster">
-      <ion-row style="padding: 0px;">
-        <ion-col 
-          size="4" size-md="4" size-lg="4" 
-          style="padding: 0px; padding-bottom: 40px;" 
-          *ngFor="let fabric of displayedFabrics; let i = index">
-          
-          <ion-thumbnail class="fabric-thumb">
-            <img [src]="fabric.imageUrl" [alt]="fabric.fabricType" />
-            <p class="thumbnail-text text-service">{{ fabric.fabricType }}</p>
-          </ion-thumbnail>
-          
-        </ion-col>
-      </ion-row>
-    
-      <!-- View More Button -->
-      <ion-row *ngIf="fabricMaster.length > itemsPerPage && !showAllFabric">
-        <ion-col size="12" class="center-button">
-          <ion-button expand="full" (click)="toggleViewMore()">
-            View More
-          </ion-button>
-        </ion-col> 
-      </ion-row>
-    </ion-grid>
-    
-  </div>
+  
+
+
   <!-- routerLink="/tailor/{{tailor.id}}" -->
   <!-- How It Works Section -->
   <!-- <div class="how-it-works">

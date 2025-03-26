@@ -27,6 +27,11 @@ export const routes: Routes = [
           import('../pages/customer/customer.module').then((m) => m.CustomerModule),
       },
       {
+        path: 'mytabs',
+        loadChildren: () =>
+          import('../pages/mytabs/mytabs.module').then((m) => m.MytabsModule),
+      },
+      {
         path: 'tailor',
         loadChildren: () =>
           import('../pages/tailor/tailor.module').then((m) => m.TailorModule),
@@ -40,7 +45,7 @@ export const routes: Routes = [
   },
   {
     path: '',
-    redirectTo: '/tabs/customer',
+    redirectTo: '/tabs/mytabs',
     pathMatch: 'full',
   },
 ];

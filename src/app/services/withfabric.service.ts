@@ -7,6 +7,20 @@ export class WithfabricService {
 
   constructor() { }
 
+  getService(){
+    return [
+      {
+        image: "/assets/images/with_fabric1.jpeg",
+        alt: "With Fabric",
+        serviceType: "With Fabric"
+      },
+      {
+        image: "/assets/images/with_out_fabric1.jpeg",
+        alt: "With Out Fabric",
+        serviceType: "With Out Fabric"
+      }
+    ]
+  }
   getMasterMenu(){
     return [
       {
