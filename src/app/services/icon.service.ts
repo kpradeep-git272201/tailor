@@ -27,7 +27,8 @@ import {
   personOutline,
   menuOutline,
   shirtOutline,
-  cartOutline
+  cartOutline,
+  locationOutline
 } from 'ionicons/icons';
 
 @Injectable({
@@ -40,6 +41,7 @@ export class IconService {
 
   private registerIcons() {
     addIcons({
+      locationOutline,
       cartOutline,
       mailOutline,
       appsOutline,

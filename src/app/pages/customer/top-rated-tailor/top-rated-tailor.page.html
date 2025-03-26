@@ -2,27 +2,34 @@
   <h3 class="section-title">Top Rated Tailors</h3>
   <ion-grid>
     <ion-row>
-      <ion-col size="12" *ngFor="let tailor of topRatedTailors">
+      <ion-col size="12" *ngFor="let tailor of displayedTailors">
         <ion-card class="tailor-card">
           <ion-card-header>
-            <ion-thumbnail slot="start">
-              <!-- <img [src]="tailor.imageUrl" [alt]="tailor.name" class="tailor-image" /> -->
-              <img src="src/assets/images/tailors/tailor1.jpg" alt="Tailor 1">
-            </ion-thumbnail>
-            <ion-card-title>{{ tailor.name }}</ion-card-title>
-            <ion-card-subtitle>
-              ⭐ {{ tailor.rating }}/5 | {{ tailor.experience }} years experience
-            </ion-card-subtitle>
+            <div class="card-header-container">
+              <ion-thumbnail class="tailor-thumbnail">
+                <img [src]="tailor.imageUrl" [alt]="tailor.name" />
+              </ion-thumbnail>
+              <div class="tailor-info">
+                <ion-card-title>{{ tailor.name }}</ion-card-title>
+                <ion-card-subtitle>
+                  <span class="FontSize">⭐ {{ tailor.rating }}/5 | {{ tailor.experience }} years</span>
+                </ion-card-subtitle>
+              </div>
+              <ion-button fill="clear" class="view-profile-button">
+                View
+              </ion-button>
+            </div>
           </ion-card-header>
           <ion-card-content>
-            <p>Expertise: {{ tailor.expertise }}</p>
-            <p>Distance: {{ tailor.distance }} km away</p>
-            <ion-button fill="outline">
-              View Profile
-            </ion-button>
+            <p class="FontSize">Expertise: {{ tailor.expertise }}</p>
+            <p><ion-icon class="locationIcon" name="location-outline"></ion-icon> <span class="FontSize">{{ tailor.distance }} km away</span></p>
           </ion-card-content>
         </ion-card>
       </ion-col>
     </ion-row>
   </ion-grid>
+  
+  <div class="load-more-container" *ngIf="showLoadMoreButton">
+    <ion-button (click)="loadMore()" expand="full">View More Tailors</ion-button>
+  </div>
 </div>
