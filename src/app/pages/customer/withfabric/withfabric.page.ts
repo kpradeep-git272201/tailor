@@ -19,6 +19,14 @@ export class WithfabricPage implements OnInit {
 	pauseOnIndicator = false;
 	pauseOnHover = true;
 	pauseOnFocus = true;
+  displayedFabrics: any = [];
+  showAllFabric = false;
+  allFabricsLoaded = false;
+  fabricMaster: any = [];
+  initialDisplayCount = 6;
+  loadMoreCount = 20;
+
+
 
 	@ViewChild('carousel', { static: true }) carousel: NgbCarousel | any;
 
@@ -33,7 +41,7 @@ export class WithfabricPage implements OnInit {
     { name: 'T-Shirts', image: 'assets/images/Alteration.jpg' },
     { name: 'Casual Shoes', image: 'assets/images/Alteration.jpg' }
   ];
-  searchQuery: string = 'Search for ';
+  searchQueryAuto: string = 'Search for ';
   items: any[] = [
     { name: 'Shirts' },
     { name: 'Jeans' },
@@ -50,8 +58,9 @@ export class WithfabricPage implements OnInit {
   interval: any;
   masterBrandData: any[] | any;
   masterMenu: any[] | any;
-  FabricMaster: any[] | any;
-
+  FabricMaster: any=[];
+  isTyping: boolean = false;
+  colorMaster:any=[];
   constructor(private commonService: CommonService, 
     private wfService: WithfabricService,
     private router: Router) {
@@ -64,12 +73,26 @@ export class WithfabricPage implements OnInit {
     this.masterBrandData=this.commonService.getMasterBrand();
     this.masterMenu=this.wfService.getMasterMenu();
     this.FabricMaster = this.wfService.getFabricMasterDate();
+    this.colorMaster = this.wfService.colorClassificationMaster();
     this.filteredItems = this.masterMenu;
   }
 
   ngOnDestroy() {
     clearInterval(this.interval);
   }
+
+  stopAutoTyping() {
+    this.isTyping = true;
+    clearInterval(this.interval);
+  }
+
+  restartAutoTyping() {
+    if (!this.searchQueryAuto) {
+      this.isTyping = false;
+      this.startAutoTyping();
+    }
+  }
+
 
   startAutoTyping() {
     this.interval = setInterval(() => {
@@ -80,14 +103,14 @@ export class WithfabricPage implements OnInit {
 
   typeText(text: string) {
     let index = 0;
-    this.searchQuery = '';
+    this.searchQueryAuto = '';
     const typingInterval = setInterval(() => {
       if (index < text.length) {
-        this.searchQuery += text.charAt(index);
+        this.searchQueryAuto += text.charAt(index);
         index++;
       } else {
         clearInterval(typingInterval);
-        this.filterItems({ target: { value: this.searchQuery } });
+        this.filterItems({ target: { value: this.searchQueryAuto } });
       }
     }, 200);
   }
@@ -131,5 +154,16 @@ export class WithfabricPage implements OnInit {
         article: JSON.stringify(article)
       }
     });
+  }
+
+  updateDisplayedFabrics() {
+    const currentDisplayCount = this.displayedFabrics.length;
+    const nextDisplayCount = currentDisplayCount + (currentDisplayCount === 0 ? this.initialDisplayCount : this.loadMoreCount);
+    this.displayedFabrics = this.fabricMaster.slice(0, nextDisplayCount);
+    this.allFabricsLoaded = this.displayedFabrics.length >= this.fabricMaster.length;
+  }
+
+  loadMoreFabrics() {
+    this.updateDisplayedFabrics();
   }
 }

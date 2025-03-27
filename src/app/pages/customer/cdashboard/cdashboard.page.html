@@ -5,7 +5,7 @@
         <ion-thumbnail class="logo-thumbnail">
           <img src="/assets/logo/t-Logo1.jpg" />
         </ion-thumbnail>
-        <span class="title-text">Dashboard</span>
+        <span class="title-text">Home</span>
       </div>
     </ion-title>
     <ion-avatar
@@ -57,8 +57,8 @@
             <img
               [src]="brand.logoUrl"
               [alt]="brand.brandName"
-              height="250px"
-              width="500px"
+              height="245px"
+              width="455px"
             />
           </div>
 
@@ -72,7 +72,85 @@
     </ngb-carousel>
   </div>
 
-  <!-- Hero Section -->
+  
+  <div class="grid grid-cols-2 gap-6 p-1" style="margin-top: 1.563rem;">
+    <ion-grid *ngIf="ourService">
+      <ion-row class="flex justify-center items-center gap-6">
+        <ion-col
+          *ngFor="let service of ourService; let i = index"
+          (click)="getService(service)"
+          size="6"
+          class="flex flex-col items-center"
+        >
+          <div
+            class="bg-white rounded-[10px] shadow-lg p-3 transform hover:scale-105 transition duration-300"
+            style="margin: 7px; border-radius: 10px"
+          >
+            <img
+              [src]="service.image"
+              [alt]="service.alt"
+              class="w-full h-40 object-cover rounded-[10px]"
+            />
+            <div
+              class="text-black font-bold text-center mt-2 text-base sm:text-lg"
+            >
+              {{ service.serviceType }}
+            </div>
+          </div>
+        </ion-col>
+      </ion-row>
+    </ion-grid>
+  </div>
+
+  <!-- Popular Tailors Section -->
+  <!-- Top Rated Fabric -->
+  <div class="top-rated">
+    <h3 class="section-title">Top Rated Fabrics</h3>
+    <app-top-rated-fabric></app-top-rated-fabric>
+  </div>
+
+  <!-- Top rated Tailor -->
+   <app-top-rated-tailor></app-top-rated-tailor>
+
+</ion-content>
+
+
+  <!-- routerLink="/tailor/{{tailor.id}}" -->
+  <!-- How It Works Section -->
+  <!-- <div class="how-it-works">
+    <h2>How It Works</h2>
+    <ion-row>
+      <ion-col size="4">
+        <ion-card>
+          <ion-icon name="search" size="large"></ion-icon>
+          <p>Browse Tailors</p>
+        </ion-card>
+      </ion-col>
+      <ion-col size="4">
+        <ion-card>
+          <ion-icon name="calendar" size="large"></ion-icon>
+          <p>Book Service</p>
+        </ion-card>
+      </ion-col>
+      <ion-col size="4">
+        <ion-card>
+          <ion-icon name="checkmark-circle" size="large"></ion-icon>
+          <p>Get It Done</p>
+        </ion-card>
+      </ion-col>
+    </ion-row>
+  </div> -->
+
+<!-- <ion-footer>
+  <ion-toolbar>
+    <ion-title style="font-size: 0.75rem"
+      >© 2025 Tailor App. All Rights Reserved.</ion-title
+    >
+  </ion-toolbar>
+</ion-footer> -->
+
+
+<!-- Hero Section -->
   <!-- <div class="hero">
   <h1>Find the Best Tailors for Alteration & Stitching!</h1>
   <p>Get your clothes stitched or altered by professional tailors near you.</p>
@@ -101,75 +179,3 @@
       </ion-row>
     </ion-grid> -->
   <!-- </div> -->
-  <div class="grid grid-cols-2 gap-6 p-2" style="margin-top: 25px;">
-    <ion-grid *ngIf="ourService">
-      <ion-row class="flex justify-center items-center gap-6">
-        <ion-col
-          *ngFor="let service of ourService; let i = index"
-          (click)="getService(service.serviceType)"
-          size="6"
-          class="flex flex-col items-center"
-        >
-          <div
-            (click)="getService('with-fabric')"
-            class="bg-white rounded-[10px] shadow-lg p-3 transform hover:scale-105 transition duration-300"
-            style="margin: 7px; border-radius: 10px"
-          >
-            <img
-              [src]="service.image"
-              [alt]="service.alt"
-              class="w-full h-40 object-cover rounded-[10px]"
-            />
-            <div
-              class="text-black font-bold text-center mt-2 text-base sm:text-lg"
-            >
-              {{ service.serviceType }}
-            </div>
-          </div>
-        </ion-col>
-      </ion-row>
-    </ion-grid>
-  </div>
-
-  <!-- Popular Tailors Section -->
-  <!-- Top Rated Fabric -->
-  <app-top-rated-fabric></app-top-rated-fabric>
-  <!-- Top rated Tailor -->
-   <app-top-rated-tailor></app-top-rated-tailor>
-
-  
-
-
-  <!-- routerLink="/tailor/{{tailor.id}}" -->
-  <!-- How It Works Section -->
-  <!-- <div class="how-it-works">
-    <h2>How It Works</h2>
-    <ion-row>
-      <ion-col size="4">
-        <ion-card>
-          <ion-icon name="search" size="large"></ion-icon>
-          <p>Browse Tailors</p>
-        </ion-card>
-      </ion-col>
-      <ion-col size="4">
-        <ion-card>
-          <ion-icon name="calendar" size="large"></ion-icon>
-          <p>Book Service</p>
-        </ion-card>
-      </ion-col>
-      <ion-col size="4">
-        <ion-card>
-          <ion-icon name="checkmark-circle" size="large"></ion-icon>
-          <p>Get It Done</p>
-        </ion-card>
-      </ion-col>
-    </ion-row>
-  </div> -->
-</ion-content>
-<ion-footer>
-  <ion-toolbar>
-    <ion-title style="font-size: 0.75rem"
-      >© 2025 Tailor App. All Rights Reserved.</ion-title
-    >
-  </ion-toolbar>
-</ion-footer>

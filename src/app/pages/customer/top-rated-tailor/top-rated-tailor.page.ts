@@ -1,8 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { TailorService } from 'src/app/services/tailor.service';
 import { SharedModule } from 'src/app/sharedmodule/sharedmodule.module';
-import { IonCardSubtitle } from "@ionic/angular/standalone";
 import { IconService } from 'src/app/services/icon.service';
+import { IonCardSubtitle } from "@ionic/angular/standalone";
 
 @Component({
   selector: 'app-top-rated-tailor',

@@ -1,8 +1,12 @@
-<div class="top-rated">
+<div class="top-rated" style="padding-bottom: 20px;">
   <h3 class="section-title">Top Rated Tailors</h3>
   <ion-grid>
     <ion-row>
-      <ion-col size="12" *ngFor="let tailor of displayedTailors">
+      <ion-col
+        size="12"
+        *ngFor="let tailor of displayedTailors"
+        style="padding: 0px"
+      >
         <ion-card class="tailor-card">
           <ion-card-header>
             <div class="card-header-container">
@@ -10,26 +14,55 @@
                 <img [src]="tailor.imageUrl" [alt]="tailor.name" />
               </ion-thumbnail>
               <div class="tailor-info">
-                <ion-card-title>{{ tailor.name }}</ion-card-title>
+                <ion-card-title style="margin-top: -0.875rem"
+                  >{{ tailor.name }}</ion-card-title
+                >
                 <ion-card-subtitle>
-                  <span class="FontSize">⭐ {{ tailor.rating }}/5 | {{ tailor.experience }} years</span>
+                  <span class="FontSize"
+                    >Expertise: {{ tailor.expertise }}</span
+                  >
                 </ion-card-subtitle>
               </div>
-              <ion-button fill="clear" class="view-profile-button">
+              <ion-button
+                color="primary"
+                fill="clear"
+                class="view-profile-button"
+              >
                 View
               </ion-button>
             </div>
           </ion-card-header>
           <ion-card-content>
-            <p class="FontSize">Expertise: {{ tailor.expertise }}</p>
-            <p><ion-icon class="locationIcon" name="location-outline"></ion-icon> <span class="FontSize">{{ tailor.distance }} km away</span></p>
+            <ion-row>
+              <ion-col style="padding: 0rem">
+                <p class="FontSize">
+                  ⭐ {{ tailor.rating }}/5 | {{ tailor.experience }} yrs
+                </p>
+              </ion-col>
+              <ion-col style="padding: 0rem; text-align: right">
+                <p>
+                  <ion-icon
+                    class="locationIcon"
+                    name="location-outline"
+                  ></ion-icon>
+                  <span class="FontSize">{{ tailor.distance }} km away</span>
+                </p>
+              </ion-col>
+            </ion-row>
           </ion-card-content>
         </ion-card>
       </ion-col>
     </ion-row>
   </ion-grid>
-  
+
   <div class="load-more-container" *ngIf="showLoadMoreButton">
-    <ion-button (click)="loadMore()" expand="full">View More Tailors</ion-button>
+    <ion-button
+      class="view-more"
+      (click)="loadMore()"
+      expand="full"
+      color="secondary"
+    >
+      <span>View More Tailors</span>
+    </ion-button>
   </div>
 </div>

@@ -30,3 +30,50 @@
 
 
 
+// color 
+.top-rated {
+  padding-bottom: 20px;
+}
+
+.fabric-grid {
+  padding: 0 10px;
+}
+
+.fabric-card {
+  border-radius: 12px;
+  box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1);
+  overflow: hidden;
+  transition: transform 0.3s ease-in-out;
+
+  &:hover {
+    transform: scale(1.03);
+  }
+}
+
+.fabric-color-preview {
+  height: 150px;
+  width: 100%;
+  border-top-left-radius: 12px;
+  border-top-right-radius: 12px;
+}
+
+/* Text alignment for small screens */
+.fabric-description {
+  font-size: 14px;
+  color: #555;
+  text-align: center;
+  padding: 5px;
+}
+
+/* Responsive Grid */
+@media (max-width: 768px) {
+  .fabric-color-preview {
+    height: 120px; /* Smaller color preview for mobile */
+  }
+}
+
+@media (max-width: 480px) {
+  .fabric-description {
+    font-size: 13px; /* Smaller text for mobile screens */
+  }
+}

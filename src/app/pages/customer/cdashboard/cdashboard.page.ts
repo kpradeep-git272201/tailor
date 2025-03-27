@@ -221,25 +221,7 @@ export class CdashboardPage implements OnInit {
       }
     }, 200);
   }
-  // startAutoTyping() {
-  //   this.interval = setInterval(() => {
-  //     this.typeText("Search for "+this.autoSearchTexts[this.searchIndex]);
-  //     this.searchIndex = (this.searchIndex + 1) % this.autoSearchTexts.length;
-  //   }, 5000);
-  // }
-  // typeText(text: string) {
-  //   let index = 0;
-  //   this.searchQueryAuto = '';
-  //   const typingInterval = setInterval(() => {
-  //     if (index < text.length) {
-  //       this.searchQueryAuto += text.charAt(index);
-  //       index++;
-  //     } else {
-  //       clearInterval(typingInterval);
-  //       this.filterItems({ target: { value: this.searchQueryAuto } });
-  //     }
-  //   }, 200);
-  // }
+
 
   filterItems(event: any) {
     const searchTerm = event.target.value.toLowerCase();
@@ -339,6 +321,6 @@ export class CdashboardPage implements OnInit {
   }
 
   getService(action: any) {
-    this.router.navigate(['/tabs/customer/' + action]);
+    this.router.navigate(['/tabs/customer/' + action.subUrl]);
   }
 }

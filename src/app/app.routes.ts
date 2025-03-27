@@ -24,6 +24,14 @@ export const routes: Routes = [
   {
     path: 'chart-model',
     loadComponent: () => import(/* @vite-ignore */ './pages/customer/chart-model/chart-model.page').then(m => m.ChartModelPage),
+  },  {
+    path: 'order',
+    loadComponent: () => import('./pages/customer/order/order.page').then( m => m.OrderPage)
+  },
+  {
+    path: 'cart',
+    loadComponent: () => import('./pages/customer/cart/cart.page').then( m => m.CartPage)
   }
+
 
 ];

@@ -34,24 +34,24 @@
 
 /* @import "@ionic/angular/css/palettes/dark.always.css"; */
 /* @import "@ionic/angular/css/palettes/dark.class.css"; */
-@import '@ionic/angular/css/palettes/dark.system.css';
+@import "@ionic/angular/css/palettes/dark.system.css";
 
 :root {
-  --primary-color: #673ab7;
-  --secondary-color: #9d0054;
+  --primary-color: #880e4f; //#673ab7;
+  --secondary-color: #ff4081;
   --primary-font-color: #ffffff;
   --over-layer-color: rgba(190, 186, 186, 0.8);
   --rem-to-px: 10px;
-  --overdue-bg-color: #FF5151;
-  --incomplete-bg-color:#ff9800;
-  --upcoming-bg-color: #D5B60A;
-  --incomplete-badge-bg-color: #F57C00;
-  --overdue-badge-bg-color: #E53935;
+  --overdue-bg-color: #ff5151;
+  --incomplete-bg-color: #ff9800;
+  --upcoming-bg-color: #d5b60a;
+  --incomplete-badge-bg-color: #f57c00;
+  --overdue-badge-bg-color: #e53935;
   --upcoming-badge-bg-color: #a6860a;
-  --overdue-badge-txt-color: #000000; 
-  --incomplete-badge-txt-color: #000000; 
+  --overdue-badge-txt-color: #000000;
+  --incomplete-badge-txt-color: #000000;
   --upcoming-badge-txt-color: #000000;
-  --my-theme-bg: #2c3e50
+  --my-theme-bg: #2c3e50;
 }
 
 .category-list {
@@ -69,58 +69,57 @@
   height: 6.25rem;
 }
 .logo-container {
-    display: flex;
-    align-items: center;
-  }
-  
-.logo-thumbnail {
-    width: 40px;  /* Adjust size as needed */
-    height: 40px;
-    border-radius: 50%; /* Makes it circular */
-    overflow: hidden; /* Ensures the image stays inside the circle */
-    margin-right: 10px; /* Adds spacing between logo and text */
-}
-  
-.logo-thumbnail img {
-    width: 100%;
-    height: 100%;
-    object-fit: cover; /* Ensures the image covers the circle properly */
-}
-  
-.title-text {
-    font-size: 1.2rem;
-    font-weight: bold;
+  display: flex;
+  align-items: center;
 }
 
+.logo-thumbnail {
+  width: 40px; /* Adjust size as needed */
+  height: 40px;
+  border-radius: 50%; /* Makes it circular */
+  overflow: hidden; /* Ensures the image stays inside the circle */
+  margin-right: 10px; /* Adds spacing between logo and text */
+}
+
+.logo-thumbnail img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover; /* Ensures the image covers the circle properly */
+}
+
+.title-text {
+  font-size: 1.2rem;
+  font-weight: bold;
+}
 
 .char-avatar {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    width: 40px;
-    height: 40px;
-    border-radius: 50%;
-    margin-right: 18px;
-    background-color: #6200ea; /* Background when logged in */
-  }
-  
-  .avatar-text {
-    font-size: 18px;
-    font-weight: bold;
-    color: white;
-  }
-  
-  .default-avatar {
-    width: 100%;
-    height: 100%;
-    border-radius: 50%; /* Ensures the image stays circular */
-  }
-  
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  margin-right: 18px;
+  background-color: var(--primary-color); /* Background when logged in */
+}
 
-// ion-content {
-//     --background: url('/assets/images/background/Background5.jpg') no-repeat center center / cover !important;
-//     background-attachment: fixed !important;  /* Keeps the background fixed */
-// }
+.avatar-text {
+  font-size: 18px;
+  font-weight: bold;
+  color: white;
+}
+
+.default-avatar {
+  width: 100%;
+  height: 100%;
+  border-radius: 50%; /* Ensures the image stays circular */
+}
+
+ion-content {
+  --background: #e0f2f1;
+  // --background: url('/assets/images/background/Background5.jpg') no-repeat center center / cover !important;
+  // background-attachment: fixed !important;  /* Keeps the background fixed */
+}
 
 /* For small screens (mobile phones) */
 // @media (max-width: 600px) {
@@ -149,6 +148,157 @@
   animation: blink 1s step-start infinite;
 }
 
-.carousel{
+.carousel {
   margin: 0.625rem;
+}
+
+.search-container {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 94%; /* Adjust width as needed */
+  max-width: 37.5rem; /* Prevents too wide UI */
+  margin: 0.938rem auto; /* Center align */
+  border-radius: 0.625rem;
+  background: #fff;
+  padding: 0.188rem; /* Reduce padding */
+  border: 0.063 solid #ccc;
+  transition: all 0.3s ease-in-out;
+  height: 3.063rem; /* Reduced height */
+}
+
+/* Custom Styling for Search Bar */
+.custom-searchbar {
+  --background: transparent !important; /* Match container */
+  --border-radius: 10px !important;
+  --box-shadow: none !important; /* Prevents double shadow */
+  --color: #333 !important;
+  --placeholder-color: #888 !important;
+  --clear-button-color: #ff6600 !important;
+  --cancel-button-color: #ff6600 !important;
+
+  width: 100%;
+  font-size: 14px; /* Reduce font-size */
+  padding: 6px; /* Reduce padding */
+  height: 38px !important; /* Adjust height */
+  transition: all 0.3s ease-in-out;
+}
+
+/** ************************************* */
+//-------------------------------
+
+.carousel-slide {
+  border-radius: 10px;
+  overflow: hidden; // Prevents the sharp edges during transition
+}
+
+.carousel-slide img {
+  border-radius: 10px !important;
+  transition: border-radius 0.3s ease-in-out; // Smooth transition effect
+}
+
+.carousel-caption {
+  position: absolute;
+  bottom: 58px;
+  height: 77px;
+  left: 50%;
+  transform: translateX(-50%);
+  background: rgba(0, 0, 0, 0.7);
+  color: white;
+  padding: 10px 15px;
+  border-radius: 10px;
+  width: 64%;
+  text-align: center;
+}
+
+.carousel-caption .h2 {
+  margin-top: 0rem !important;
+  padding-top: 0rem !important;
+  color: white;
+  font-size: 1.25rem;
+  margin-bottom: 0.313rem;
+}
+
+.carousel-caption p {
+  font-size: 0.875rem;
+  font-weight: bold;
+  color: #ffcc00; /* Yellow highlight for discount */
+}
+/* Convert default dashes (—) into circular dots */
+.custom-carousel .carousel-indicators [data-bs-target] {
+  width: 0.75rem !important;
+  height: 0.75rem !important;
+  background-color: #bbb !important; /* Inactive dot color */
+  border-radius: 50% !important;
+  border: none !important;
+  transition:
+    background-color 0.3s ease-in-out,
+    width 0.3s ease-in-out;
+}
+
+/* Highlight active dot */
+.custom-carousel .carousel-indicators .active {
+  background-color: #ffcc00 !important; /* Highlighted active dot */
+  width: 0.875rem !important;
+  height: 0.875rem !important;
+}
+
+.carousel-container {
+  position: relative;
+  border-radius: 10px;
+  max-height: 200px !important; /* Apni required height set karein */
+  overflow: hidden;
+  padding-bottom: 30px;
+  margin-left: 0.75rem;
+  margin-right: 0.75rem;
+}
+
+.custom-carousel .carousel-indicators .active {
+  background-color: #ffcc00 !important; /* Yellow highlighted active dot */
+  width: 0.875rem !important;
+  height: 0.875rem !important;
+}
+
+.custom-carousel .carousel-indicators [data-bs-target] {
+  width: 0.75rem !important;
+  height: 0.75rem !important;
+  background-color: #bbb !important; /* Inactive dot color */
+  border-radius: 50% !important;
+  border: none !important;
+  transition:
+    background-color 0.3s ease-in-out,
+    width 0.3s ease-in-out;
+}
+/* Move indicators (dots) below the carousel */
+.custom-carousel .carousel-indicators {
+  position: absolute !important;
+  bottom: -1.875rem !important; /* Adjust this value to position dots correctly */
+  left: 50%;
+  transform: translateX(-50%);
+  display: flex !important;
+  justify-content: center;
+  align-items: center;
+  gap: 0.5rem; /* Space between dots */
+  list-style: none;
+}
+
+// Location header
+.location-icon {
+  font-size: 24px;
+  margin-left: 8px; /* Adds space between Login and Location */
+  color: white; /* Match toolbar color */
+}
+
+.section-title {
+  padding-left: 1.063rem;
+}
+
+.view-more {
+  margin-left: 6.375rem;
+  margin-right: 6.375rem;
+  color: black;
+  span {
+    color: black;
+    margin-top: 0.188rem;
+  }
 }

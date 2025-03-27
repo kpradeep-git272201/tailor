@@ -2,13 +2,13 @@ import { Component, OnInit } from '@angular/core';
 import { SharedModule } from 'src/app/sharedmodule/sharedmodule.module';
 
 @Component({
-  selector: 'app-menu',
-  templateUrl: './menu.page.html',
-  styleUrls: ['./menu.page.scss'],
+  selector: 'app-cart',
+  templateUrl: './cart.page.html',
+  styleUrls: ['./cart.page.scss'],
   standalone: true,
   imports: [SharedModule]
 })
-export class MenuPage implements OnInit {
+export class CartPage implements OnInit {
 
   constructor() { }
 
