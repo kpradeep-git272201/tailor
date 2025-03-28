@@ -23,7 +23,7 @@ export class TailorProfilePage implements OnInit {
       if(params['tailor']){
         this.tailor=JSON.parse(params['tailor']);
       }
-    })
+    });
 
   }
 

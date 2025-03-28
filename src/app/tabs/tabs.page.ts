@@ -1,8 +1,7 @@
 import { Component, EnvironmentInjector, inject } from '@angular/core';
-import { addIcons } from 'ionicons';
-import { settings, home, help, person } from 'ionicons/icons';
 import { SharedModule } from '../sharedmodule/sharedmodule.module';
 import { Router } from '@angular/router';
+import { IconService } from '../services/icon.service';
 
 @Component({
   selector: 'app-tabs',
@@ -14,8 +13,8 @@ export class TabsPage {
   public environmentInjector = inject(EnvironmentInjector);
   appRole: any;
 
-  constructor(private router: Router,) {
-    addIcons({ settings, home, help, person });
+  constructor(private router: Router, private iconService: IconService) {
+  
   }
 
   ionViewWillEnter() {

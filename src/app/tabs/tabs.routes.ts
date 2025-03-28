@@ -17,6 +17,36 @@ export const routes: Routes = [
           import('../tab2/tab2.page').then((m) => m.Tab2Page),
       },
       {
+        path: 'tailor',
+        loadComponent: () =>
+          import('../pages/mytabs/tailor/tailor.page').then((m) => m.TailorPage),
+      },
+      {
+        path: 'order',
+        loadComponent: () =>
+          import('../pages/customer/order/order.page').then((m) => m.OrderPage),
+      },
+      {
+        path: 'dashboard',
+        loadComponent: () =>
+          import('../pages/customer/cdashboard/cdashboard.page').then((m) => m.CdashboardPage),
+      },
+      {
+        path: 'home',
+        loadComponent: () =>
+          import('../pages/mytabs/home/home.page').then((m) => m.HomePage),
+      },
+      {
+        path: 'menu',
+        loadComponent: () =>
+          import('../pages/mytabs/menu/menu.page').then((m) => m.MenuPage),
+      },
+      {
+        path: 'cart',
+        loadComponent: () =>
+          import('../pages/customer/cart/cart.page').then((m) => m.CartPage),
+      },
+      {
         path: 'tab3',
         loadComponent: () =>
           import('../tab3/tab3.page').then((m) => m.Tab3Page),
@@ -25,6 +55,11 @@ export const routes: Routes = [
         path: 'customer',
         loadChildren: () =>
           import('../pages/customer/customer.module').then((m) => m.CustomerModule),
+      },
+      {
+        path: 'mytabs',
+        loadChildren: () =>
+          import('../pages/mytabs/mytabs.module').then((m) => m.MytabsModule),
       },
       {
         path: 'tailor',
@@ -40,7 +75,7 @@ export const routes: Routes = [
   },
   {
     path: '',
-    redirectTo: '/tabs/customer',
+    redirectTo: '/tabs/mytabs',
     pathMatch: 'full',
   },
 ];

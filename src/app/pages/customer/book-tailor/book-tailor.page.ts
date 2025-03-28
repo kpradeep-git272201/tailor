@@ -1,9 +1,9 @@
-import { Component, OnInit, ViewChild } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { SharedModule } from 'src/app/sharedmodule/sharedmodule.module';
-import { AlertController, IonDatetime } from '@ionic/angular';
-import moment from 'moment';
+import { AlertController } from '@ionic/angular';
+
 
 
 
@@ -78,7 +78,7 @@ export class BookTailorPage implements OnInit {
     if (this.bookingForm.valid) {
       const alert = await this.alertCtrl.create({
         header: 'Booking Confirmed!',
-        message: `Your booking is confirmed for ${moment(this.bookingForm.value.date).format("DD-MMM-YYYY")}`,
+        message: `Your booking is confirmed for ${this.bookingForm.value.date}`,
         buttons: ['OK'],
         backdropDismiss: false,
       });

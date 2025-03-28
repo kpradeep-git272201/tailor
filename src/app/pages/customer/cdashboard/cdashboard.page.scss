@@ -1,57 +1,121 @@
-.hero {
-    text-align: center;
-    padding: 40px;
-    // background: url('/assets/hero-bg.jpg') no-repeat center center/cover;
+
+
+
+
+/* Fix: Remove shadow & upward movement on click */
+.search-container:focus-within {
+  border: 1px solid #ff6600; /* Highlight border */
+  box-shadow: none !important; /* Removes shadow */
+  transform: none !important; /* Prevents movement */
+}
+
+
+
+ion-card {
+  text-align: center;
+  padding: 15px;
+}
+
+ion-footer {
+  text-align: center;
+}
+
+#service {
+  text-align: center;
+  height: 150px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  p {
+    font-size: 1.25rem;
+    color: white;
   }
-  
-  .services {
-    text-align: center;
-    padding: 20px;
-  }
-  
-  ion-card {
-    text-align: center;
-    padding: 15px;
-  }
-  
-  .tailors ion-item {
-    --background: #f9f9f9;
-    border-radius: 10px;
-    margin: 10px 0;
-  }
-  
-  .how-it-works {
-    text-align: center;
-    padding: 20px;
-  }
-  
-  ion-footer {
-    text-align: center;
-  }
-  
-  #service {
-    text-align: center;
-    height: 150px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    box-shadow: 0 4px 6px rgba(0,0,0,0.1);
-    p{
-      font-size: 1.25rem; color: white;
-    }
-  }
-  .with-fabric{
-    background: url('/assets/images/with_fabric.jpeg') no-repeat center center/cover;
-  }
-  .with-out-fabric{
-    background: url('/assets/images/with_out_fabric.jpeg') no-repeat center center/cover;
-  }
-  .alteration{
-    background: url('/assets/images/Alteration.jpg') no-repeat center center/cover;
-  }
-  .stitching{
-    background: url('/assets/images/Stitching.jpg') no-repeat center center/cover;
-  }
-  .measurement{
-    background: url('/assets/images/Measurement.jpg') no-repeat center center/cover;
-  }
+}
+
+.service {
+  --size: 9.938rem;
+  --border-radius: 0.875rem;
+  border: 1px solid;
+}
+.fabric-thumb {
+  --size: 5.938rem;
+  --border-radius: 0.875rem;
+  border: 1px solid;
+}
+.text-service {
+  text-align: center;
+  color: black;
+  font-size: 1.3rem;
+  font-weight: 500;
+  background-color: white;
+  border-radius: 5px;
+}
+
+
+.align-right {
+  display: flex;
+  justify-content: flex-end;
+  align-items: center; /* Ensures vertical alignment */
+  padding: 0px;
+}
+
+ion-card {
+  border-radius: 12px;
+  overflow: hidden;
+}
+
+ion-card-title {
+  color: #333;
+}
+
+ion-button {
+  margin: 10px;
+}
+
+ion-grid {
+  padding: 0px;
+}
+ion-col {
+  padding: 0px;
+}
+
+
+
+h3{
+  margin-top: 0rem !important;
+}
+
+
+
+
+
+
+/* Convert dashes into circular dots */
+
+
+/* Highlight active dot */
+
+
+
+/// Fabric css
+
+
+.section-title {
+  padding-left: 10px;
+}
+
+
+
+.fabric-card {
+  transition: transform 0.3s ease-in-out;
+}
+
+.fabric-card:hover {
+  transform: scale(1.05);
+}
+
+.center-button {
+  display: flex;
+  justify-content: center;
+}

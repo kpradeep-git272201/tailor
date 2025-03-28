@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { AlertService } from 'src/app/services/alert.service';
 import { ApiService } from 'src/app/services/api.service';
+import { TostService } from 'src/app/services/tost.service';
 import { SharedModule } from 'src/app/sharedmodule/sharedmodule.module';
 
 @Component({
@@ -13,7 +14,7 @@ import { SharedModule } from 'src/app/sharedmodule/sharedmodule.module';
 export class ViewBookingsPage implements OnInit {
   bookings:any;
 
-  constructor( private alertService: AlertService,
+  constructor( private tostService: TostService,
       private apiService: ApiService,) { }
   ngOnInit() {
     this.loadBookings();
@@ -29,7 +30,7 @@ export class ViewBookingsPage implements OnInit {
       this.bookings = this.bookings.map((booking:any)=>{  
         return booking.id === bookingId ? { ...booking, status: 'Completed' } : booking
       });
-      this.alertService.showSnackbar('Booking marked as completed!', 'success');
+      this.tostService.presentToast('Booking marked as completed!', 'success');
     // });
   }
 
@@ -38,7 +39,7 @@ export class ViewBookingsPage implements OnInit {
       this.bookings = this.bookings.map((booking:any) =>{ 
         return booking.id === bookingId ? { ...booking, status: 'Cancelled' } : booking
       });
-      this.alertService.showSnackbar('Booking has been cancelled.', 'danger');
+      this.tostService.presentToast('Booking has been cancelled.', 'danger');
     // });
   }
 
