@@ -29,4 +29,8 @@ export class TabsPage {
       this.router.navigate(['/tabs/customer']);
     }
   }
+
+  myTabs(action:any){
+    this.router.navigate(['/tabs/myTabs/'+action]);
+  }
 }

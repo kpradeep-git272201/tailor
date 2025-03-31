@@ -22,6 +22,11 @@ export const routes: Routes = [
           import('../pages/mytabs/tailor/tailor.page').then((m) => m.TailorPage),
       },
       {
+        path: 'tailor/:tailorId', 
+        loadComponent: () =>
+          import('../pages/customer/tailor-profile/tailor-profile.page').then((m) => m.TailorProfilePage),
+      },
+      {
         path: 'order',
         loadComponent: () =>
           import('../pages/customer/order/order.page').then((m) => m.OrderPage),

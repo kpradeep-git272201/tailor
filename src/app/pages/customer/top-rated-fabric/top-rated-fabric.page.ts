@@ -23,7 +23,7 @@ export class TopRatedFabricPage implements OnInit {
       private wfService: WithfabricService,) { }
 
   ngOnInit() {
-    this.fabricMaster = this.wfService.getFabricMasterDate();
+    this.fabricMaster = this.wfService.getFabricMasterData();
     this.updateDisplayedFabrics();
   }
 

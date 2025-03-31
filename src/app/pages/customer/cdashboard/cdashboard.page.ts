@@ -321,6 +321,8 @@ export class CdashboardPage implements OnInit {
   }
 
   getService(action: any) {
-    this.router.navigate(['/tabs/customer/' + action.subUrl]);
+    const path = '/tabs/customer/' + action.subUrl;
+    localStorage.setItem('lastVisitedPage', path);
+    this.router.navigate([path]);
   }
 }

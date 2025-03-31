@@ -7,6 +7,7 @@ import { BookTailorPage } from './book-tailor/book-tailor.page';
 import { WithfabricPage } from './withfabric/withfabric.page';
 import { WithoutfabricPage } from './withoutfabric/withoutfabric.page';
 import { ArticlePage } from './article/article.page';
+import { ArticleDetailPage } from './article-detail/article-detail.page';
 
 const routes: Routes = [
   { path: '', redirectTo: 'dashboard', pathMatch: 'full' },
@@ -17,6 +18,7 @@ const routes: Routes = [
   { path: 'with-fabric', component: WithfabricPage },
   { path: 'with-out-fabric', component: WithoutfabricPage },
   { path: 'with-fabric/:article', component: ArticlePage },
+  { path: 'with-fabric/:article/:articleId', component: ArticleDetailPage }
 ];
 
 @NgModule({

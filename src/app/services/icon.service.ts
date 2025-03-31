@@ -28,7 +28,11 @@ import {
   menuOutline,
   shirtOutline,
   cartOutline,
-  locationOutline
+  locationOutline,
+  chevronDownOutline,
+  closeOutline,
+  shareOutline,
+  heart
 } from 'ionicons/icons';
 
 @Injectable({
@@ -53,7 +57,6 @@ export class IconService {
       createOutline,
       paperPlaneOutline,
       paperPlaneSharp,
-      heartOutline,
       heartSharp,
       archiveOutline,
       archiveSharp,
@@ -69,6 +72,11 @@ export class IconService {
       personOutline,
       menuOutline,
       shirtOutline,
+      chevronDownOutline,
+      closeOutline,
+      shareOutline,
+      heartOutline,
+      heart
     });
   }
 }

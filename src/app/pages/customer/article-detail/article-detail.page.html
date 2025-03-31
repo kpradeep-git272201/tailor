@@ -1,0 +1,86 @@
+<ion-header [translucent]="true">
+  <ion-toolbar color="primary">
+    <ion-buttons slot="start">
+      <ion-back-button
+        defaultHref="/tabs/customer/with-fabric"
+      ></ion-back-button>
+    </ion-buttons>
+    <ion-title *ngIf="fabric && article"
+      >{{ fabric.fabricType }}</ion-title
+    >
+  </ion-toolbar>
+</ion-header>
+
+<ion-content [fullscreen]="true">
+  <div class="search-container">
+    <ion-searchbar
+      [placeholder]="'Search for '"
+      class="custom-searchbar"
+    ></ion-searchbar>
+  </div>
+  <div *ngIf="subArtcles.length > 0">
+    <ngb-carousel
+      #carousel
+      [interval]="2000"
+      [pauseOnFocus]="pauseOnFocus"
+      (slide)="onSlide($event)"
+      [showNavigationArrows]="true"
+      [showNavigationIndicators]="false"
+      class="carousel-container custom-carousel"
+    >
+      <ng-template ngbSlide *ngFor="let subArt of subArtcles">
+        <div class="carousel-slide">
+          <div class="picsum-img-wrapper">
+            <img
+              [src]="subArt.imageUrl"
+              [alt]="subArt.subArticleName"
+              height="245px"
+              width="455px"
+            />
+          </div>
+        </div>
+      </ng-template>
+    </ngb-carousel>
+    <ion-toolbar class="heart-toolbar">
+      <ion-title style="text-align: left;" *ngIf="fabric && article"
+        >Fabric | {{ fabric.fabricType }}</ion-title
+      >
+
+      <ion-buttons slot="end">
+        <ion-button (click)="addToWishList()">
+          <ion-icon
+            id="heart-outline"
+            name="heart"
+            [style.color]="isWishlisted ? 'red' : 'white'"
+            
+            ></ion-icon
+          >
+        </ion-button>
+      </ion-buttons>
+      <ion-buttons slot="end">
+        <ion-button>
+          <ion-icon id="share-outline" name="share-outline"></ion-icon>
+        </ion-button>
+      </ion-buttons>
+    </ion-toolbar>
+  </div>
+  <ion-grid>
+    <ion-row>
+      <ion-col>Article :</ion-col>
+      <ion-col class="value">{{article.articleName}}</ion-col>
+    </ion-row>
+    <ion-row>
+      <ion-col>Quantitiy :</ion-col>
+      <ion-col class="value">1</ion-col>
+    </ion-row>
+    
+    <ion-row>
+      <ion-col>Color :</ion-col>
+      <ion-col class="value">Select Color</ion-col>
+    </ion-row>
+    <ion-row>
+      <ion-col>Price :</ion-col>
+      <ion-col class="value">300/-</ion-col>
+    </ion-row>
+  </ion-grid>
+</ion-content>

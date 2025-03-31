@@ -116,7 +116,7 @@
 }
 
 ion-content {
-  --background: #e0f2f1;
+  --background: var(--ion-content-bg-color);
   // --background: url('/assets/images/background/Background5.jpg') no-repeat center center / cover !important;
   // background-attachment: fixed !important;  /* Keeps the background fixed */
 }
@@ -301,4 +301,11 @@ ion-content {
     color: black;
     margin-top: 0.188rem;
   }
+}
+
+ion-header {
+  --box-shadow: none !important;
+  --border-width: 0 !important;
+  box-shadow: none !important;
+  border-bottom: none !important;
 }

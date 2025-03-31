@@ -1,0 +1,20 @@
+.heart-toolbar{
+    text-align: right;
+    --background: var(--ion-content-bg-color);
+    --color: black;
+    #heart-outline{
+        // margin-right: 10px; 
+        font-size: 30px; 
+        // margin-top: 8px;
+    }
+    #share-outline{
+        margin-right: 10px; 
+        font-size: 30px;
+        margin-bottom: 3px;
+    }
+}
+
+ion-grid{
+    padding: 0rem;
+    padding-left: 10px;
+}
