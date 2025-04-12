@@ -1,18 +1,5 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { SharedModule } from 'src/app/sharedmodule/sharedmodule.module';
-import { addIcons } from 'ionicons';
-import {
-  person,
-  location,
-  personOutline,
-  settingsOutline,
-  logOutOutline,
-  cut,
-  shirt,
-  search,
-  calendar,
-  checkmarkCircle,
-} from 'ionicons/icons';
 import { MenuComponent } from 'src/app/components/menu/menu.component';
 import { MatDialog } from '@angular/material/dialog';
 import { Router } from '@angular/router';
@@ -72,80 +59,80 @@ export class CdashboardPage implements OnInit {
 
 
 
-  tailors = [
-    {
-      id: 1,
-      name: 'John Doe',
-      specialization: 'Bridal Wear',
-      rating: '4.9',
-      image: '/assets/tailorImg/tailor1.jpg',
-      experience: 10,
-      portfolio: [
-        'assets/portfolio/portfolio1.png',
-        'assets/portfolio/portfolio2.png',
-      ],
-      services: [
-        { name: 'Bridal Dress Stitching', price: 150 },
-        { name: 'Alterations', price: 50 },
-      ],
-      reviews: [
-        { customer: 'Emma Watson', comment: 'Great service!', rating: 5 },
-        {
-          customer: 'John Smith',
-          comment: 'Perfect fit, highly recommended!',
-          rating: 4.8,
-        },
-      ],
-    },
-    {
-      id: 2,
-      name: 'Emma Smith',
-      specialization: 'Casual Wear',
-      rating: '4.7',
-      image: '/assets/tailorImg/tailor2.png',
-      experience: 10,
-      portfolio: [
-        'assets/portfolio/portfolio1.png',
-        'assets/portfolio/portfolio2.png',
-      ],
-      services: [
-        { name: 'Bridal Dress Stitching', price: 150 },
-        { name: 'Alterations', price: 50 },
-      ],
-      reviews: [
-        { customer: 'Emma Watson', comment: 'Great service!', rating: 5 },
-        {
-          customer: 'John Smith',
-          comment: 'Perfect fit, highly recommended!',
-          rating: 4.8,
-        },
-      ],
-    },
-    {
-      id: 3,
-      name: 'Michael Brown',
-      specialization: 'Formal Wear',
-      rating: '4.8',
-      image: '/assets/tailorImg/tailor1.jpg',
-      experience: 10,
-      portfolio: [
-        'assets/portfolio/portfolio1.png',
-        'assets/portfolio/portfolio2.png',
-      ],
-      services: [
-        { name: 'Bridal Dress Stitching', price: 150 },
-        { name: 'Alterations', price: 50 },
-      ],
-      reviews: [
-        { customer: 'Emma Watson', comment: 'Great service!', rating: 5 },
-        {
-          customer: 'John Smith',
-          comment: 'Perfect fit, highly recommended!',
-          rating: 4.8,
-        },
-      ],
-    },
-  ];
+  // tailors = [
+  //   {
+  //     id: 1,
+  //     name: 'John Doe',
+  //     specialization: 'Bridal Wear',
+  //     rating: '4.9',
+  //     image: '/assets/tailorImg/tailor1.jpg',
+  //     experience: 10,
+  //     portfolio: [
+  //       'assets/portfolio/portfolio1.png',
+  //       'assets/portfolio/portfolio2.png',
+  //     ],
+  //     services: [
+  //       { name: 'Bridal Dress Stitching', price: 150 },
+  //       { name: 'Alterations', price: 50 },
+  //     ],
+  //     reviews: [
+  //       { customer: 'Emma Watson', comment: 'Great service!', rating: 5 },
+  //       {
+  //         customer: 'John Smith',
+  //         comment: 'Perfect fit, highly recommended!',
+  //         rating: 4.8,
+  //       },
+  //     ],
+  //   },
+  //   {
+  //     id: 2,
+  //     name: 'Emma Smith',
+  //     specialization: 'Casual Wear',
+  //     rating: '4.7',
+  //     image: '/assets/tailorImg/tailor2.png',
+  //     experience: 10,
+  //     portfolio: [
+  //       'assets/portfolio/portfolio1.png',
+  //       'assets/portfolio/portfolio2.png',
+  //     ],
+  //     services: [
+  //       { name: 'Bridal Dress Stitching', price: 150 },
+  //       { name: 'Alterations', price: 50 },
+  //     ],
+  //     reviews: [
+  //       { customer: 'Emma Watson', comment: 'Great service!', rating: 5 },
+  //       {
+  //         customer: 'John Smith',
+  //         comment: 'Perfect fit, highly recommended!',
+  //         rating: 4.8,
+  //       },
+  //     ],
+  //   },
+  //   {
+  //     id: 3,
+  //     name: 'Michael Brown',
+  //     specialization: 'Formal Wear',
+  //     rating: '4.8',
+  //     image: '/assets/tailorImg/tailor1.jpg',
+  //     experience: 10,
+  //     portfolio: [
+  //       'assets/portfolio/portfolio1.png',
+  //       'assets/portfolio/portfolio2.png',
+  //     ],
+  //     services: [
+  //       { name: 'Bridal Dress Stitching', price: 150 },
+  //       { name: 'Alterations', price: 50 },
+  //     ],
+  //     reviews: [
+  //       { customer: 'Emma Watson', comment: 'Great service!', rating: 5 },
+  //       {
+  //         customer: 'John Smith',
+  //         comment: 'Perfect fit, highly recommended!',
+  //         rating: 4.8,
+  //       },
+  //     ],
+  //   },
+  // ];
 
   ourService: any = [];
 
@@ -157,18 +144,8 @@ export class CdashboardPage implements OnInit {
     private wfService: WithfabricService,
     private commonService: CommonService,
   ) {
-    addIcons({
-      cut,
-      shirt,
-      search,
-      calendar,
-      location,
-      checkmarkCircle,
-      personOutline,
-      settingsOutline,
-      logOutOutline,
-      person,
-    });
+    this.iconService.registerIcons();
+
   }
 
   ngOnInit() {
@@ -323,6 +300,12 @@ export class CdashboardPage implements OnInit {
   getService(action: any) {
     const path = '/tabs/customer/' + action.subUrl;
     localStorage.setItem('lastVisitedPage', path);
-    this.router.navigate([path]);
+    this.router.navigate([path],{
+      queryParams: {
+        navigatedData: JSON.stringify({
+          serviceType: action.serviceType
+        })
+      }
+    });
   }
 }

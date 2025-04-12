@@ -15,7 +15,9 @@ export class ChartModelPage implements OnInit {
   @Input() title: string | any;
   constructor(private modalController: ModalController,
     private iconService: IconService
-  ) { }
+  ) { 
+    this.iconService.registerIcons();
+  }
 
   ngOnInit() {
   }

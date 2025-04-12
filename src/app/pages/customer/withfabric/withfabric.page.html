@@ -61,7 +61,7 @@
   </div>
 
   <div class="top-rated" style="padding-bottom: 20px;">
-    <h3 class="section-title">Fabric By Material</h3>
+    <h3 class="section-title fs-subtitle">Fabric By Material</h3>
     <ion-grid class="fabric-grid" *ngIf="fabricMaster.length" style="padding: 0rem;">
       <ion-row>
         <ion-col
@@ -73,7 +73,7 @@
           <ion-card class="fabric-card">
             <img [src]="fabric.imageUrl" [alt]="fabric.fabricType" />
             <ion-card-header>
-              <ion-card-title>{{ fabric.fabricType }}</ion-card-title>
+              <ion-card-title class="font-16">{{ fabric.fabricType }}</ion-card-title>
             </ion-card-header>
             <!-- <ion-card-content>
               <p>{{ fabric.description }}</p>
@@ -98,7 +98,7 @@
   </div>
 
   <div class="top-rated" style="padding-bottom: 20px;">
-    <h3 class="section-title">Fabrics By Texture</h3>
+    <h3 class="section-title fs-subtitle">Fabrics By Texture</h3>
     <ion-grid class="fabric-grid" *ngIf="displayedFabricsByTex.length" style="padding: 0rem;">
       <ion-row>
         <ion-col
@@ -110,12 +110,8 @@
           <ion-card class="fabric-card">
             <img [src]="fabric.imageUrl" [alt]="fabric.fabricType" />
             <ion-card-header>
-              <ion-card-title>{{ fabric.fabricType }}</ion-card-title>
+              <ion-card-title class="font-16">{{ fabric.fabricType }}</ion-card-title>
             </ion-card-header>
-            <!-- <ion-card-content>
-              <p>{{ fabric.description }}</p>
-              <ion-button expand="full"> View Details </ion-button>
-            </ion-card-content> -->
           </ion-card>
         </ion-col>
       </ion-row>
@@ -135,7 +131,7 @@
   </div>
 
   <div class="top-rated">
-    <h3 class="section-title">Fabrics By Color</h3>
+    <h3 class="section-title fs-subtitle">Fabrics By Color</h3>
     <ion-grid class="fabric-grid">
       <ion-row>
         <ion-col
@@ -151,7 +147,7 @@
             ></div>
   
             <ion-card-header class="text-center">
-              <ion-card-title>{{ color.colorName }}</ion-card-title>
+              <ion-card-title class="font-16">{{ color.colorName }}</ion-card-title>
             </ion-card-header>
   
             <!-- <ion-card-content>

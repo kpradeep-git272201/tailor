@@ -4,7 +4,7 @@ import { ViewChild } from '@angular/core';
 import { NgbCarousel, NgbSlideEvent, NgbSlideEventSource } from '@ng-bootstrap/ng-bootstrap';
 import { CommonService } from 'src/app/services/common.service';
 import { WithfabricService } from 'src/app/services/withfabric.service';
-import { Router } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 
 @Component({
   selector: 'app-withfabric',
@@ -71,14 +71,23 @@ export class WithfabricPage implements OnInit {
   masterMenu: any[] | any;
   isTyping: boolean = false;
   colorMaster:any=[];
+  navigatedData:any;
   constructor(private commonService: CommonService, 
     private wfService: WithfabricService,
-    private router: Router) {
+    private router: Router,
+    private route: ActivatedRoute) {
    
    
   }
 
   ngOnInit() {
+    this.route.queryParams.subscribe(params => {
+      const navigatedData = params['navigatedData'];
+      if (navigatedData) {
+        this.navigatedData = JSON.parse(navigatedData);
+        console.log(this.navigatedData.serviceType);
+      }
+    });
     this.startAutoTyping();
     this.masterBrandData=this.commonService.getMasterBrand();
     this.masterMenu=this.wfService.getMasterMenu();
@@ -166,7 +175,10 @@ export class WithfabricPage implements OnInit {
   goToArticle(article:any){
     this.router.navigate(['/tabs/customer/with-fabric', article.articleName],{
       queryParams: {
-        article: JSON.stringify(article)
+        navigatedData: JSON.stringify({
+          serviceType: this.navigatedData.serviceType,
+          article: article
+        })
       }
     });
   }

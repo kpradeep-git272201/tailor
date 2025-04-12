@@ -42,20 +42,14 @@
       </ng-template>
     </ngb-carousel>
     <ion-toolbar class="heart-toolbar">
-      <ion-title style="text-align: left;" *ngIf="fabric && article"
-        >Fabric | {{ fabric.fabricType }}</ion-title
-      >
-
       <ion-buttons slot="end">
         <ion-button (click)="addToWishList()">
           <ion-icon
             id="heart-outline"
-            name="heart"
-            [style.color]="isWishlisted ? 'red' : 'white'"
-            
-            ></ion-icon
-          >
-        </ion-button>
+            name="heart-outline"
+            [style.color]="isWishlisted ? 'red' : ''"
+          ></ion-icon
+        ></ion-button>
       </ion-buttons>
       <ion-buttons slot="end">
         <ion-button>
@@ -63,16 +57,55 @@
         </ion-button>
       </ion-buttons>
     </ion-toolbar>
+
+    <!-- Select Color -->
+    <ion-row>
+      <ion-col class="colorText">
+        <ion-text style="padding-left: 0.625rem;" class="fs-subtitle">Color</ion-text>
+      </ion-col>
+      <ion-col class="sizeChart">
+        <ion-text (click)="openSizeChartModal()" style="padding-right: 0.625rem; color: blue;"
+         class="fs-subtitle">Size Chart</ion-text>
+      </ion-col>
+    </ion-row>
+    
+    
+    <div class="category-list">
+      <div class="category-item" *ngFor="let color of colorMaster">
+        <ion-thumbnail class="articles" (click)="selectColor(color)">
+          <div class="color-circle"
+            [style.background-color]="color.hexCode">
+            <ion-icon *ngIf="selectedColor?.hexCode === color.hexCode"
+              name="checkmark-circle-outline"
+              class="check-icon"
+            ></ion-icon>
+          </div>
+        </ion-thumbnail>
+        <p class="thumbnail-text" [style.color]="selectedColor?.hexCode === color.hexCode ? color.hexCode : ''">
+          {{ color.colorName }}
+        </p>
+      </div>
+    </div>
+    
+
   </div>
   <ion-grid>
+    <ion-row>
+      <ion-col>Fabric :</ion-col>
+      <ion-col class="value">{{fabric.fabricType}}</ion-col>
+    </ion-row>
     <ion-row>
       <ion-col>Article :</ion-col>
       <ion-col class="value">{{article.articleName}}</ion-col>
     </ion-row>
     <ion-row>
       <ion-col>Quantitiy :</ion-col>
-      <ion-col class="value">1</ion-col>
-    </ion-row>
+      <ion-col class="value">
+        <ion-icon class="icon-md" style="margin-bottom: -0.375rem;" name="remove-circle-outline" (click)="removeQuntity()"></ion-icon>
+        <ion-text style="padding-left: 0.625rem; padding-right: 0.625rem;">{{quntity}}</ion-text>
+        <ion-icon class="icon-md" style="margin-bottom:  -0.375rem;" name="add-circle-outline" (click)="addQuntity()"></ion-icon>
+        </ion-col>
+      </ion-row>
     
     <ion-row>
       <ion-col>Color :</ion-col>
@@ -83,4 +116,16 @@
       <ion-col class="value">300/-</ion-col>
     </ion-row>
   </ion-grid>
+
+  <ion-button expand="block" class="add-to-cart" shape="round">
+    <ion-icon name="cloud-upload-outline" slot="start"></ion-icon>
+    Add To Cart
+  </ion-button>
+  
+  <ion-button (click)="bookTailor()" expand="block" shape="round" class="book-tailor">
+    <ion-icon name="reader-outline" slot="start"></ion-icon>
+    Book Tailor
+  </ion-button>
+
+
 </ion-content>

@@ -40,7 +40,7 @@ export class ArticlePage implements OnInit {
   allFabricsLoaded = false;
   initialDisplayCount = 6;
   loadMoreCount = 20;
-
+  navigatedData:any;
 
   constructor(
     private route: ActivatedRoute,
@@ -58,8 +58,9 @@ export class ArticlePage implements OnInit {
     this.fabricByArticle = this.wfService.getFabricMasterData();
     this.colorClassificatioMaster=this.commonService.getColorClassificatioMaster();
     this.route.queryParams.subscribe((params) => {
-      if (params['article']) {
-        this.article = JSON.parse(params['article']);
+      if (params['navigatedData']) {
+        this.navigatedData = JSON.parse(params['navigatedData']);
+        this.article=this.navigatedData.article;
         // console.log("article", JSON.stringify(this.article));
         // this.fabricByArticle=fabricMaster.filter((article)=>{
         //   return article.articleIds.includes(this.article);
@@ -131,8 +132,11 @@ export class ArticlePage implements OnInit {
   selectedFabric(fabric:any){
     this.router.navigate([`/tabs/customer/with-fabric/${this.article.articleName}`,fabric.fabricId],{
       queryParams: {
-        article: JSON.stringify(this.article),
-        fabric: JSON.stringify(fabric)
+        navigatedData: JSON.stringify({
+          serviceType: this.navigatedData.serviceType,
+          article: this.navigatedData.article,
+          fabric: fabric
+        })
       }
     });
   }

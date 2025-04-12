@@ -23,7 +23,9 @@ export class TopRatedTailorPage implements OnInit {
         private tailorService: TailorService,
         private iconService: IconService,
         private router: Router
-  ) {}
+  ) {
+    this.iconService.registerIcons();
+  }
 
   ngOnInit() {
     this.allTailors = this.tailorService.getTopRatedTailor();

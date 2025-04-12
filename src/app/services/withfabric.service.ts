@@ -383,19 +383,19 @@ export class WithfabricService {
       },
       {
         "colorId": 5,
-        "colorName": "Black",
-        "hexCode": "#000000",
-        "category": "Neutral",
-        "description": "A timeless and sophisticated color associated with power and elegance.",
-        "fabricIds": [109, 110]
-      },
-      {
-        "colorId": 6,
         "colorName": "White",
         "hexCode": "#FFFFFF",
         "category": "Neutral",
         "description": "A pure and clean color representing simplicity and peace.",
         "fabricIds": [101, 103]
+      },
+      {
+        "colorId": 6,
+        "colorName": "Black",
+        "hexCode": "#000000",
+        "category": "Neutral",
+        "description": "A timeless and sophisticated color associated with power and elegance.",
+        "fabricIds": [109, 110]
       },
       {
         "colorId": 7,

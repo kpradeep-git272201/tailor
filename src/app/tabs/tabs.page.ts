@@ -14,7 +14,7 @@ export class TabsPage {
   appRole: any;
 
   constructor(private router: Router, private iconService: IconService) {
-  
+    this.iconService.registerIcons();
   }
 
   ionViewWillEnter() {

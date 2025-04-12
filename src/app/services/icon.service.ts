@@ -1,6 +1,14 @@
 import { Injectable } from '@angular/core';
 import { addIcons } from 'ionicons';
 import {
+  cut,
+  shirt,
+  search,
+  calendar,
+  location,
+  checkmarkCircle,
+  settingsOutline,
+  person,
   mailOutline,
   appsOutline,
   homeOutline,
@@ -11,7 +19,6 @@ import {
   createOutline,
   paperPlaneOutline,
   paperPlaneSharp,
-  heartOutline,
   heartSharp,
   archiveOutline,
   archiveSharp,
@@ -32,7 +39,12 @@ import {
   chevronDownOutline,
   closeOutline,
   shareOutline,
-  heart
+  heartOutline,
+  checkboxOutline,
+  checkmarkCircleOutline,
+  addCircleOutline,
+  removeCircleOutline,
+  barChartOutline
 } from 'ionicons/icons';
 
 @Injectable({
@@ -40,11 +52,21 @@ import {
 })
 export class IconService {
   constructor() {
-    this.registerIcons();
   }
 
-  private registerIcons() {
+  registerIcons() {
     addIcons({
+      barChartOutline,
+      cut,
+      shirt,
+      search,
+      calendar,
+      location,
+      checkmarkCircle,
+      settingsOutline,
+      person,
+      checkmarkCircleOutline,
+      checkboxOutline,
       locationOutline,
       cartOutline,
       mailOutline,
@@ -76,7 +98,8 @@ export class IconService {
       closeOutline,
       shareOutline,
       heartOutline,
-      heart
+      addCircleOutline,
+      removeCircleOutline
     });
   }
 }

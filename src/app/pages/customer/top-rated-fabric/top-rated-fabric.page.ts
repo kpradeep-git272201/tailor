@@ -20,7 +20,9 @@ export class TopRatedFabricPage implements OnInit {
 
 
   constructor(  private iconService: IconService,
-      private wfService: WithfabricService,) { }
+      private wfService: WithfabricService,) { 
+        this.iconService.registerIcons();
+      }
 
   ngOnInit() {
     this.fabricMaster = this.wfService.getFabricMasterData();

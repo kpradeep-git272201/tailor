@@ -49,7 +49,7 @@
 
 
   <div class="top-rated" style="padding-bottom: 20px;">
-    <h3 class="section-title">Fabric By Article</h3>
+    <h3 class="section-title fs-subtitle">Fabric By Article</h3>
     <ion-grid class="fabric-grid" *ngIf="displayedFabrics.length" style="padding: 0rem;">
       <ion-row>
         <ion-col
@@ -61,7 +61,7 @@
           <ion-card class="fabric-card" (click)="selectedFabric(fabric)">
             <img [src]="fabric.imageUrl" [alt]="fabric.fabricType" />
             <ion-card-header>
-              <ion-card-title>{{ fabric.fabricType }}</ion-card-title>
+              <ion-card-title class="font-16">{{ fabric.fabricType }}</ion-card-title>
             </ion-card-header>
           </ion-card>
         </ion-col>
