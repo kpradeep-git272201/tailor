@@ -4,7 +4,7 @@ import { ViewChild } from '@angular/core';
 import { NgbCarousel, NgbSlideEvent, NgbSlideEventSource } from '@ng-bootstrap/ng-bootstrap';
 import { CommonService } from 'src/app/services/common.service';
 import { WithfabricService } from 'src/app/services/withfabric.service';
-import { Router } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 
 @Component({
   selector: 'app-withfabric',
@@ -19,13 +19,24 @@ export class WithfabricPage implements OnInit {
 	pauseOnIndicator = false;
 	pauseOnHover = true;
 	pauseOnFocus = true;
-  displayedFabrics: any = [];
+  displayedFabricsByMat: any = [];
+  displayedFabricsByTex: any = [];
+  displayedColors: any = [];
   showAllFabric = false;
-  allFabricsLoaded = false;
-  fabricMaster: any = [];
-  initialDisplayCount = 6;
-  loadMoreCount = 20;
 
+  allFabricsLoadedByMat = false;
+  allFabricsLoadedByTex = false;
+  allColorLoaded = false;
+  fabricMaster: any = [];
+ 
+
+  
+  initDisplayCountFabByMat=6;
+  initialDisplayCountByTex = 6;
+  initialDisplayCountColor = 6;
+  loadMoreCountFabByMat = 20;
+  loadMoreCountByTex = 20;
+  loadMoreCountColor = 20;
 
 
 	@ViewChild('carousel', { static: true }) carousel: NgbCarousel | any;
@@ -58,23 +69,36 @@ export class WithfabricPage implements OnInit {
   interval: any;
   masterBrandData: any[] | any;
   masterMenu: any[] | any;
-  FabricMaster: any=[];
   isTyping: boolean = false;
   colorMaster:any=[];
+  navigatedData:any;
   constructor(private commonService: CommonService, 
     private wfService: WithfabricService,
-    private router: Router) {
+    private router: Router,
+    private route: ActivatedRoute) {
    
    
   }
 
   ngOnInit() {
+    this.route.queryParams.subscribe(params => {
+      const navigatedData = params['navigatedData'];
+      if (navigatedData) {
+        this.navigatedData = JSON.parse(navigatedData);
+        console.log(this.navigatedData.serviceType);
+      }
+    });
     this.startAutoTyping();
     this.masterBrandData=this.commonService.getMasterBrand();
     this.masterMenu=this.wfService.getMasterMenu();
-    this.FabricMaster = this.wfService.getFabricMasterDate();
+    this.fabricMaster = this.wfService.getFabricMasterData();
     this.colorMaster = this.wfService.colorClassificationMaster();
     this.filteredItems = this.masterMenu;
+
+    this.updateDisplayedFabricsByMaterail();
+    this.updateDisplayedFabricsByTex();
+    this.updateDisplayedColors();
+
   }
 
   ngOnDestroy() {
@@ -151,19 +175,44 @@ export class WithfabricPage implements OnInit {
   goToArticle(article:any){
     this.router.navigate(['/tabs/customer/with-fabric', article.articleName],{
       queryParams: {
-        article: JSON.stringify(article)
+        navigatedData: JSON.stringify({
+          serviceType: this.navigatedData.serviceType,
+          article: article
+        })
       }
     });
   }
 
-  updateDisplayedFabrics() {
-    const currentDisplayCount = this.displayedFabrics.length;
-    const nextDisplayCount = currentDisplayCount + (currentDisplayCount === 0 ? this.initialDisplayCount : this.loadMoreCount);
-    this.displayedFabrics = this.fabricMaster.slice(0, nextDisplayCount);
-    this.allFabricsLoaded = this.displayedFabrics.length >= this.fabricMaster.length;
+  loadMoreFabrics() {
+    this.updateDisplayedFabricsByMaterail();
   }
 
-  loadMoreFabrics() {
-    this.updateDisplayedFabrics();
+  updateDisplayedFabricsByMaterail() {
+    const currentDisplayCountColor = this.displayedFabricsByMat.length;
+    const nextDisplayCount = currentDisplayCountColor + (currentDisplayCountColor === 0 ? this.initDisplayCountFabByMat : this.loadMoreCountFabByMat);
+    this.displayedFabricsByMat = this.fabricMaster.slice(0, nextDisplayCount);
+    this.allFabricsLoadedByMat = this.displayedFabricsByMat.length >= this.fabricMaster.length;
+  }
+
+  loadMoreFabricsByTex() {
+    this.updateDisplayedFabricsByTex();
+  }
+
+  updateDisplayedFabricsByTex() {
+    const currentDisplayCountColor = this.displayedFabricsByTex.length;
+    const nextDisplayCount = currentDisplayCountColor + (currentDisplayCountColor === 0 ? this.initialDisplayCountByTex : this.loadMoreCountByTex);
+    this.displayedFabricsByTex = this.fabricMaster.slice(0, nextDisplayCount);
+    this.allFabricsLoadedByTex = this.displayedFabricsByTex.length >= this.fabricMaster.length;
+  }
+
+  loadMoreColors() {
+    this.updateDisplayedColors();
+  }
+
+  updateDisplayedColors() {
+    const currentDisplayCount = this.displayedColors.length;
+    const nextDisplayCount = currentDisplayCount + (currentDisplayCount === 0 ? this.initialDisplayCountColor : this.loadMoreCountColor);
+    this.displayedColors = this.colorMaster.slice(0, nextDisplayCount);
+    this.allColorLoaded = this.displayedColors.length >= this.colorMaster.length;
   }
 }

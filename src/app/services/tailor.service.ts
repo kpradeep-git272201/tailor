@@ -10,6 +10,7 @@ export class TailorService {
   getTopRatedTailor() {
     return [
       {
+        tailorId: 100,
         imageUrl: "assets/images/tailors/tailor1.jpg",
         name: "Rahul Kumar",
         experience: 8,
@@ -18,6 +19,7 @@ export class TailorService {
         distance: 2.5
       },
       {
+        tailorId: 101,
         imageUrl: "assets/images/tailors/tailor2.jpg",
         name: "Priya Sharma",
         experience: 5,
@@ -26,6 +28,7 @@ export class TailorService {
         distance: 3.1
       },
       {
+        tailorId: 102,
         imageUrl: "assets/images/tailors/tailor3.jpg",
         name: "Amit Verma",
         experience: 10,
@@ -34,6 +37,7 @@ export class TailorService {
         distance: 1.8
       },
       {
+        tailorId: 103,
         imageUrl: "assets/images/tailors/tailor1.jpg",
         name: "Neha Kapoor",
         experience: 7,
@@ -42,6 +46,7 @@ export class TailorService {
         distance: 4.2
       },
       {
+        tailorId: 104,
         imageUrl: "assets/images/tailors/tailor2.jpg",
         name: "Vikram Singh",
         experience: 6,
@@ -50,6 +55,7 @@ export class TailorService {
         distance: 3.0
       },
       {
+        tailorId: 105,
         imageUrl: "assets/images/tailors/tailor3.jpg",
         name: "Anjali Mehta",
         experience: 9,
@@ -58,6 +64,7 @@ export class TailorService {
         distance: 2.0
       },
       {
+        tailorId: 106,
         imageUrl: "assets/images/tailors/tailor2.jpg",
         name: "Sandeep Yadav",
         experience: 12,
@@ -66,6 +73,7 @@ export class TailorService {
         distance: 1.5
       },
       {
+        tailorId: 107,
         imageUrl: "assets/images/tailors/tailor1.jpg",
         name: "Pooja Chauhan",
         experience: 4,
@@ -75,5 +83,6 @@ export class TailorService {
       }
     ];
   }
+
   
 }

@@ -3,6 +3,7 @@ import { TailorService } from 'src/app/services/tailor.service';
 import { SharedModule } from 'src/app/sharedmodule/sharedmodule.module';
 import { IconService } from 'src/app/services/icon.service';
 import { IonCardSubtitle } from "@ionic/angular/standalone";
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-top-rated-tailor',
@@ -20,8 +21,11 @@ export class TopRatedTailorPage implements OnInit {
 
   constructor(
         private tailorService: TailorService,
-        private iconService: IconService
-  ) {}
+        private iconService: IconService,
+        private router: Router
+  ) {
+    this.iconService.registerIcons();
+  }
 
   ngOnInit() {
     this.allTailors = this.tailorService.getTopRatedTailor();
@@ -36,5 +40,10 @@ export class TopRatedTailorPage implements OnInit {
 
   get showLoadMoreButton(): boolean {
     return this.displayedTailors.length < this.allTailors.length;
+  }
+
+  viewTailor(tailor:any){
+    console.log(JSON.stringify(tailor));
+    this.router.navigate(["/tailor", tailor.tailorId]);
   }
 }

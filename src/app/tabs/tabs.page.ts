@@ -14,7 +14,7 @@ export class TabsPage {
   appRole: any;
 
   constructor(private router: Router, private iconService: IconService) {
-  
+    this.iconService.registerIcons();
   }
 
   ionViewWillEnter() {
@@ -28,5 +28,9 @@ export class TabsPage {
       this.appRole = "defaultRole";
       this.router.navigate(['/tabs/customer']);
     }
+  }
+
+  myTabs(action:any){
+    this.router.navigate(['/tabs/myTabs/'+action]);
   }
 }

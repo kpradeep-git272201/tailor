@@ -3,61 +3,40 @@
     <ion-buttons slot="start">
       <ion-back-button defaultHref="/tabs/customer"></ion-back-button>
     </ion-buttons>
-    <ion-title>{{ tailor?.name }}</ion-title>
+    <ion-title *ngIf="tailor">{{ tailor?.name }}</ion-title>
   </ion-toolbar>
 </ion-header>
 
-<ion-content [fullscreen]="true">
-   <!-- Profile Section -->
-   <div class="profile">
-    <ion-avatar>
-      <img [src]="tailor?.image" alt="Tailor Profile">
-    </ion-avatar>
-    <h2>{{ tailor?.name }}</h2>
-    <p>{{ tailor?.specialization }}</p>
-    <ion-badge color="success">{{ tailor?.rating }} ⭐</ion-badge>
-    <p><strong>Experience:</strong> {{ tailor?.experience }} years</p>
-  </div>
-
-  <!-- Portfolio Section -->
-  <div class="portfolio">
-    <h3 style="padding-left: 10px;">Portfolio</h3>
-    <ion-grid>
-      <ion-row>
-        <ion-col size="6" *ngFor="let img of tailor?.portfolio">
-          <ion-img [src]="img"></ion-img>
-        </ion-col>
-      </ion-row>
-    </ion-grid>
-  </div>
-
-  <!-- Services Offered -->
-  <div class="services">
-    <h3>Services & Pricing</h3>
-    <ion-list>
-      <ion-item *ngFor="let service of tailor?.services">
-        <ion-label>
-          <h4>{{ service.name }}</h4>
-          <p>Price: ₹{{ service.price }}</p>
-        </ion-label>
-      </ion-item>
-    </ion-list>
-  </div>
-
-  <!-- Customer Reviews -->
-  <div class="reviews">
-    <h3>Customer Reviews</h3>
-    <ion-list>
-      <ion-item *ngFor="let review of tailor?.reviews">
-        <ion-label>
-          <h4>{{ review.customer }}</h4>
-          <p>{{ review.comment }}</p>
-          <ion-badge color="warning">{{ review.rating }} ⭐</ion-badge>
-        </ion-label>
-      </ion-item>
-    </ion-list>
-  </div>
-
+<ion-content [fullscreen]="true" *ngIf="tailor">
+  <ion-card class="tailor-profile-card">
+    <ion-card-header class="image-container">
+      <img [src]="tailor.imageUrl" [alt]="tailor.name" />
+    </ion-card-header>
+  
+    <ion-card-content>
+      <ion-grid>
+        <ion-row>
+          <ion-col size="4" style="text-align: left;" ><strong>Expertise :</strong></ion-col>
+          <ion-col size="8" style="text-align: right;">{{ tailor.expertise }}</ion-col>
+        </ion-row>
+        <ion-row>
+          <ion-col size="4" style="text-align: left;" ><strong>Experience :</strong></ion-col>
+          <ion-col size="8" style="text-align: right;">{{ tailor.experience }} years</ion-col>
+        </ion-row>
+        <ion-row>
+          <ion-col size="4" style="text-align: left;" ><strong>Rating :</strong></ion-col>
+          <ion-col size="8" style="text-align: right;">
+            <ion-badge color="success">{{ tailor.rating }} ⭐</ion-badge>
+          </ion-col>
+        </ion-row>
+        <ion-row>
+          <ion-col size="4" style="text-align: left;" ><strong>Distance :</strong></ion-col>
+          <ion-col size="8" style="text-align: right;">{{ tailor.distance }} km away</ion-col>
+        </ion-row>
+      </ion-grid>
+    </ion-card-content>
+  </ion-card>
+  
   <!-- Book Now Button -->
   <!-- routerLink="/book-tailor/{{ tailor?.id }}" -->
   <div class="book-btn">

@@ -40,15 +40,19 @@ import {
   IonDatetimeButton,
   IonModal,
   IonTextarea,
-  IonMenu
+  IonMenu,
+  IonSpinner,
+  IonChip, 
+  IonCardSubtitle
 } from '@ionic/angular/standalone';
 import { IonButton } from '@ionic/angular/standalone';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { NgbPaginationModule, NgbAlertModule, NgbCarouselModule } from '@ng-bootstrap/ng-bootstrap';
 import { NgbAlert } from '@ng-bootstrap/ng-bootstrap';
+import { ModalController } from '@ionic/angular';
 @NgModule({
   declarations: [],
-  providers:[],
+  providers: [ModalController],
   imports: [
     IonContent,
     IonHeader,
@@ -97,7 +101,10 @@ import { NgbAlert } from '@ng-bootstrap/ng-bootstrap';
     NgbPaginationModule,
     NgbAlertModule,
     NgbAlert,
-    NgbCarouselModule
+    NgbCarouselModule,
+    IonSpinner,
+    IonChip, 
+    IonCardSubtitle
   ],
   exports: [
     IonContent,
@@ -147,7 +154,10 @@ import { NgbAlert } from '@ng-bootstrap/ng-bootstrap';
     NgbPaginationModule, 
     NgbAlertModule,
     NgbAlert,
-    NgbCarouselModule
+    NgbCarouselModule,
+    IonSpinner,
+    IonChip, 
+    IonCardSubtitle
   ]
 })
 export class SharedModule { }

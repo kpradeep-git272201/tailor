@@ -31,6 +31,22 @@ export const routes: Routes = [
   {
     path: 'cart',
     loadComponent: () => import('./pages/customer/cart/cart.page').then( m => m.CartPage)
+  },
+  {
+    path: 'chart-model',
+    loadComponent: () => import('./model/chart-model/chart-model.page').then( m => m.ChartModelPage)
+  },
+  {
+    path: 'filter-model',
+    loadComponent: () => import('./model/filter-model/filter-model.page').then( m => m.FilterModelPage)
+  },
+  {
+    path: 'generic-model',
+    loadComponent: () => import('./model/generic-model/generic-model.page').then( m => m.GenericModelPage)
+  },
+  {
+    path: 'article-detail',
+    loadComponent: () => import('./pages/customer/article-detail/article-detail.page').then( m => m.ArticleDetailPage)
   }
 
 

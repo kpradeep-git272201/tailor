@@ -43,7 +43,6 @@
     >
       <ng-template ngbSlide *ngFor="let brand of masterBrandData">
         <div class="carousel-slide">
-          <!-- Image -->
           <div class="picsum-img-wrapper">
             <img
               [src]="brand.logoUrl"
@@ -52,7 +51,6 @@
               width="455px"
             />
           </div>
-          <!-- Overlay Text (Brand Name + Discount) -->
           <div class="carousel-caption">
             <p class="h2"><strong>{{ brand.brandName }}</strong></p>
             <p>Get up to <strong>{{ brand.discount }}% OFF</strong>!</p>
@@ -62,55 +60,31 @@
     </ngb-carousel>
   </div>
 
-  <!-- <div *ngIf="masterBrandData">
-    <ngb-carousel
-      #carousel
-      [interval]="2000"
-      [pauseOnFocus]="pauseOnFocus"
-      (slide)="onSlide($event)"
-      class="carousel-container carousel"
-    >
-      <ng-template ngbSlide *ngFor="let brand of masterBrandData; let i = index">
-        <div class="carousel-slide">
-          <div class="carousel-caption">
-            <h3>{{brand.brandName}}</h3>
-          </div>
-          <a>
-            <div class="picsum-img-wrapper">
-              <img [src]="brand.logoUrl" [alt]="brand.description" height="250px" width="500px" />
-            </div>
-          </a>
-        </div>
-      </ng-template>
-    </ngb-carousel>
-  </div> -->
-
-  <!-- Fabric cards -->
   <div class="top-rated" style="padding-bottom: 20px;">
-    <h3 class="section-title">Fabric By Material</h3>
-    <ion-grid class="fabric-grid" *ngIf="FabricMaster.length" style="padding: 0rem;">
+    <h3 class="section-title fs-subtitle">Fabric By Material</h3>
+    <ion-grid class="fabric-grid" *ngIf="fabricMaster.length" style="padding: 0rem;">
       <ion-row>
         <ion-col
           size="6"
           size-md="4"
           size-lg="3"
-          *ngFor="let fabric of FabricMaster; let i = index"
+          *ngFor="let fabric of displayedFabricsByMat; let i = index"
         >
           <ion-card class="fabric-card">
             <img [src]="fabric.imageUrl" [alt]="fabric.fabricType" />
             <ion-card-header>
-              <ion-card-title>{{ fabric.fabricType }}</ion-card-title>
+              <ion-card-title class="font-16">{{ fabric.fabricType }}</ion-card-title>
             </ion-card-header>
-            <ion-card-content>
+            <!-- <ion-card-content>
               <p>{{ fabric.description }}</p>
               <ion-button expand="full"> View Details </ion-button>
-            </ion-card-content>
+            </ion-card-content> -->
           </ion-card>
         </ion-col>
       </ion-row>
     
       <!-- View More Button -->
-      <div class="load-more-container" *ngIf="!allFabricsLoaded">
+      <div class="load-more-container" *ngIf="!allFabricsLoadedByMat">
         <ion-button
           class="view-more"
           (click)="loadMoreFabrics()"
@@ -124,33 +98,29 @@
   </div>
 
   <div class="top-rated" style="padding-bottom: 20px;">
-    <h3 class="section-title">Fabrics By Texture</h3>
-    <ion-grid class="fabric-grid" *ngIf="FabricMaster.length" style="padding: 0rem;">
+    <h3 class="section-title fs-subtitle">Fabrics By Texture</h3>
+    <ion-grid class="fabric-grid" *ngIf="displayedFabricsByTex.length" style="padding: 0rem;">
       <ion-row>
         <ion-col
           size="6"
           size-md="4"
           size-lg="3"
-          *ngFor="let fabric of FabricMaster; let i = index"
+          *ngFor="let fabric of fabricMaster; let i = index"
         >
           <ion-card class="fabric-card">
             <img [src]="fabric.imageUrl" [alt]="fabric.fabricType" />
             <ion-card-header>
-              <ion-card-title>{{ fabric.fabricType }}</ion-card-title>
+              <ion-card-title class="font-16">{{ fabric.fabricType }}</ion-card-title>
             </ion-card-header>
-            <ion-card-content>
-              <p>{{ fabric.description }}</p>
-              <ion-button expand="full"> View Details </ion-button>
-            </ion-card-content>
           </ion-card>
         </ion-col>
       </ion-row>
     
       <!-- View More Button -->
-      <div class="load-more-container" *ngIf="!allFabricsLoaded">
+      <div class="load-more-container" *ngIf="!allFabricsLoadedByTex">
         <ion-button
           class="view-more"
-          (click)="loadMoreFabrics()"
+          (click)="loadMoreFabricsByTex()"
           expand="full"
           color="secondary"
         >
@@ -161,14 +131,14 @@
   </div>
 
   <div class="top-rated">
-    <h3 class="section-title">Fabrics By Color</h3>
+    <h3 class="section-title fs-subtitle">Fabrics By Color</h3>
     <ion-grid class="fabric-grid">
       <ion-row>
         <ion-col
           size="6"
           size-md="4"
           size-lg="3"
-          *ngFor="let color of colorMaster"
+          *ngFor="let color of displayedColors"
         >
           <ion-card class="fabric-card">
             <div
@@ -177,22 +147,21 @@
             ></div>
   
             <ion-card-header class="text-center">
-              <ion-card-title>{{ color.colorName }}</ion-card-title>
+              <ion-card-title class="font-16">{{ color.colorName }}</ion-card-title>
             </ion-card-header>
   
-            <ion-card-content>
-              <!-- <p class="fabric-description">{{ color.description }}</p> -->
+            <!-- <ion-card-content>
               <ion-button expand="full" color="primary">View</ion-button>
-            </ion-card-content>
+            </ion-card-content> -->
           </ion-card>
         </ion-col>
       </ion-row>
   
       <!-- View More Button -->
-      <div class="load-more-container text-center" *ngIf="!allFabricsLoaded">
+      <div class="load-more-container text-center" *ngIf="!allColorLoaded">
         <ion-button
           class="view-more"
-          (click)="loadMoreFabrics()"
+          (click)="loadMoreColors()"
           expand="full"
           color="secondary"
         >

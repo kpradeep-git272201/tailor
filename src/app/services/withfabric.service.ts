@@ -23,6 +23,60 @@ export class WithfabricService {
       }
     ]
   }
+  getSubArtcles(){
+    return [
+      {
+        "articleId": 1,
+        "imageUrl": "assets/images/shirtArticles/shirt1.jpg",
+        "createDate": "2025-03-11T10:00:00Z",
+        "modifiedDate": "2025-03-11T10:00:00Z",
+        "isDelete": false,
+        "isActive": true,
+        "subArticleId": 1001,
+        "subArticleName": "Shirt1"
+      },
+      {
+        "articleId": 1,
+        "imageUrl": "assets/images/shirtArticles/shirt2.jpg",
+        "createDate": "2025-03-11T10:00:00Z",
+        "modifiedDate": "2025-03-11T10:00:00Z",
+        "isDelete": false,
+        "isActive": true,
+        "subArticleId": 1002,
+        "subArticleName": "Shirt2"
+      },
+      {
+        "articleId": 1,
+        "imageUrl": "assets/images/shirtArticles/shirt3.jpg",
+        "createDate": "2025-03-11T10:00:00Z",
+        "modifiedDate": "2025-03-11T10:00:00Z",
+        "isDelete": false,
+        "isActive": true,
+        "subArticleId": 1003,
+        "subArticleName": "Shirt3"
+      },
+      {
+        "articleId": 1,
+        "imageUrl": "assets/images/shirtArticles/shirt4.jpg",
+        "createDate": "2025-03-11T10:00:00Z",
+        "modifiedDate": "2025-03-11T10:00:00Z",
+        "isDelete": false,
+        "isActive": true,
+        "subArticleId": 1004,
+        "subArticleName": "Shirt4"
+      },
+      {
+        "articleId": 1,
+        "imageUrl": "assets/images/shirtArticles/shirt5.jpg",
+        "createDate": "2025-03-11T10:00:00Z",
+        "modifiedDate": "2025-03-11T10:00:00Z",
+        "isDelete": false,
+        "isActive": true,
+        "subArticleId": 1005,
+        "subArticleName": "Shirt5"
+      }
+    ]
+  }
   getMasterMenu(){
     return [
       {
@@ -128,7 +182,7 @@ export class WithfabricService {
     ];
   }
 
-  getFabricMasterDate(){
+  getFabricMasterData(){
     return [
       {
         "fabricId": 101,
@@ -329,19 +383,19 @@ export class WithfabricService {
       },
       {
         "colorId": 5,
-        "colorName": "Black",
-        "hexCode": "#000000",
-        "category": "Neutral",
-        "description": "A timeless and sophisticated color associated with power and elegance.",
-        "fabricIds": [109, 110]
-      },
-      {
-        "colorId": 6,
         "colorName": "White",
         "hexCode": "#FFFFFF",
         "category": "Neutral",
         "description": "A pure and clean color representing simplicity and peace.",
         "fabricIds": [101, 103]
+      },
+      {
+        "colorId": 6,
+        "colorName": "Black",
+        "hexCode": "#000000",
+        "category": "Neutral",
+        "description": "A timeless and sophisticated color associated with power and elegance.",
+        "fabricIds": [109, 110]
       },
       {
         "colorId": 7,
