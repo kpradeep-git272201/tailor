@@ -5,6 +5,7 @@ import { NgbCarousel, NgbSlideEvent, NgbSlideEventSource } from '@ng-bootstrap/n
 import { CommonService } from 'src/app/services/common.service';
 import { WithfabricService } from 'src/app/services/withfabric.service';
 import { ActivatedRoute, Router } from '@angular/router';
+import { IconService } from 'src/app/services/icon.service';
 
 @Component({
   selector: 'app-withfabric',
@@ -75,12 +76,14 @@ export class WithfabricPage implements OnInit {
   constructor(private commonService: CommonService, 
     private wfService: WithfabricService,
     private router: Router,
-    private route: ActivatedRoute) {
-   
-   
+    private route: ActivatedRoute,
+    private iconService: IconService) {
+   this.iconService.registerIcons();
+
   }
 
   ngOnInit() {
+    this.commonService.setCurrentPath();
     this.route.queryParams.subscribe(params => {
       const navigatedData = params['navigatedData'];
       if (navigatedData) {
@@ -100,7 +103,9 @@ export class WithfabricPage implements OnInit {
     this.updateDisplayedColors();
 
   }
-
+  ngAfterViewInit(){
+    this.commonService.setCurrentPath();
+  }
   ngOnDestroy() {
     clearInterval(this.interval);
   }

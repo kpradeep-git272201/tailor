@@ -38,10 +38,10 @@ export class TdashboardPage implements OnInit {
 
   }
   ionViewWillEnter() {
-    const userInfoString = localStorage.getItem("userInfo");
-    if (userInfoString) {
-      const userInfo: any = JSON.parse(userInfoString);
-      this.appRole = userInfo.appRole;
+    const loggedUserString = localStorage.getItem("loggedUser");
+    if (loggedUserString) {
+      const loggedUser: any = JSON.parse(loggedUserString);
+      this.appRole = loggedUser.appRole;
       this.isLoggedIn = true;
     } else {
       this.appRole = '';

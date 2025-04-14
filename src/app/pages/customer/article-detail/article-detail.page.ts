@@ -11,6 +11,8 @@ import { SharedModule } from 'src/app/sharedmodule/sharedmodule.module';
 import { ChartModelPage } from '../chart-model/chart-model.page';
 import { ModalController } from '@ionic/angular';
 import { TailorPage } from '../../mytabs/tailor/tailor.page';
+import { AlertService } from 'src/app/services/alert.service';
+import { CommonService } from 'src/app/services/common.service';
 
 @Component({
   selector: 'app-article-detail',
@@ -36,11 +38,14 @@ export class ArticleDetailPage implements OnInit {
   selectedColor: any;
   quntity: number = 1;
   constructor(
-    private route: ActivatedRoute,
+   
     private wfService: WithfabricService,
     private iconService: IconService,
     private modalController: ModalController,
-    private router: Router
+    private router: Router,
+    private route: ActivatedRoute,
+    private alertService: AlertService,
+    private commonService: CommonService
   ) {
     this.iconService.registerIcons();
   }
@@ -57,6 +62,9 @@ export class ArticleDetailPage implements OnInit {
     });
   }
 
+  ngAfterViewInit(){
+    this.commonService.setCurrentPath();
+  }
   togglePaused() {
     if (this.paused) {
       this.carousel.cycle();
@@ -103,32 +111,77 @@ export class ArticleDetailPage implements OnInit {
     this.quntity++;
   }
 
+  
   openSizeChartModal(ModelPage?:any) {
-    this.presentModal(ModelPage);
+    const isLoggedIn = !!localStorage.getItem('loggedUser'); // or use your AuthService
+
+  if (!isLoggedIn) {
+    this.alertService.showAlertWithCancel('Alrert!','Please login to continue','alert').then((resp:any)=>{
+      if(resp){
+        this.commonService.setCurrentPath();
+        // Redirect to login
+        this.router.navigate(['/auth/login']);
+        return;
+      }
+    });
+    return;
   }
 
-  async presentModal(ModelPage?:any) {
+  // Continue to booking process if already logged in
+  this.router.navigate(['/book-tailor']);
+  this.presentModal(ModelPage, isLoggedIn);
+
+  }
+
+  async presentModal(ModelPage?:any, isLoggedIn?:any) {
     const modal = await this.modalController.create({
       component: ModelPage || ChartModelPage,
       cssClass: 'bottom-modal',
       breakpoints: [0, 0.5, 1],
       initialBreakpoint: 0.7,
       handle: true,
+      componentProps: {
+        bookTailor: this.navigatedData, // pass your required data
+      },
     });
 
     await modal.present();
     const { data, role } = await modal.onDidDismiss();
     if (role === 'confirmed' && data) {
       console.log('Data received from modal:', data);
-      this.handleModalData(data);
+      this.handleModalData(data, isLoggedIn);
     }
   }
-  handleModalData(data: any) {
+  handleModalData(data: any, isLoggedIn:any) {
     console.log('Processing received data:', data);
+    this.myOrders(data, isLoggedIn);
   }
 
   bookTailor(){
     this.openSizeChartModal(TailorPage);
     //this.router.navigate(["tabs/tailor"])
+  }
+
+  myOrders(tailor:any, isLoggedIn:any){
+    const myOrder:any=localStorage.getItem('myOrder');
+    if(myOrder){
+      const order:any = JSON.parse(myOrder);
+      const data=  {
+        phoneNumber: isLoggedIn.phoneNumber,
+        tailor: tailor,
+        itme: this.navigatedData
+      }
+      order.push(data);
+      localStorage.setItem('myOrder', JSON.stringify(order));
+    }else{
+      const order=[
+        {
+          phoneNumber: isLoggedIn.phoneNumber,
+          tailor: tailor,
+          itme: this.navigatedData
+        }
+      ]
+      localStorage.setItem('myOrder', JSON.stringify(order));
+    }
   }
 }

@@ -1,15 +1,31 @@
 import { Injectable } from '@angular/core';
+import { ActivatedRoute, Router } from '@angular/router';
 
 @Injectable({
   providedIn: 'root'
 })
 export class CommonService {
 
-  constructor() { 
-
-
+  constructor( private router: Router,
+    private route: ActivatedRoute,) { 
   }
 
+  setCurrentPath(){
+    const currentUrl = decodeURIComponent(this.router.url.split('?')[0]);
+        console.log('Path:', currentUrl);
+        localStorage.setItem('redirectUrl', currentUrl);
+        this.route.queryParams.subscribe(params => {
+          if (params['navigatedData']) {
+            try {
+              const decoded = JSON.parse(params['navigatedData']);
+              console.log('Decoded navigatedData:', decoded);
+              localStorage.setItem('navigatedData', JSON.stringify(decoded))
+            } catch (err) {
+              console.error('Invalid navigatedData format', err);
+            }
+          }
+        });
+  }
   getMasterBrand(){
     return [
       {

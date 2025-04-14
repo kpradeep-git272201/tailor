@@ -31,13 +31,13 @@ export class LoginPage implements OnInit {
       return;
     }
     this.router.navigate(['/auth/otp-verification'], {
-      queryParams: { phone: `+91-${phone}` }
+      queryParams: { phone: `${phone}` }
     });
     this.loginForm.controls['phoneNumber'].setValue("");
   }
 
   skip() {
-    localStorage.removeItem("userInfo");
+    localStorage.removeItem("loggedUser");
     this.router.navigate(["tabs/customer"]);
   }
 }

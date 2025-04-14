@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, Input, OnInit } from '@angular/core';
 import { IconService } from 'src/app/services/icon.service';
 import { TailorService } from 'src/app/services/tailor.service';
 import { SharedModule } from 'src/app/sharedmodule/sharedmodule.module';
@@ -14,6 +14,8 @@ import { ChartModelPage } from 'src/app/model/chart-model/chart-model.page';
   imports: [SharedModule],
 })
 export class TailorPage implements OnInit {
+  @Input() bookTailor: any;
+  
   allTailors: any[] = [];
   displayedTailors: any[] = [];
   initialDisplayCount = 5;
@@ -31,6 +33,8 @@ export class TailorPage implements OnInit {
   ngOnInit() {
     this.allTailors = this.tailorService.getTopRatedTailor();
     this.displayedTailors = this.allTailors.slice(0, this.initialDisplayCount);
+    console.log('Received data:', this.bookTailor);
+  
   }
 
   loadMore() {
@@ -113,5 +117,13 @@ export class TailorPage implements OnInit {
   }
   handleModalData(data: any) {
     console.log('Processing received data:', data);
+  }
+
+  dismiss() {
+    this.modalController.dismiss();
+  }
+
+  getBookTailor(tailor:any){
+    this.modalController.dismiss(tailor);
   }
 }

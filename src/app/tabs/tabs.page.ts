@@ -19,11 +19,11 @@ export class TabsPage {
 
   ionViewWillEnter() {
     console.log("Checking role...");
-    const userInfoString = localStorage.getItem("userInfo");
-    if (userInfoString) {
-      const userInfo: any = JSON.parse(userInfoString);
-      this.appRole = userInfo.appRole;
-      this.router.navigate([userInfo.path]);
+    const loggedUserString = localStorage.getItem("loggedUser");
+    if (loggedUserString) {
+      const loggedUser: any = JSON.parse(loggedUserString);
+      this.appRole = loggedUser.appRole;
+      this.router.navigate([loggedUser.path]);
     } else {
       this.appRole = "defaultRole";
       this.router.navigate(['/tabs/customer']);

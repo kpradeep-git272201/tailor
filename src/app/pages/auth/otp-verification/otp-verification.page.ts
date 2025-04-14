@@ -18,7 +18,9 @@ export class OtpVerificationPage implements OnInit {
 
   private countdownInterval: any;
   phoneNumber: any;
+  countryCode:any;
   selectedRole: any;
+  user_table:any=[];
   constructor(private router: Router,
     private activatedRoute: ActivatedRoute
   ) { }
@@ -70,24 +72,40 @@ export class OtpVerificationPage implements OnInit {
   verifyOtp() {
     const enteredOtp = this.otp.join('');
     console.log('Entered OTP:', enteredOtp);
-    const userInfo={
+    const loggedUser={
       appRole: "defaultRole",
       phoneNumber: this.phoneNumber,
       path: ""
     }
     let url="/auth";
-    if(this.phoneNumber=="+91-9999999999"){ // This is for Customer login mobile number
+    if(this.phoneNumber=="9999999999"){ // This is for Customer login mobile number
       url="/tabs/customer";
-      userInfo.appRole="Customer";
-      userInfo.path=url;
-    }else if(this.phoneNumber=="+91-8888888888"){ // This is for Tailor login mobile number
+      loggedUser.appRole="Customer";
+      loggedUser.path=url;
+    }else if(this.phoneNumber=="8888888888"){ // This is for Tailor login mobile number
       url="/tabs/tailor";
-      userInfo.appRole="Tailor";
-      userInfo.path=url;
+      loggedUser.appRole="Tailor";
+      loggedUser.path=url;
     }
  
-    localStorage.setItem('userInfo', JSON.stringify(userInfo));
-    this.router.navigate([url]);
+    localStorage.setItem('loggedUser', JSON.stringify(loggedUser));
+    this.insertUser(loggedUser);
+    const redirectUrl = localStorage.getItem('redirectUrl');
+    if (redirectUrl) {
+      const navigatedData = localStorage.getItem('navigatedData');
+      if(navigatedData){
+        this.router.navigate([decodeURIComponent(redirectUrl)],{
+          queryParams: {
+            navigatedData: navigatedData
+          }
+        });
+      }else{
+        this.router.navigate([decodeURIComponent(redirectUrl)]);
+      }
+    } else {
+      this.router.navigate([url]);
+    }
+
     this.otp=[];
   }
 
@@ -104,4 +122,18 @@ export class OtpVerificationPage implements OnInit {
     }
   }
 
+  insertUser(user:any){
+    const user_table:any = localStorage.getItem('user_table');
+    if(user_table){
+      const users:any = JSON.parse(user_table);
+      const isExistUser = users.find((num:any) => {num === "9792869123"});
+      if(!isExistUser){
+        users.push(user);
+        localStorage.setItem('user_table', JSON.stringify(users));
+      }
+    }else{
+      this.user_table.push(user);
+      localStorage.setItem('user_table', JSON.stringify(this.user_table));
+    }
+  }
 }

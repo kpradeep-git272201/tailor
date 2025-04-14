@@ -69,7 +69,9 @@ export class ArticlePage implements OnInit {
       this.updateDisplayedFabrics();
     });
   }
-
+  ngAfterViewInit(){
+    this.commonService.setCurrentPath();
+  }
   loadMoreFabrics() {
     this.updateDisplayedFabrics();
   }

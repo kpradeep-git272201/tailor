@@ -26,17 +26,20 @@ export class AppComponent {
         StatusBar.setBackgroundColor({ color: '#009688' });
       }
 
-      const lastPage = localStorage.getItem('lastVisitedPage');
-      console.log('Last Visited Page:', lastPage); // Debugging ke liye
-
-      if (lastPage) {
-        this.zone.run(() => {
-          this.router.navigateByUrl(lastPage);
-        });
+      const redirectUrl = localStorage.getItem('redirectUrl');
+      if (redirectUrl) {
+        const navigatedData = localStorage.getItem('navigatedData');
+        if(navigatedData){
+          this.router.navigate([decodeURIComponent(redirectUrl)],{
+            queryParams: {
+              navigatedData: navigatedData
+            }
+          });
+        }else{
+          this.router.navigate([decodeURIComponent(redirectUrl)]);
+        }
       } else {
-        this.zone.run(() => {
-          this.router.navigateByUrl('/tabs/customer/dashboard');
-        });
+        this.router.navigateByUrl('/tabs/customer/dashboard');
       }
     });
   }

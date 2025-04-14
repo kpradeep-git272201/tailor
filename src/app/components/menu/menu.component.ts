@@ -35,7 +35,7 @@ export class MenuComponent  implements OnInit {
   logout() {
     this.dialogRef.close();
     // Add logout logic here
-    localStorage.removeItem("userInfo");
+    localStorage.removeItem("loggedUser");
     this.router.navigate(['/auth']);
   }
   closeMenu(): void {

@@ -1,6 +1,11 @@
 <ion-header [translucent]="true">
   <ion-toolbar color="primary">
     <ion-title>Tailor</ion-title>
+    <ion-buttons *ngIf="bookTailor?.serviceType" slot="end">
+      <ion-button (click)="dismiss()">
+        <ion-icon style="font-size: 1.875rem;" name="close-outline"></ion-icon>
+      </ion-button>
+    </ion-buttons>
   </ion-toolbar>
 </ion-header>
 
@@ -58,9 +63,10 @@
                 color="primary"
                 fill="clear"
                 class="view-profile-button"
-                (click)="viewTailor(tailor)"
+                (click)="(bookTailor?.serviceType)? getBookTailor(tailor) : viewTailor(tailor)"
               >
-                View
+                <ion-text *ngIf="!bookTailor?.serviceType">View</ion-text>
+                <ion-text *ngIf="bookTailor?.serviceType">Book</ion-text>
               </ion-button>
             </div>
           </ion-card-header>

@@ -157,9 +157,12 @@ export class CdashboardPage implements OnInit {
   }
 
   ionViewDidEnter() {
-    this.loadUserInfo();
+    this.loadLoggedUser();
   }
-
+  ngAfterViewInit(){
+    this.commonService.setCurrentPath();
+  }
+  
   ngOnDestroy() {
     clearInterval(this.interval);
   }
@@ -238,11 +241,11 @@ export class CdashboardPage implements OnInit {
     }
   }
 
-  loadUserInfo() {
-    const userInfoString = localStorage.getItem('userInfo');
-    if (userInfoString) {
-      const userInfo: any = JSON.parse(userInfoString);
-      this.appRole = userInfo.appRole;
+  loadLoggedUser() {
+    const loggedUserString = localStorage.getItem('loggedUser');
+    if (loggedUserString) {
+      const loggedUser: any = JSON.parse(loggedUserString);
+      this.appRole = loggedUser.appRole;
       this.isLoggedIn = true;
     } else {
       this.appRole = '';
@@ -299,7 +302,6 @@ export class CdashboardPage implements OnInit {
 
   getService(action: any) {
     const path = '/tabs/customer/' + action.subUrl;
-    localStorage.setItem('lastVisitedPage', path);
     this.router.navigate([path],{
       queryParams: {
         navigatedData: JSON.stringify({
