@@ -403,3 +403,7 @@ ion-header {
   --color: #856404 !important; /* Dark orange text */
   text-align: center !important;
 }
+
+.alert-head.sc-ion-alert-md+.alert-message.sc-ion-alert-md{
+  padding-top: 15px !important;
+}

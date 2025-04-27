@@ -44,7 +44,8 @@ import {
   checkmarkCircleOutline,
   addCircleOutline,
   removeCircleOutline,
-  barChartOutline
+  barChartOutline,
+  checkmark
 } from 'ionicons/icons';
 
 @Injectable({
@@ -60,6 +61,7 @@ export class IconService {
       cut,
       shirt,
       search,
+      checkmark,
       calendar,
       location,
       checkmarkCircle,

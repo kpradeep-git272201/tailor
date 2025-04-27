@@ -1,0 +1,47 @@
+.color-grid {
+    margin-top: 10px;
+  }
+  
+  .color-col {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin-bottom: 15px;
+  }
+  
+  .color-box {
+    width: 60px;
+    height: 60px;
+    border-radius: 50%;
+    box-shadow: 0 1px 4px rgba(0, 0, 0, 0.2);
+    transition: transform 0.2s ease-in-out, box-shadow 0.3s;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    position: relative;
+    cursor: pointer;
+  }
+  
+  .color-box:hover {
+    transform: scale(1.1);
+  }
+  
+  .color-box.selected {
+    box-shadow: 0 0 0 4px rgba(56, 128, 255, 0.6); // blue glow
+  }
+  
+  .check-icon {
+    color: #fff;
+    font-size: 1.5rem;
+  }
+  
+  .color-label {
+    margin-top: 8px;
+    font-weight: 500;
+    font-size: 0.9rem;
+    text-align: center;
+  }
+  ion-fab {
+    margin-bottom: 20px;
+    margin-right: 16px;
+  }

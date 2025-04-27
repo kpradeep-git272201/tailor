@@ -26,21 +26,21 @@ export class AppComponent {
         StatusBar.setBackgroundColor({ color: '#009688' });
       }
 
-      const redirectUrl = localStorage.getItem('redirectUrl');
-      if (redirectUrl) {
-        const navigatedData = localStorage.getItem('navigatedData');
-        if(navigatedData){
-          this.router.navigate([decodeURIComponent(redirectUrl)],{
-            queryParams: {
-              navigatedData: navigatedData
-            }
-          });
-        }else{
-          this.router.navigate([decodeURIComponent(redirectUrl)]);
-        }
-      } else {
-        this.router.navigateByUrl('/tabs/customer/dashboard');
-      }
+      // const redirectUrl = localStorage.getItem('redirectUrl');
+      // if (redirectUrl) {
+      //   const navigatedData = localStorage.getItem('navigatedData');
+      //   if(navigatedData){
+      //     this.router.navigate([decodeURIComponent(redirectUrl)],{
+      //       queryParams: {
+      //         navigatedData: navigatedData
+      //       }
+      //     });
+      //   }else{
+      //     this.router.navigate([decodeURIComponent(redirectUrl)]);
+      //   }
+      // } else {
+      //   this.router.navigateByUrl('/tabs/customer/dashboard');
+      // }
     });
   }
 }

@@ -1,0 +1,80 @@
+.section-title {
+  padding-left: 1.063rem;
+}
+
+.card-header-container {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.tailor-thumbnail {
+  flex-shrink: 0;
+  margin-right: 16px;
+  height: 6rem;
+  width: 6rem;
+  border: 0.033rem solid;
+  border-radius: 0.875rem;
+  img {
+    border-radius: 0.875rem;
+  }
+}
+
+.tailor-info {
+  flex-grow: 1;
+}
+
+.view-profile-button {
+  flex-shrink: 0;
+  margin-bottom: 3.5rem;
+  font-size: 1rem;
+}
+
+.tailor-card {
+  background-color: var(--ion-card-bg-color);
+}
+.locationIcon {
+  color: red;
+  font-size: 1.4rem;
+  margin-bottom: -5px;
+  padding-right: 7px;
+  margin-left: -3px;
+}
+.FontSize {
+  font-size: 0.9rem;
+}
+
+.view-more {
+  margin-left: 6.375rem;
+  margin-right: 6.375rem;
+  color: black;
+  span {
+    color: black;
+    margin-top: 0.188rem;
+  }
+}
+
+.sticky-container {
+  position: sticky;
+  top: 0;
+  background: var(--ion-card-bg-color);
+  z-index: 10;
+  padding-bottom: 5px;
+  // box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+.search-container {
+  padding: 10px;
+}
+
+.filter-container {
+  display: flex;
+  overflow-x: auto;
+  white-space: nowrap;
+  padding: 10px;
+  gap: 10px;
+}
+
+.filter-container ion-chip {
+  flex: 0 0 auto;
+}

@@ -1,0 +1,63 @@
+.heart-toolbar {
+  text-align: right;
+  --background: var(--ion-content-bg-color);
+  --color: black;
+  #heart-outline {
+    // margin-right: 10px;
+    font-size: 1.875rem;
+    // margin-top: 8px;
+  }
+  #share-outline {
+    // margin-right: 10px;
+    font-size: 1.875rem;
+    margin-bottom: 3px;
+  }
+}
+
+ion-grid {
+  padding: 0rem;
+  padding-left: 10px;
+}
+
+.color-circle {
+  width: 100%;
+  height: 100%;
+  border-radius: 50%;
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.check-icon {
+  color: white;
+  font-size: 20px;
+}
+
+.colorText {
+  padding: 0rem;
+}
+.sizeChart {
+  padding: 0rem;
+  text-align: right;
+}
+
+.add-to-cart {
+  --background: #ffd700;
+  color: black;
+  margin-left: 0.625rem;
+  margin-right: 0.625rem;
+  margin-top: 0.875rem;
+}
+
+.book-tailor {
+  --background: #ffa500;
+  color: white;
+  margin-left: 0.625rem;
+  margin-right: 0.625rem;
+  margin-top: 0.875rem;
+}
+
+ion-button {
+  height: 2.813rem;
+}

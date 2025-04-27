@@ -1,0 +1,7 @@
+.fabric-card {
+  transition: transform 0.3s ease-in-out;
+}
+
+.fabric-card:hover {
+  transform: scale(1.05);
+}
