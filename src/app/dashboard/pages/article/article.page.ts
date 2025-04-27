@@ -58,10 +58,7 @@ export class ArticlePage implements OnInit {
       if (params['navigatedData']) {
         this.navigatedData = JSON.parse(params['navigatedData']);
         this.article=this.navigatedData.article;
-        // console.log("article", JSON.stringify(this.article));
-        // this.fabricByArticle=fabricMaster.filter((article)=>{
-        //   return article.articleIds.includes(this.article);
-        // });
+     
       }
       this.updateDisplayedFabrics();
     });

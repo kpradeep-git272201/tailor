@@ -124,7 +124,7 @@ export class TailorListPage implements OnInit {
   }
 
   getBookTailor(tailor:any){
-    this.modalController.dismiss({data: tailor, role: 'confirmed'});
+    this.modalController.dismiss(tailor,'confirmed');
   }
 }
 

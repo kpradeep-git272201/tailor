@@ -1,0 +1,107 @@
+<ion-header [translucent]="true">
+  <ion-toolbar color="primary">
+    <ion-buttons slot="start">
+      <ion-back-button
+        defaultHref="/main/with-fabric/{{ articleName }}/{{ articleId }}"
+      ></ion-back-button>
+    </ion-buttons>
+    <ion-title>Order Summary</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content [fullscreen]="true" class="ion-padding">
+
+  <!-- Article Details -->
+  <ion-card>
+    <ion-card-header>
+      <ion-card-title>Article: {{ order.article.articleName }}</ion-card-title>
+    </ion-card-header>
+    <ion-card-content>
+      <img [src]="order.article.imageUrl" alt="Article Image" style="width: 100%; border-radius: 8px;">
+    </ion-card-content>
+  </ion-card>
+
+  <!-- Fabric Details -->
+  <ion-card>
+    <ion-card-header>
+      <ion-card-title>Fabric: {{ order.fabric.fabricType }}</ion-card-title>
+    </ion-card-header>
+    <ion-card-content>
+      <ion-list>
+        <ion-item>
+          <ion-label>Weave Type</ion-label>
+          <ion-note slot="end">{{ order.fabric.weaveType }}</ion-note>
+        </ion-item>
+        <ion-item>
+          <ion-label>Texture</ion-label>
+          <ion-note slot="end">{{ order.fabric.texture }}</ion-note>
+        </ion-item>
+        <ion-item>
+          <ion-label>Thickness</ion-label>
+          <ion-note slot="end">{{ order.fabric.thickness }}</ion-note>
+        </ion-item>
+        <ion-item>
+          <ion-label>Price Per Meter</ion-label>
+          <ion-note slot="end">₹{{ order.fabric.pricePerMeter }}</ion-note>
+        </ion-item>
+      </ion-list>
+      <img [src]="order.fabric.imageUrl" alt="Fabric Image" style="width: 100%; margin-top: 10px; border-radius: 8px;">
+    </ion-card-content>
+  </ion-card>
+
+  <!-- Color Details -->
+  <ion-card>
+    <ion-card-header>
+      <ion-card-title>Selected Color</ion-card-title>
+    </ion-card-header>
+    <ion-card-content>
+      <div style="display: flex; align-items: center;">
+        <div [style.background]="color.hexCode"
+             style="width: 40px; height: 40px; border-radius: 50%; margin-right: 10px;">
+        </div>
+        <div>
+          <h2>{{ color.colorName }}</h2>
+          <p>{{ color.description }}</p>
+        </div>
+      </div>
+    </ion-card-content>
+  </ion-card>
+
+  <!-- Tailor Details -->
+  <ion-card>
+    <ion-card-header>
+      <ion-card-title>Tailor: {{ tailor.name }}</ion-card-title>
+    </ion-card-header>
+    <ion-card-content>
+      <img [src]="tailor.imageUrl" alt="Tailor Image" style="width: 100%; border-radius: 8px; margin-bottom: 10px;">
+      <ion-list>
+        <ion-item>
+          <ion-label>Experience</ion-label>
+          <ion-note slot="end">{{ tailor.experience }} years</ion-note>
+        </ion-item>
+        <ion-item>
+          <ion-label>Expertise</ion-label>
+          <ion-note slot="end">{{ tailor.expertise }}</ion-note>
+        </ion-item>
+        <ion-item>
+          <ion-label>Rating</ion-label>
+          <ion-note slot="end">{{ tailor.rating }} ⭐</ion-note>
+        </ion-item>
+        <ion-item>
+          <ion-label>Distance</ion-label>
+          <ion-note slot="end">{{ tailor.distance }} km</ion-note>
+        </ion-item>
+        <ion-item>
+          <ion-label>Delivery In</ion-label>
+          <ion-note slot="end">{{ tailor.deliveryIn }} days</ion-note>
+        </ion-item>
+      </ion-list>
+    </ion-card-content>
+  </ion-card>
+
+  <!-- Confirm Order Button -->
+  <ion-button expand="block" color="success" style="margin-top: 20px;">
+    Confirm Order
+  </ion-button>
+
+</ion-content>

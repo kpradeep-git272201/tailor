@@ -43,7 +43,8 @@ import {
   IonMenu,
   IonSpinner,
   IonChip, 
-  IonCardSubtitle
+  IonCardSubtitle,
+  IonNote
 } from '@ionic/angular/standalone';
 import { IonButton } from '@ionic/angular/standalone';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
@@ -103,7 +104,8 @@ import { ModalController } from '@ionic/angular';
     NgbCarouselModule,
     IonSpinner,
     IonChip, 
-    IonCardSubtitle
+    IonCardSubtitle,
+    IonNote
   ],
   exports: [
     IonContent,
@@ -156,7 +158,8 @@ import { ModalController } from '@ionic/angular';
     NgbCarouselModule,
     IonSpinner,
     IonChip, 
-    IonCardSubtitle
+    IonCardSubtitle,
+    IonNote
   ]
 })
 export class SharedModule { }
