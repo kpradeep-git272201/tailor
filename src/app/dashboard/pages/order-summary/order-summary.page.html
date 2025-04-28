@@ -9,99 +9,136 @@
   </ion-toolbar>
 </ion-header>
 
-<ion-content [fullscreen]="true" class="ion-padding">
-
-  <!-- Article Details -->
+<ion-content [fullscreen]="true">
   <ion-card>
-    <ion-card-header>
-      <ion-card-title>Article: {{ order.article.articleName }}</ion-card-title>
-    </ion-card-header>
     <ion-card-content>
-      <img [src]="order.article.imageUrl" alt="Article Image" style="width: 100%; border-radius: 8px;">
-    </ion-card-content>
-  </ion-card>
-
-  <!-- Fabric Details -->
-  <ion-card>
-    <ion-card-header>
-      <ion-card-title>Fabric: {{ order.fabric.fabricType }}</ion-card-title>
-    </ion-card-header>
-    <ion-card-content>
+  
       <ion-list>
-        <ion-item>
-          <ion-label>Weave Type</ion-label>
-          <ion-note slot="end">{{ order.fabric.weaveType }}</ion-note>
-        </ion-item>
-        <ion-item>
-          <ion-label>Texture</ion-label>
-          <ion-note slot="end">{{ order.fabric.texture }}</ion-note>
-        </ion-item>
-        <ion-item>
-          <ion-label>Thickness</ion-label>
-          <ion-note slot="end">{{ order.fabric.thickness }}</ion-note>
-        </ion-item>
-        <ion-item>
-          <ion-label>Price Per Meter</ion-label>
-          <ion-note slot="end">₹{{ order.fabric.pricePerMeter }}</ion-note>
+        <ion-item lines="none" style="position: relative;">
+          <ion-label>
+            <h3 style="display: flex; align-items: center; justify-content: space-between;">
+              <span>
+                <ion-icon name="location-outline"></ion-icon>
+                Delivery Address
+              </span>
+              <!-- Change Address Button Top Right -->
+              <ion-button fill="outline" size="small" color="primary" (click)="changeAddress()">
+                Change Address
+              </ion-button>
+            </h3>
+  
+            <!-- If Address Exists -->
+            <div *ngIf="userAddress; else addAddress" style="margin-top: 10px;">
+              <p><strong>{{ userAddress.fullName }}</strong></p>
+              <p>{{ userAddress.houseNo }}, {{ userAddress.area }}</p>
+              <p>{{ userAddress.city }}, {{ userAddress.state }} - {{ userAddress.pincode }}</p>
+            </div>
+  
+            <!-- Else Show Add Address Option -->
+            <ng-template #addAddress>
+              <ion-button expand="block" color="primary" (click)="addNewAddress()">
+                + Add Address
+              </ion-button>
+            </ng-template>
+  
+          </ion-label>
         </ion-item>
       </ion-list>
-      <img [src]="order.fabric.imageUrl" alt="Fabric Image" style="width: 100%; margin-top: 10px; border-radius: 8px;">
+  
     </ion-card-content>
   </ion-card>
-
-  <!-- Color Details -->
+  
   <ion-card>
-    <ion-card-header>
-      <ion-card-title>Selected Color</ion-card-title>
-    </ion-card-header>
     <ion-card-content>
-      <div style="display: flex; align-items: center;">
-        <div [style.background]="color.hexCode"
-             style="width: 40px; height: 40px; border-radius: 50%; margin-right: 10px;">
-        </div>
-        <div>
-          <h2>{{ color.colorName }}</h2>
-          <p>{{ color.description }}</p>
-        </div>
-      </div>
-    </ion-card-content>
-  </ion-card>
-
-  <!-- Tailor Details -->
-  <ion-card>
-    <ion-card-header>
-      <ion-card-title>Tailor: {{ tailor.name }}</ion-card-title>
-    </ion-card-header>
-    <ion-card-content>
-      <img [src]="tailor.imageUrl" alt="Tailor Image" style="width: 100%; border-radius: 8px; margin-bottom: 10px;">
+  
       <ion-list>
+  
+        <!-- Article Info -->
         <ion-item>
-          <ion-label>Experience</ion-label>
-          <ion-note slot="end">{{ tailor.experience }} years</ion-note>
+          <ion-avatar slot="start">
+            <img [src]="order.article.imageUrl" alt="Article Image">
+          </ion-avatar>
+          <ion-label>
+            <h3>Article</h3>
+            <p>{{ order.article.articleName }}</p>
+            <small>Size: M | Fit: Slim</small> <!-- (optional future info) -->
+          </ion-label>
         </ion-item>
+  
+        <!-- Fabric Info -->
         <ion-item>
-          <ion-label>Expertise</ion-label>
-          <ion-note slot="end">{{ tailor.expertise }}</ion-note>
+          <ion-avatar slot="start">
+            <img [src]="order.fabric.imageUrl" alt="Fabric Image">
+          </ion-avatar>
+          <ion-label>
+            <h3>Fabric</h3>
+            <p>{{ order.fabric.fabricType }} (₹{{ order.fabric.pricePerMeter }}/m)</p>
+            <small>Wash: {{ order.fabric.washingInstruction }} | Iron: {{ order.fabric.ironing }}</small>
+          </ion-label>
         </ion-item>
+  
+        <!-- Color Info -->
         <ion-item>
-          <ion-label>Rating</ion-label>
-          <ion-note slot="end">{{ tailor.rating }} ⭐</ion-note>
+          <ion-avatar slot="start">
+            <div [style.background]="color.hexCode" 
+                 style="width: 100%; height: 100%; border-radius: 50%;"></div>
+          </ion-avatar>
+          <ion-label>
+            <h3>Color</h3>
+            <p>{{ color.colorName }}</p>
+            <small>{{ color.description }}</small>
+          </ion-label>
         </ion-item>
+  
+        <!-- Tailor Info -->
         <ion-item>
-          <ion-label>Distance</ion-label>
-          <ion-note slot="end">{{ tailor.distance }} km</ion-note>
+          <ion-avatar slot="start">
+            <img [src]="tailor.imageUrl" alt="Tailor Image">
+          </ion-avatar>
+          <ion-label>
+            <h3>Tailor</h3>
+            <p>{{ tailor.name }} ({{ tailor.experience }} yrs)</p>
+            <small>Delivery in {{ tailor.deliveryIn }} days (e.g., 30 April 2025)</small>
+          </ion-label>
         </ion-item>
-        <ion-item>
-          <ion-label>Delivery In</ion-label>
-          <ion-note slot="end">{{ tailor.deliveryIn }} days</ion-note>
+  
+      </ion-list>
+  
+    </ion-card-content>
+  </ion-card>
+  
+  <ion-card>
+    <ion-card-content>
+  
+      <ion-list>
+        <ion-item lines="full" (click)="selectPayment('cod')" button detail>
+          <img src="assets/cash.png" slot="start" style="width: 24px; height: 24px;">
+          <ion-label>Cash on Delivery (COD)</ion-label>
+          <ion-radio slot="end" value="cod"></ion-radio>
+        </ion-item>
+  
+        <ion-item lines="full" (click)="selectPayment('online')" button detail>
+          <ion-icon name="card-outline" slot="start"></ion-icon>
+          <ion-label>Pay Online</ion-label>
+          <ion-radio slot="end" value="online"></ion-radio>
+        </ion-item>
+  
+        <ion-item lines="none" (click)="selectPayment('upi')" button detail>
+          <img src="assets/upi.svg" slot="start" style="width: 24px; height: 24px;">
+          <ion-label>UPI Payment</ion-label>
+          <ion-radio slot="end" value="upi"></ion-radio>
         </ion-item>
       </ion-list>
+  
     </ion-card-content>
   </ion-card>
 
   <!-- Confirm Order Button -->
-  <ion-button expand="block" color="success" style="margin-top: 20px;">
+  <ion-button expand="block" color="success" style="margin-top: 20px; margin-left: 20px; margin-right: 20px;">
     Confirm Order
   </ion-button>
+  
+  
+
 
 </ion-content>

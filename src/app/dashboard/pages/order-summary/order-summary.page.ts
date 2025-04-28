@@ -6,13 +6,15 @@ import { AlertService } from 'src/app/services/alert.service';
 import { CommonService } from 'src/app/services/common.service';
 import { SharedModule } from 'src/app/sharedmodule/sharedmodule.module';
 import { Location } from '@angular/common';
+import { IonRadio } from "@ionic/angular/standalone";
+import { AddressPage } from 'src/app/users/pages/address/address.page';
 
 @Component({
   selector: 'app-order-summary',
   templateUrl: './order-summary.page.html',
   styleUrls: ['./order-summary.page.scss'],
   standalone: true,
-  imports: [SharedModule]
+  imports: [IonRadio, SharedModule]
 })
 export class OrderSummaryPage implements OnInit {
   articleName: any | null;
@@ -21,7 +23,8 @@ export class OrderSummaryPage implements OnInit {
   order:any = {};
   color:any;
   tailor:any;
-  
+  userAddress: any = null;
+  selectedPayment: string = 'cod';
   constructor(
     private iconService: IconService,
     private modalController: ModalController,
@@ -39,18 +42,51 @@ export class OrderSummaryPage implements OnInit {
     this.articleName = this.route.snapshot.paramMap.get('article');
     this.articleId = this.route.snapshot.paramMap.get('articleId');
     const currentBooking = localStorage.getItem('currentBooking');
-    
+    const myAddress = localStorage.getItem("myAddress");
+    if(myAddress){
+      const address = JSON.parse(myAddress);
+      this.userAddress=address;
+    }
     if(currentBooking){
       const parseCurrentBooking = JSON.parse(currentBooking);
       this.color = parseCurrentBooking?.color;
       this.tailor =  parseCurrentBooking?.tailor;
       this.navigatedData = parseCurrentBooking?.itme;
-      this.order.serviceType=parseCurrentBooking.serviceType;
-      this.order.article=parseCurrentBooking.article;
-      this.order.fabric=parseCurrentBooking.fabric;
+      this.order.serviceType=this.navigatedData.serviceType;
+      this.order.article=this.navigatedData.article;
+      this.order.fabric=this.navigatedData.fabric;
 
     }
 
   }
 
+
+  addNewAddress() {
+    this.presentModal(AddressPage);
+  }
+  async presentModal(ModelPage: any) {
+    const modal = await this.modalController.create({
+      component: ModelPage,
+      cssClass: 'bottom-modal',
+      breakpoints: [0, 0.5, 1],
+      initialBreakpoint: 0.7,
+      handle: true,
+      componentProps: {
+        title: "Add Address"
+      },
+    });
+
+    await modal.present();
+    const { data, role } = await modal.onDidDismiss();
+    if (role === 'confirmed' && data) {
+      
+    }
+  }
+  changeAddress() {
+    // Open change address page
+  }
+  
+  selectPayment(method: string) {
+    this.selectedPayment = method;
+  }
 }

@@ -45,7 +45,10 @@ import {
   addCircleOutline,
   removeCircleOutline,
   barChartOutline,
-  checkmark
+  checkmark,
+  close,
+  business,
+  home
 } from 'ionicons/icons';
 
 @Injectable({
@@ -57,6 +60,9 @@ export class IconService {
 
   registerIcons() {
     addIcons({
+      home,
+      business,
+      close,
       barChartOutline,
       cut,
       shirt,

@@ -18,6 +18,7 @@ export const routes: Routes = [
     path: 'order-summary',
     loadComponent: () => import('./dashboard/pages/order-summary/order-summary.page').then( m => m.OrderSummaryPage)
   },
+  
   // {
   //   path: 'login',
   //   loadComponent: () => import('./auth/login/login.page').then( m => m.LoginPage)

@@ -1,0 +1,91 @@
+<ion-header [translucent]="true">
+  <ion-toolbar color="primary">
+    <ion-title>{{title}}</ion-title>
+    <ion-buttons slot="end">
+      <ion-button (click)="dismiss()">
+        <ion-icon style="color: black;" name="close"></ion-icon>
+      </ion-button>
+    </ion-buttons>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content [fullscreen]="true">
+  <form [formGroup]="addressForm">
+
+    <ion-list lines="full">
+
+      <ion-item>
+        <ion-input formControlName="fullName" label="Full Name (Required)" label-placement="stacked"></ion-input>
+      </ion-item>
+
+      <ion-item>
+        <ion-input formControlName="phoneNumber" type="tel" label="Phone Number (Required)" label-placement="stacked"></ion-input>
+      </ion-item>
+
+      <ion-text color="primary" class="ion-padding-start">
+        <p (click)="addAlternatePhone()" style="cursor: pointer; font-weight: 500;">+ Add Alternate Phone Number</p>
+      </ion-text>
+
+      <ion-item>
+        <ion-input formControlName="pincode" type="text" label="Pincode (Required)" label-placement="stacked"></ion-input>
+        <ion-button size="small" slot="end" (click)="useMyLocation()">
+          <ion-icon name="locate" slot="icon-only"></ion-icon>
+        </ion-button>
+      </ion-item>
+
+      <ion-grid>
+        <ion-row>
+          <ion-col size="6">
+            <ion-item>
+              <ion-input formControlName="state" label="State (Required)" label-placement="stacked"></ion-input>
+            </ion-item>
+          </ion-col>
+          <ion-col size="6">
+            <ion-item>
+              <ion-input formControlName="city" label="City (Required)" label-placement="stacked"></ion-input>
+              <ion-icon name="search" slot="end" style="margin-right: 10px;"></ion-icon>
+            </ion-item>
+          </ion-col>
+        </ion-row>
+      </ion-grid>
+
+      <ion-item>
+        <ion-input formControlName="houseNo" label="House No., Building Name (Required)" label-placement="stacked"></ion-input>
+      </ion-item>
+
+      <ion-item>
+        <ion-input formControlName="area" label="Road name, Area, Colony (Required)" label-placement="stacked"></ion-input>
+        <ion-icon name="search" slot="end" style="margin-right: 10px;"></ion-icon>
+      </ion-item>
+
+      <ion-text color="primary" class="ion-padding-start">
+        <p (click)="addLandmark()" style="cursor: pointer; font-weight: 500;">+ Add Nearby Famous Shop/Mall/Landmark</p>
+      </ion-text>
+
+      <ion-item lines="none">
+        <ion-label>Type of address</ion-label>
+      </ion-item>
+
+      <ion-grid>
+        <ion-row>
+          <ion-col size="6">
+            <ion-button expand="block" fill="outline" [color]="selectedType === 'home' ? 'primary' : 'medium'" (click)="selectType('home')">
+              <ion-icon name="home" slot="start"></ion-icon> Home
+            </ion-button>
+          </ion-col>
+          <ion-col size="6">
+            <ion-button expand="block" fill="outline" [color]="selectedType === 'work' ? 'primary' : 'medium'" (click)="selectType('work')">
+              <ion-icon name="business" slot="start"></ion-icon> Work
+            </ion-button>
+          </ion-col>
+        </ion-row>
+      </ion-grid>
+
+    </ion-list>
+
+    <ion-button expand="block" color="warning" (click)="saveAddress()" style="margin-top: 20px;" [disabled]="addressForm.invalid">
+      SAVE ADDRESS
+    </ion-button>
+
+  </form>
+</ion-content>
