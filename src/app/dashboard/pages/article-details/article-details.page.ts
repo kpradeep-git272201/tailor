@@ -1,6 +1,10 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { SharedModule } from 'src/app/sharedmodule/sharedmodule.module';
-import { NgbCarousel, NgbSlideEvent, NgbSlideEventSource } from '@ng-bootstrap/ng-bootstrap';
+import {
+  NgbCarousel,
+  NgbSlideEvent,
+  NgbSlideEventSource,
+} from '@ng-bootstrap/ng-bootstrap';
 import { IconService } from 'src/app/services/icon.service';
 import { ModalController } from '@ionic/angular';
 import { ActivatedRoute, Router } from '@angular/router';
@@ -8,8 +12,6 @@ import { AlertService } from 'src/app/services/alert.service';
 import { CommonService } from 'src/app/services/common.service';
 import { ColorModelPage } from 'src/app/model/color-model/color-model.page';
 import { TailorListPage } from 'src/app/tailor/pages/tailor-list/tailor-list.page';
-
-
 
 @Component({
   selector: 'app-article-details',
@@ -19,7 +21,6 @@ import { TailorListPage } from 'src/app/tailor/pages/tailor-list/tailor-list.pag
   providers: [],
 })
 export class ArticleDetailsPage implements OnInit {
-
   @ViewChild('carousel', { static: true }) carousel: NgbCarousel | any;
   article: any;
   fabric: any;
@@ -34,7 +35,10 @@ export class ArticleDetailsPage implements OnInit {
   colorMaster: any = [];
   selectedColor: any;
   quntity: number = 1;
-  // fabricSize:any;
+  articleName: any | null;
+  articleId: any | null;
+  loggedUser: any;
+  selectedTailor:any;
   constructor(
     private iconService: IconService,
     private modalController: ModalController,
@@ -47,8 +51,20 @@ export class ArticleDetailsPage implements OnInit {
   }
 
   ngOnInit() {
+    this.loggedUser = !!localStorage.getItem('loggedUser'); 
     this.subArtcles = this.commonService.getSubArtcles();
     this.colorMaster = this.commonService.colorClassificationMaster();
+
+    this.articleName = this.route.snapshot.paramMap?.get('article');
+    this.articleId = this.route.snapshot.paramMap?.get('articleId');
+    const currentBooking = localStorage.getItem('currentBooking');
+    if(currentBooking){
+      const parseCurrentBooking = JSON.parse(currentBooking);
+      this.selectedColor = parseCurrentBooking?.color;
+      this.selectedTailor =  parseCurrentBooking?.tailor;
+      this.navigatedData = parseCurrentBooking?.itme
+    }
+
     this.route.queryParams.subscribe((params) => {
       if (params['navigatedData']) {
         this.navigatedData = JSON.parse(params['navigatedData']);
@@ -107,8 +123,6 @@ export class ArticleDetailsPage implements OnInit {
     this.quntity++;
   }
 
-
-
   openSizeChartModal(action: any, ModelPage?: any) {
     this.presentModal(action, ModelPage);
   }
@@ -130,13 +144,16 @@ export class ArticleDetailsPage implements OnInit {
     if (role === 'confirmed' && data) {
       if (action == 'selectedColor') {
         this.selectedColor = data;
+        const data1 = {
+          phoneNumber: this.loggedUser?.phoneNumber,
+          tailor: this.selectedTailor,
+          itme: this.navigatedData,
+          color: this.selectedColor,
+        };
+        localStorage.setItem('currentBooking', JSON.stringify(data1));
       } else if (action == 'bookTailor') {
         this.handleModalData(data, loggedUser);
-      } 
-      // else if (action == 'sizeChart') {
-      //   this.fabricSize=data;
-      // }
-      
+      }
     }
   }
   handleModalData(data: any, loggedUser: any) {
@@ -145,24 +162,17 @@ export class ArticleDetailsPage implements OnInit {
   }
 
   bookTailor() {
-    // If color not selected
     if (!this.selectedColor) {
       this.openSizeChartModal('selectedColor', ColorModelPage);
       return;
     }
-    // if(!this.fabricSize){
-    //   this.openSizeChartModal('sizeChart');
-    //   return 
-    // }
-    const loggedUser = !!localStorage.getItem('loggedUser'); // or use your AuthService
 
-    if (!loggedUser) {
+    if (!this.loggedUser) {
       this.alertService
         .showAlertWithCancel('Alrert!', 'Please login to continue', 'alert')
         .then((resp: any) => {
           if (resp) {
             this.commonService.setCurrentPath();
-            // Redirect to login
             this.router.navigate(['/auth/login']);
             return;
           }
@@ -170,15 +180,17 @@ export class ArticleDetailsPage implements OnInit {
       return;
     }
     this.openSizeChartModal('bookTailor', TailorListPage);
-    // this.router.navigate(['/tabs/tailor']);
   }
 
   myOrders(tailor: any, loggedUser: any) {
+    this.selectedTailor=tailor;
+    this.currentBooking(loggedUser, tailor);
+    this.goToOrderSummary();
     const myOrder: any = localStorage.getItem('myOrder');
     if (myOrder) {
       const order: any = JSON.parse(myOrder);
       const data = {
-        phoneNumber: loggedUser.phoneNumber,
+        phoneNumber: loggedUser?.phoneNumber,
         tailor: tailor,
         itme: this.navigatedData,
       };
@@ -187,12 +199,25 @@ export class ArticleDetailsPage implements OnInit {
     } else {
       const order = [
         {
-          phoneNumber: loggedUser.phoneNumber,
+          phoneNumber: loggedUser?.phoneNumber,
           tailor: tailor,
           itme: this.navigatedData,
         },
       ];
       localStorage.setItem('myOrder', JSON.stringify(order));
     }
+  }
+  currentBooking(loggedUser: any, tailor: any) {
+    const data = {
+      phoneNumber: loggedUser?.phoneNumber,
+      tailor: tailor,
+      itme: this.navigatedData,
+      color: this.selectedColor,
+    };
+    localStorage.setItem('currentBooking', JSON.stringify(data));
+  }
+
+  goToOrderSummary() {
+    this.router.navigate(['/main/with-fabric', this.articleName, this.articleId, 'order-summary']);
   }
 }

@@ -2,7 +2,7 @@
   <ion-toolbar color="primary">
     <ion-buttons slot="start">
       <ion-back-button
-        defaultHref="/tabs/customer/with-fabric"
+        defaultHref="/main/dashboard/with-fabric/{{articleName}}"
       ></ion-back-button>
     </ion-buttons>
     <ion-title *ngIf="fabric && article"
@@ -12,12 +12,6 @@
 </ion-header>
 
 <ion-content [fullscreen]="true">
-  <!-- <div class="search-container">
-    <ion-searchbar
-      [placeholder]="'Search for '"
-      class="custom-searchbar"
-    ></ion-searchbar>
-  </div> -->
   <div *ngIf="subArtcles.length > 0">
     <ngb-carousel
       #carousel
@@ -62,12 +56,7 @@
       <ion-col class="colorText">
         <ion-text style="padding-left: 0.625rem;" class="fs-subtitle">Color</ion-text>
       </ion-col>
-      <!-- <ion-col class="sizeChart">
-        <ion-text (click)="openSizeChartModal('sizeChart')" style="padding-right: 0.625rem; color: blue;"
-         class="fs-subtitle">Size Chart</ion-text>
-      </ion-col> -->
     </ion-row>
-    
     
     <div class="category-list">
       <div class="category-item" *ngFor="let color of colorMaster">
