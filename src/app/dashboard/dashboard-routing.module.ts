@@ -5,6 +5,9 @@ import { WithfabricPage } from './pages/withfabric/withfabric.page';
 import { ArticlePage } from './pages/article/article.page';
 import { ArticleDetailsPage } from './pages/article-details/article-details.page';
 import { OrderSummaryPage } from './pages/order-summary/order-summary.page';
+import { TailorListPage } from '../tailor/pages/tailor-list/tailor-list.page';
+import { MenuPage } from './pages/menu/menu.page';
+import { CartPage } from '../users/pages/cart/cart.page';
 
 const routes: Routes = [
   {
@@ -18,9 +21,30 @@ const routes: Routes = [
         path: 'with-fabric/:article/:articleId',
         component: ArticleDetailsPage,
       },
+      
       {
         path: 'with-fabric/:article/:articleId/order-summary',
         component: OrderSummaryPage,
+      },
+      {
+        path: 'menu',
+        component: MenuPage
+      },
+      {
+        path: 'cart',
+        component: CartPage
+      },
+      {
+        path: 'tailor',
+        loadChildren: () => import('../tailor/tailor.module').then( m => m.TailorModule)
+      },
+      {
+        path: 'user',
+        loadChildren: () => import('../users/users.module').then( m => m.UsersModule)
+      },
+      {
+        path: 'menu',
+        component: MenuPage
       },
     ],
   },

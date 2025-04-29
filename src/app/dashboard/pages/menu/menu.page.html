@@ -1,0 +1,49 @@
+<ion-header [translucent]="true">
+  <ion-toolbar color="primary">
+    <ion-title>Menu</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content [fullscreen]="true">
+  <ion-card>
+    <ion-card-header>
+      <ion-card-title>Orders</ion-card-title>
+    </ion-card-header>
+  
+    <ion-card-content>
+      <ion-list class="list-card">
+        <ion-item>
+          <ion-icon style="padding-right: 0.625rem;" name="cube-outline"></ion-icon>
+          <ion-label>Your Order</ion-label>
+          <ion-icon name="chevron-forward-outline"></ion-icon>
+        </ion-item>
+        <ion-item lines="none">
+          <ion-icon style="padding-right: 0.625rem;" name="heart-outline"></ion-icon>
+          <ion-label>Wishlist</ion-label>
+          <ion-icon name="chevron-forward-outline"></ion-icon>
+        </ion-item>
+      </ion-list>
+    </ion-card-content>
+  </ion-card>
+
+  <ion-card>
+    <ion-card-header>
+      <ion-card-title>Account Setting</ion-card-title>
+    </ion-card-header>
+  
+    <ion-card-content>
+      <ion-list class="list-card">
+        <ion-item (click)="onClick('Address')">
+          <ion-icon style="padding-right: 0.625rem;" name="location-outline"></ion-icon>
+          <ion-label>Your Address</ion-label>
+          <ion-icon name="chevron-forward-outline"></ion-icon>
+        </ion-item>
+        <ion-item lines="none">
+          <ion-icon style="padding-right: 0.625rem;" name="log-in-outline"></ion-icon>
+          <ion-label>Login & Security</ion-label>
+          <ion-icon name="chevron-forward-outline"></ion-icon>
+        </ion-item>
+      </ion-list>
+    </ion-card-content>
+  </ion-card>
+</ion-content>

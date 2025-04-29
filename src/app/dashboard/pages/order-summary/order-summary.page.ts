@@ -6,7 +6,7 @@ import { AlertService } from 'src/app/services/alert.service';
 import { CommonService } from 'src/app/services/common.service';
 import { SharedModule } from 'src/app/sharedmodule/sharedmodule.module';
 import { Location } from '@angular/common';
-import { IonRadio } from "@ionic/angular/standalone";
+import { IonRadio, IonRadioGroup } from "@ionic/angular/standalone";
 import { AddressPage } from 'src/app/users/pages/address/address.page';
 
 @Component({
@@ -14,7 +14,7 @@ import { AddressPage } from 'src/app/users/pages/address/address.page';
   templateUrl: './order-summary.page.html',
   styleUrls: ['./order-summary.page.scss'],
   standalone: true,
-  imports: [IonRadio, SharedModule]
+  imports: [IonRadioGroup, IonRadio, SharedModule]
 })
 export class OrderSummaryPage implements OnInit {
   articleName: any | null;
@@ -24,7 +24,7 @@ export class OrderSummaryPage implements OnInit {
   color:any;
   tailor:any;
   userAddress: any = null;
-  selectedPayment: string = 'cod';
+  paymentMode: string = 'cod';
   constructor(
     private iconService: IconService,
     private modalController: ModalController,
@@ -42,11 +42,8 @@ export class OrderSummaryPage implements OnInit {
     this.articleName = this.route.snapshot.paramMap.get('article');
     this.articleId = this.route.snapshot.paramMap.get('articleId');
     const currentBooking = localStorage.getItem('currentBooking');
-    const myAddress = localStorage.getItem("myAddress");
-    if(myAddress){
-      const address = JSON.parse(myAddress);
-      this.userAddress=address;
-    }
+    this.getAddress();
+
     if(currentBooking){
       const parseCurrentBooking = JSON.parse(currentBooking);
       this.color = parseCurrentBooking?.color;
@@ -79,14 +76,26 @@ export class OrderSummaryPage implements OnInit {
     await modal.present();
     const { data, role } = await modal.onDidDismiss();
     if (role === 'confirmed' && data) {
-      
+      this.userAddress=data;
     }
   }
   changeAddress() {
-    // Open change address page
+    this.addNewAddress();
   }
   
-  selectPayment(method: string) {
-    this.selectedPayment = method;
+  getPaymentMode(event: any) {
+    this.paymentMode = event.detail.value;
+    console.log(event);
+  }
+
+  getAddress(){
+    const myAddress = localStorage.getItem("myAddress");
+    if(myAddress){
+      const address = JSON.parse(myAddress)?.filter((item:any)=>{
+        return item.defaultAddress==true;
+      });
+      
+      this.userAddress=address[0];
+    }
   }
 }

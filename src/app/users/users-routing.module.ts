@@ -8,17 +8,17 @@ const routes: Routes = [
   {
       path: '',
       children: [
-        { path: '', redirectTo: 'user/address', pathMatch: 'full' },
+        { path: '', redirectTo: 'address', pathMatch: 'full' },
         {
-          path: 'user/address',
+          path: 'address',
           component: AddressPage
         },
         {
-          path: 'user/address',
+          path: 'cart',
           component: CartPage
         },
         {
-          path: 'user/address',
+          path: 'myorder',
           component: MyorderPage
         },
       ],

@@ -1,22 +1,23 @@
-import { Component, Input, OnInit } from '@angular/core';
+import { Component, Input, OnInit, ViewChild } from '@angular/core';
 import { IconService } from 'src/app/services/icon.service';
 import { SharedModule } from 'src/app/sharedmodule/sharedmodule.module';
 import { ModalController } from '@ionic/angular';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-
+import { IonAccordion, IonCheckbox } from "@ionic/angular/standalone";
 
 @Component({
   selector: 'app-address',
   templateUrl: './address.page.html',
   styleUrls: ['./address.page.scss'],
   standalone: true,
-  imports: [SharedModule]
+  imports: [IonCheckbox, IonAccordion, SharedModule]
 })
 export class AddressPage implements OnInit {
   @Input() title: string | any;
   selectedType: string = '';
   addressForm!: FormGroup;
-
+  @ViewChild('accordionGroup', { static: true }) accordionGroup!: any;
+  userAddressList: any=[];
   constructor(private iconService: IconService,
     private modalController: ModalController,
     private fb: FormBuilder
@@ -33,8 +34,11 @@ export class AddressPage implements OnInit {
       city: ['', Validators.required],
       houseNo: ['', Validators.required],
       area: ['', Validators.required],
+      defaultAddress: [''],
       landmark: ['']
     });
+
+    this.getAddressList();
   }
 
   dismiss() {
@@ -58,17 +62,43 @@ export class AddressPage implements OnInit {
   }
 
   saveAddress() {
+    const addressList=[];
     if (this.addressForm.valid) {
+      const myAddress = localStorage.getItem("myAddress");
+      if(myAddress){
+        this.userAddressList = JSON.parse(myAddress)
+      }
+   
       const addressData = {
         ...this.addressForm.value,
         addressType: this.selectedType
       };
-      console.log('Saved Address: ', JSON.stringify(addressData));
-      localStorage.setItem("myAddress", JSON.stringify(addressData))
+      this.userAddressList.push(addressData);
+      console.log('Saved Address: ', JSON.stringify(this.userAddressList));
+      localStorage.setItem("myAddress", JSON.stringify(this.userAddressList));
+      if(this.title){
+        
+        this.modalController.dismiss(addressData, 'confirmed');
+      }else{
+        this.getAddressList();
+      }
     } else {
       console.log('Form Invalid');
     }
   }
+  toggleAccordion = () => {
+    const nativeEl = this.accordionGroup;
+    if (nativeEl.value === 'second') {
+      nativeEl.value = undefined;
+    } else {
+      nativeEl.value = 'second';
+    }
+  };
 
-
+  getAddressList(){
+    const myAddress = localStorage.getItem("myAddress");
+    if(myAddress){
+      this.userAddressList = JSON.parse(myAddress)
+    }
+  }
 }

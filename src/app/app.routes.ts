@@ -14,10 +14,10 @@ export const routes: Routes = [
     redirectTo: 'main',
     pathMatch: 'full',
   },
-  {
-    path: 'order-summary',
-    loadComponent: () => import('./dashboard/pages/order-summary/order-summary.page').then( m => m.OrderSummaryPage)
-  },
+  // {
+  //   path: 'order-summary',
+  //   loadComponent: () => import('./dashboard/pages/order-summary/order-summary.page').then( m => m.OrderSummaryPage)
+  // },
   
   // {
   //   path: 'login',

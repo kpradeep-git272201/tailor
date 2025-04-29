@@ -1,0 +1,17 @@
+.country-code {
+    display: flex;
+    align-items: center;
+    margin-right: 10px;
+
+    .flag {
+      width: 20px;
+      height: 15px;
+      margin-right: 5px;
+    }
+
+    .code {
+        font-size: 16px;
+        padding-right: 10px;
+        margin-top: 1px;
+    }
+  }
