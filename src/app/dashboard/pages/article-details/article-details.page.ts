@@ -51,7 +51,6 @@ export class ArticleDetailsPage implements OnInit {
   }
 
   ngOnInit() {
-    this.loggedUser = !!localStorage.getItem('loggedUser'); 
     this.subArtcles = this.commonService.getSubArtcles();
     this.colorMaster = this.commonService.colorClassificationMaster();
 
@@ -66,6 +65,7 @@ export class ArticleDetailsPage implements OnInit {
     }
 
     this.route.queryParams.subscribe((params) => {
+      this.loggedUser = !!localStorage.getItem('loggedUser'); 
       if (params['navigatedData']) {
         this.navigatedData = JSON.parse(params['navigatedData']);
         this.article = this.navigatedData.article;
