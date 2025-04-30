@@ -38,4 +38,18 @@ export class FooterPage implements OnInit {
     this.router.navigate(['/tabs/myTabs/'+action]);
   }
 
+  onClick(action:string){
+    if(action=="Home"){
+      this.router.navigate(['/main/dashboard']);
+    }else if(action=="Tailor"){
+      this.router.navigate(['/main/tailor']);
+    }else if(action=="Order"){
+      this.router.navigate(['/main/dashboard']);
+    }else if(action=="Cart"){
+      this.router.navigate(['/main/cart']);
+    }else if(action=="Menu"){
+      this.router.navigate(['/main/menu']);
+
+    }
+  }
 }

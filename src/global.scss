@@ -115,6 +115,9 @@
   border-radius: 50%; /* Ensures the image stays circular */
 }
 
+ion-card{
+  border-radius: 0.625rem;
+}
 ion-content {
   --background: var(--ion-content-bg-color);
   // --background: url('/assets/images/background/Background5.jpg') no-repeat center center / cover !important;

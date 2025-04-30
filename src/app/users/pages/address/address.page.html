@@ -1,7 +1,12 @@
 <ion-header [translucent]="true">
   <ion-toolbar color="primary">
-    <ion-title>{{title}}</ion-title>
-    <ion-buttons slot="end">
+    <ion-buttons *ngIf="!title" slot="start">
+      <ion-back-button
+        defaultHref="/main/user"
+      ></ion-back-button>
+    </ion-buttons>
+    <ion-title>{{title|| 'Address'}}</ion-title>
+    <ion-buttons *ngIf="title" slot="end">
       <ion-button (click)="dismiss()">
         <ion-icon style="color: black;" name="close"></ion-icon>
       </ion-button>
@@ -10,82 +15,135 @@
 </ion-header>
 
 <ion-content [fullscreen]="true">
-  <form [formGroup]="addressForm">
-
-    <ion-list lines="full">
-
-      <ion-item>
-        <ion-input formControlName="fullName" label="Full Name (Required)" label-placement="stacked"></ion-input>
+  <ion-accordion-group>
+    <ion-accordion value="first">
+      <ion-item slot="header" color="light">
+        <ion-icon style="padding-right: 0.625rem;" name="add-outline"></ion-icon>
+        <ion-label> New Address</ion-label>
       </ion-item>
+      <div slot="content">
+        <ion-card>
+          <ion-card-header>
+            <ion-card-title>
 
-      <ion-item>
-        <ion-input formControlName="phoneNumber" type="tel" label="Phone Number (Required)" label-placement="stacked"></ion-input>
-      </ion-item>
+            </ion-card-title>
+          </ion-card-header>
+          <ion-card-content>
+            <form [formGroup]="addressForm">
+      
+              <ion-list lines="full">
+          
+                <ion-item>
+                  <ion-input formControlName="fullName" label="Full Name (Required)" label-placement="stacked"></ion-input>
+                </ion-item>
+          
+                <ion-item>
+                 <div class="country-code">
+                  <img src="assets/flags/india.png" class="flag" alt="India Flag" />
+                  <span class="code">+91</span>
+                  <ion-input formControlName="phoneNumber" type="tel" label-placement="stacked"></ion-input>
+                </div>
+                 
+                </ion-item>
+          
+                <ion-text color="primary" class="ion-padding-start">
+                  <p (click)="addAlternatePhone()" style="cursor: pointer; font-weight: 500;">+ Add Alternate Phone Number</p>
+                </ion-text>
+          
+                <ion-item>
+                  <ion-input formControlName="pincode" type="text" label="Pincode (Required)" label-placement="stacked"></ion-input>
+                  <ion-button size="small" slot="end" (click)="useMyLocation()">
+                    <ion-icon name="locate" slot="icon-only"></ion-icon>
+                  </ion-button>
+                </ion-item>
+          
+                <ion-grid>
+                  <ion-row>
+                    <ion-col size="6">
+                      <ion-item>
+                        <ion-input formControlName="state" label="State (Required)" label-placement="stacked"></ion-input>
+                      </ion-item>
+                    </ion-col>
+                    <ion-col size="6">
+                      <ion-item>
+                        <ion-input formControlName="city" label="City (Required)" label-placement="stacked"></ion-input>
+                        <ion-icon name="search" slot="end" style="margin-right: 10px;"></ion-icon>
+                      </ion-item>
+                    </ion-col>
+                  </ion-row>
+                </ion-grid>
+          
+                <ion-item>
+                  <ion-input formControlName="houseNo" label="House No., Building Name (Required)" label-placement="stacked"></ion-input>
+                </ion-item>
+          
+                <ion-item>
+                  <ion-input formControlName="area" label="Road name, Area, Colony (Required)" label-placement="stacked"></ion-input>
+                  <ion-icon name="search" slot="end" style="margin-right: 10px;"></ion-icon>
+                </ion-item>
+          
+                <ion-text color="primary" class="ion-padding-start">
+                  <p (click)="addLandmark()" style="cursor: pointer; font-weight: 500;">+ Add Nearby Famous Shop/Mall/Landmark</p>
+                </ion-text>
+          
+                <ion-item lines="none">
+                  <ion-label>Type of address</ion-label>
+                </ion-item>
+          
+                <ion-grid>
+                  <ion-row>
+                    <ion-col size="6">
+                      <ion-button expand="block" fill="outline" [color]="selectedType === 'home' ? 'primary' : 'medium'" (click)="selectType('home')">
+                        <ion-icon name="home" slot="start"></ion-icon> Home
+                      </ion-button>
+                    </ion-col>
+                    <ion-col size="6">
+                      <ion-button expand="block" fill="outline" [color]="selectedType === 'work' ? 'primary' : 'medium'" (click)="selectType('work')">
+                        <ion-icon name="business" slot="start"></ion-icon> Work
+                      </ion-button>
+                    </ion-col>
+                  </ion-row>
+                </ion-grid>
+          
+              </ion-list>
+              <ion-item>
+                <ion-label>Make default</ion-label>
+                <ion-checkbox slot="end" formControlName="defaultAddress"></ion-checkbox>
+              </ion-item>
+              <ion-button expand="block" color="warning" (click)="saveAddress()" style="margin-top: 20px;" [disabled]="addressForm.invalid">
+                SAVE ADDRESS
+              </ion-button>
+          
+            </form>
+          </ion-card-content>
+        </ion-card>
+      </div>
+   
+    </ion-accordion>
 
-      <ion-text color="primary" class="ion-padding-start">
-        <p (click)="addAlternatePhone()" style="cursor: pointer; font-weight: 500;">+ Add Alternate Phone Number</p>
-      </ion-text>
+  </ion-accordion-group>
+  <div *ngIf="userAddressList">
+    <ion-card *ngFor="let userAddress of userAddressList">
+      <ion-card-content style="padding-right: 0rem;">
+        <ion-list>
+          <ion-item lines="none" style="position: relative;">
+            <ion-label>
+              <!-- If Address Exists -->
+              <div style="margin-top: 10px;">
+                <p><strong>{{ userAddress.fullName }}</strong></p>
+                  <p>{{ userAddress.houseNo }}, {{ userAddress.area }}</p>
+                  <p>{{ userAddress.city }}, {{ userAddress.state }} - {{ userAddress.pincode }}</p>
+                  <p>Mobile: <ion-icon name="call-outline" style="padding-right: 0.625rem; padding-left: 0.625rem; color: green;"></ion-icon>{{ userAddress.phoneNumber }}</p>
+              </div>
+            </ion-label>
+          </ion-item>
+        </ion-list>
+        <ion-item lines="none" style="margin-top: -1.5rem;">
+          <ion-icon name="create-outline" color="success" slot="end"></ion-icon>
+          <ion-icon name="trash-outline" color="danger" slot="end"></ion-icon>
+        </ion-item>
+      </ion-card-content>
+    </ion-card>
+  </div>
 
-      <ion-item>
-        <ion-input formControlName="pincode" type="text" label="Pincode (Required)" label-placement="stacked"></ion-input>
-        <ion-button size="small" slot="end" (click)="useMyLocation()">
-          <ion-icon name="locate" slot="icon-only"></ion-icon>
-        </ion-button>
-      </ion-item>
-
-      <ion-grid>
-        <ion-row>
-          <ion-col size="6">
-            <ion-item>
-              <ion-input formControlName="state" label="State (Required)" label-placement="stacked"></ion-input>
-            </ion-item>
-          </ion-col>
-          <ion-col size="6">
-            <ion-item>
-              <ion-input formControlName="city" label="City (Required)" label-placement="stacked"></ion-input>
-              <ion-icon name="search" slot="end" style="margin-right: 10px;"></ion-icon>
-            </ion-item>
-          </ion-col>
-        </ion-row>
-      </ion-grid>
-
-      <ion-item>
-        <ion-input formControlName="houseNo" label="House No., Building Name (Required)" label-placement="stacked"></ion-input>
-      </ion-item>
-
-      <ion-item>
-        <ion-input formControlName="area" label="Road name, Area, Colony (Required)" label-placement="stacked"></ion-input>
-        <ion-icon name="search" slot="end" style="margin-right: 10px;"></ion-icon>
-      </ion-item>
-
-      <ion-text color="primary" class="ion-padding-start">
-        <p (click)="addLandmark()" style="cursor: pointer; font-weight: 500;">+ Add Nearby Famous Shop/Mall/Landmark</p>
-      </ion-text>
-
-      <ion-item lines="none">
-        <ion-label>Type of address</ion-label>
-      </ion-item>
-
-      <ion-grid>
-        <ion-row>
-          <ion-col size="6">
-            <ion-button expand="block" fill="outline" [color]="selectedType === 'home' ? 'primary' : 'medium'" (click)="selectType('home')">
-              <ion-icon name="home" slot="start"></ion-icon> Home
-            </ion-button>
-          </ion-col>
-          <ion-col size="6">
-            <ion-button expand="block" fill="outline" [color]="selectedType === 'work' ? 'primary' : 'medium'" (click)="selectType('work')">
-              <ion-icon name="business" slot="start"></ion-icon> Work
-            </ion-button>
-          </ion-col>
-        </ion-row>
-      </ion-grid>
-
-    </ion-list>
-
-    <ion-button expand="block" color="warning" (click)="saveAddress()" style="margin-top: 20px;" [disabled]="addressForm.invalid">
-      SAVE ADDRESS
-    </ion-button>
-
-  </form>
 </ion-content>

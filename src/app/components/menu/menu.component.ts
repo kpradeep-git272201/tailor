@@ -3,7 +3,7 @@ import { Router } from '@angular/router';
 import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
 import { SharedModule } from 'src/app/sharedmodule/sharedmodule.module';
 import { ToastController } from '@ionic/angular';
-import { TostService } from 'src/app/services/tost.service';
+
 
 
 @Component({
@@ -15,7 +15,7 @@ import { TostService } from 'src/app/services/tost.service';
 export class MenuComponent  implements OnInit {
 
   constructor(private router: Router,
-    private tostService: TostService,
+
     private toastCtrl: ToastController,
     public dialogRef: MatDialogRef<MenuComponent>,
     @Inject(MAT_DIALOG_DATA) public data: { title: string; id: number }
@@ -30,7 +30,7 @@ export class MenuComponent  implements OnInit {
   navigateTo(route: string) {
     this.dialogRef.close();// Close modal
     // this.router.navigate([route]); // Navigate to page
-    this.tostService.presentToast("Coming soon!", "warning");
+
   }
   logout() {
     this.dialogRef.close();

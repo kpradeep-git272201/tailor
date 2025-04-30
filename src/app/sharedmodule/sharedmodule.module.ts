@@ -44,7 +44,8 @@ import {
   IonSpinner,
   IonChip, 
   IonCardSubtitle,
-  IonNote
+  IonNote,
+  IonAccordionGroup
 } from '@ionic/angular/standalone';
 import { IonButton } from '@ionic/angular/standalone';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
@@ -105,7 +106,8 @@ import { ModalController } from '@ionic/angular';
     IonSpinner,
     IonChip, 
     IonCardSubtitle,
-    IonNote
+    IonNote,
+    IonAccordionGroup
   ],
   exports: [
     IonContent,
@@ -159,7 +161,8 @@ import { ModalController } from '@ionic/angular';
     IonSpinner,
     IonChip, 
     IonCardSubtitle,
-    IonNote
+    IonNote,
+    IonAccordionGroup
   ]
 })
 export class SharedModule { }

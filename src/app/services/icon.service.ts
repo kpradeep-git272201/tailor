@@ -48,7 +48,14 @@ import {
   checkmark,
   close,
   business,
-  home
+  home,
+  cubeOutline,
+  logInOutline,
+  chevronForwardOutline,
+  searchOutline,
+  locate,
+  addOutline,
+  callOutline,
 } from 'ionicons/icons';
 
 @Injectable({
@@ -60,6 +67,12 @@ export class IconService {
 
   registerIcons() {
     addIcons({
+      callOutline,
+      addOutline,
+      searchOutline,
+      chevronForwardOutline,
+      logInOutline,
+      cubeOutline,
       home,
       business,
       close,
@@ -107,7 +120,8 @@ export class IconService {
       shareOutline,
       heartOutline,
       addCircleOutline,
-      removeCircleOutline
+      removeCircleOutline,
+      locate
     });
   }
 }
