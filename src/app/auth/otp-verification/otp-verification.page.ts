@@ -82,20 +82,20 @@ export class OtpVerificationPage implements OnInit {
     const loggedUser = {
       appRole: 'defaultRole',
       phoneNumber: this.phoneNumber,
-      path: '',
+      path: '/main',
     };
-    let url = '/auth';
-    if (this.phoneNumber == '9999999999') {
-      // This is for Customer login mobile number
-      url = '/main';
-      loggedUser.appRole = 'Customer';
-      loggedUser.path = url;
-    } else if (this.phoneNumber == '8888888888') {
-      // This is for Tailor login mobile number
-      url = '/main';
-      loggedUser.appRole = 'Tailor';
-      loggedUser.path = url;
-    }
+    let url = '/main';
+    // if (this.phoneNumber == '9999999999') {
+    //   // This is for Customer login mobile number
+    //   url = '/main';
+    //   loggedUser.appRole = 'Customer';
+    //   loggedUser.path = url;
+    // } else if (this.phoneNumber == '8888888888') {
+    //   // This is for Tailor login mobile number
+    //   url = '/main';
+    //   loggedUser.appRole = 'Tailor';
+    //   loggedUser.path = url;
+    // }
 
     localStorage.setItem('loggedUser', JSON.stringify(loggedUser));
     this.insertUser(loggedUser);

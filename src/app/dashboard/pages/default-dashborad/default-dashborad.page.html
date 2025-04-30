@@ -8,7 +8,7 @@
         <span class="title-text">Home</span>
       </div>
     </ion-title>
-    <ion-avatar
+    <!-- <ion-avatar
       *ngIf="isLoggedIn"
       slot="end"
       class="char-avatar"
@@ -16,13 +16,13 @@
       <ng-container *ngIf="isLoggedIn">
         <div class="avatar-text">{{ userInitial }}</div>
       </ng-container>
-    </ion-avatar>
+    </ion-avatar> -->
     <ion-buttons *ngIf="!isLoggedIn" slot="end">
       <ion-button (click)="navigateTo()">Login</ion-button>
     </ion-buttons>
-    <ion-buttons slot="end">
+    <ion-buttons *ngIf="isLoggedIn" slot="end">
       <ion-button>
-        <ion-icon name="location" class="location-icon"></ion-icon>
+        <ion-icon name="person-circle-outline" class="location-icon"></ion-icon>
       </ion-button>
     </ion-buttons>
   </ion-toolbar>
