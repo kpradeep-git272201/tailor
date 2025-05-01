@@ -1,17 +1,20 @@
 import { Component, OnInit } from '@angular/core';
+import { IconService } from 'src/app/services/icon.service';
 import { SharedModule } from 'src/app/sharedmodule/sharedmodule.module';
 
 @Component({
-  selector: 'app-cart',
-  templateUrl: './cart.page.html',
-  styleUrls: ['./cart.page.scss'],
+  selector: 'app-wish-list',
+  templateUrl: './wish-list.page.html',
+  styleUrls: ['./wish-list.page.scss'],
   standalone: true,
   imports: [SharedModule]
 })
-export class CartPage implements OnInit {
-  wishList: any=[];
+export class WishListPage implements OnInit {
 
-  constructor() { }
+  wishList: any=[];
+  constructor(private iconService: IconService) { 
+    this.iconService.registerIcons();
+  }
 
   ngOnInit() {
     this.getWishList();
@@ -23,4 +26,5 @@ export class CartPage implements OnInit {
       this.wishList = JSON.parse(getWishList);
     }
   }
+
 }

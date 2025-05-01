@@ -1,0 +1,31 @@
+<ion-header [translucent]="true">
+  <ion-toolbar color="primary">
+    <ion-buttons slot="start">
+      <ion-back-button
+        defaultHref="/main/user"
+      ></ion-back-button>
+    </ion-buttons>
+    <ion-title>Wish List</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content [fullscreen]="true">
+  <ion-list *ngFor="let wish of wishList">
+    <ion-item *ngIf="wish.type=='Fabric'">
+      <ion-thumbnail>
+        <img alt="wish item" [src]="wish.imageUrl" />
+      </ion-thumbnail>
+      <ion-label style="padding-left: 0.625rem;">{{wish.type}}|{{wish.name}}
+        <p>{{wish.desc}}</p>
+      </ion-label>
+      
+    </ion-item>
+    <ion-item *ngIf="wish.type=='Color'">
+      <ion-thumbnail [style.background-color]="wish.hexCode">
+      </ion-thumbnail>
+      <ion-label style="padding-left: 0.625rem;">{{wish.type}}|{{wish.name}}
+        <p>{{wish.desc}}</p>
+      </ion-label>
+    </ion-item>
+  </ion-list>
+</ion-content>

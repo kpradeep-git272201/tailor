@@ -42,10 +42,6 @@ const routes: Routes = [
         path: 'user',
         loadChildren: () => import('../users/users.module').then( m => m.UsersModule)
       },
-      {
-        path: 'menu',
-        component: MenuPage
-      },
     ],
   },
 ];

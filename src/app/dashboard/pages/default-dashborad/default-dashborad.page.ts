@@ -7,7 +7,7 @@ import { IconService } from 'src/app/services/icon.service';
 import { CommonService } from 'src/app/services/common.service';
 import { TopRatedFabricPage } from "../top-rated-fabric/top-rated-fabric.page";
 import { TopRatedTailorPage } from "../top-rated-tailor/top-rated-tailor.page";
-import { FooterPage } from "../../../footer/footer.page";
+import { IonPopover } from '@ionic/angular';
 
 @Component({
   selector: 'app-default-dashborad',
@@ -17,7 +17,8 @@ import { FooterPage } from "../../../footer/footer.page";
   imports: [SharedModule, TopRatedFabricPage, TopRatedTailorPage]
 })
 export class DefaultDashboradPage implements OnInit {
-
+  @ViewChild('popover') popover!: IonPopover;
+  isOpen = false;
   isLoggedIn = false;
   userName = 'Customer';
   userInitial = this.userName.charAt(0).toUpperCase();
@@ -81,7 +82,11 @@ export class DefaultDashboradPage implements OnInit {
     clearInterval(this.interval);
   }
 
-  
+  presentPopover(e: Event) {
+    this.popover.event = e;
+    this.isOpen = true;
+  }
+
   startAutoTyping() {
     if (this.isTyping) return;
     this.interval = setInterval(() => {
@@ -193,5 +198,14 @@ export class DefaultDashboradPage implements OnInit {
         })
       }
     });
+  }
+
+  getLogout(){
+    this.popover.event = undefined;
+    this.isOpen = false;
+    this.isLoggedIn = false;
+    localStorage.removeItem('loggedUser');
+    this.router.navigate(['/auth']);
+    this.popover.dismiss();
   }
 }

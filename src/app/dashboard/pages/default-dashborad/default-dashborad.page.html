@@ -20,13 +20,24 @@
     <ion-buttons *ngIf="!isLoggedIn" slot="end">
       <ion-button (click)="navigateTo()">Login</ion-button>
     </ion-buttons>
-    <ion-buttons *ngIf="isLoggedIn" slot="end">
+    <ion-buttons *ngIf="isLoggedIn" (click)="presentPopover($event)" slot="end">
       <ion-button>
         <ion-icon name="person-circle-outline" class="location-icon"></ion-icon>
       </ion-button>
     </ion-buttons>
   </ion-toolbar>
 </ion-header>
+
+<ion-popover #popover [isOpen]="isOpen" (didDismiss)="isOpen = false">
+  <ng-template>
+    <ion-list>
+      <ion-item (click)="getLogout()">
+        <ion-icon name="log-out-outline" style="padding-right: 0.625rem;"></ion-icon>
+        <ion-label>Logout</ion-label>
+      </ion-item>
+    </ion-list>
+  </ng-template>
+</ion-popover>
 
 <ion-content [fullscreen]="true">
   <div class="search-container">
