@@ -217,4 +217,27 @@ export class WithfabricPage implements OnInit {
     this.displayedColors = this.colorMaster.slice(0, nextDisplayCount);
     this.allColorLoaded = this.displayedColors.length >= this.colorMaster.length;
   }
+
+  wishList(object:any, action:any){
+    if(action=='Color'){
+      object.type=action;
+      object.name=object.colorName;
+      object.desc=object.description;
+    }else if(action=='Fabric'){
+      object.type=action;
+      object.name=object.fabricType;
+      object.desc=object.washingInstruction;
+    }
+    object.isWishList=!object.isWishList;
+    const getWishList = localStorage.getItem('wish_list');
+    if(getWishList){
+      const wish_list:any = JSON.parse(getWishList);
+      wish_list.push(object);
+
+      localStorage.setItem('wish_list', JSON.stringify(wish_list));
+    }else{
+      localStorage.setItem('wish_list', JSON.stringify([object]));
+    }
+ 
+  }
 }

@@ -416,7 +416,8 @@ export class CommonService {
         "brandName": "PureCotton",
         "colorId": 1,
         "isDelete": false,
-        "isActive": true
+        "isActive": true,
+        "isWishList": false
       },
       {
         "fabricId": 102,
@@ -436,7 +437,8 @@ export class CommonService {
         "brandName": "RoyalSilk",
         "colorId": 2,
         "isDelete": false,
-        "isActive": true
+        "isActive": true,
+        "isWishList": false
       },
       {
         "fabricId": 103,
@@ -456,7 +458,8 @@ export class CommonService {
         "brandName": "WarmWool",
         "colorId": 3,
         "isDelete": false,
-        "isActive": true
+        "isActive": true,
+        "isWishList": false
       },
       {
         "fabricId": 104,
@@ -476,7 +479,8 @@ export class CommonService {
         "brandName": "PolyTech",
         "colorId": 4,
         "isDelete": false,
-        "isActive": true
+        "isActive": true,
+        "isWishList": false
       },
       {
         "fabricId": 105,
@@ -496,7 +500,8 @@ export class CommonService {
         "brandName": "LinenLux",
         "colorId": 5,
         "isDelete": false,
-        "isActive": true
+        "isActive": true,
+        "isWishList": false
       },
       {
         "fabricId": 106,
@@ -516,7 +521,8 @@ export class CommonService {
         "brandName": "DenimPro",
         "colorId": 6,
         "isDelete": false,
-        "isActive": true
+        "isActive": true,
+        "isWishList": false
       },
       {
         "fabricId": 107,
@@ -536,7 +542,8 @@ export class CommonService {
         "brandName": "EleganceChiffon",
         "colorId": 7,
         "isDelete": false,
-        "isActive": true
+        "isActive": true,
+        "isWishList": false
       },
       {
         "fabricId": 108,
@@ -556,7 +563,8 @@ export class CommonService {
         "brandName": "RoyalVelvet",
         "colorId": 8,
         "isDelete": false,
-        "isActive": true
+        "isActive": true,
+        "isWishList": false
       }
     ];
   }
@@ -569,7 +577,8 @@ export class CommonService {
         "hexCode": "#FF0000",
         "category": "Warm",
         "description": "A bold and energetic color often associated with passion and excitement.",
-        "fabricIds": [101, 102]
+        "fabricIds": [101, 102],
+        "isWishList": false
       },
       {
         "colorId": 2,
@@ -577,7 +586,8 @@ export class CommonService {
         "hexCode": "#0000FF",
         "category": "Cool",
         "description": "A calming color often associated with trust, stability, and depth.",
-        "fabricIds": [103, 104]
+        "fabricIds": [103, 104],
+        "isWishList": false
       },
       {
         "colorId": 3,
@@ -585,7 +595,8 @@ export class CommonService {
         "hexCode": "#008000",
         "category": "Natural",
         "description": "A refreshing color associated with nature, growth, and harmony.",
-        "fabricIds": [105, 106]
+        "fabricIds": [105, 106],
+        "isWishList": false
       },
       {
         "colorId": 4,
@@ -593,7 +604,8 @@ export class CommonService {
         "hexCode": "#FFFF00",
         "category": "Warm",
         "description": "A bright and cheerful color symbolizing happiness and positivity.",
-        "fabricIds": [107, 108]
+        "fabricIds": [107, 108],
+        "isWishList": false
       },
       {
         "colorId": 5,
@@ -601,7 +613,8 @@ export class CommonService {
         "hexCode": "#FFFFFF",
         "category": "Neutral",
         "description": "A pure and clean color representing simplicity and peace.",
-        "fabricIds": [101, 103]
+        "fabricIds": [101, 103],
+        "isWishList": false
       },
       {
         "colorId": 6,
@@ -609,7 +622,8 @@ export class CommonService {
         "hexCode": "#000000",
         "category": "Neutral",
         "description": "A timeless and sophisticated color associated with power and elegance.",
-        "fabricIds": [109, 110]
+        "fabricIds": [109, 110],
+        "isWishList": false
       },
       {
         "colorId": 7,
@@ -617,7 +631,8 @@ export class CommonService {
         "hexCode": "#800080",
         "category": "Royal",
         "description": "A luxurious color often associated with royalty, creativity, and mystery.",
-        "fabricIds": [102, 104]
+        "fabricIds": [102, 104],
+        "isWishList": false
       },
       {
         "colorId": 8,
@@ -625,7 +640,8 @@ export class CommonService {
         "hexCode": "#FFA500",
         "category": "Warm",
         "description": "A vibrant color representing energy, enthusiasm, and warmth.",
-        "fabricIds": [105, 107]
+        "fabricIds": [105, 107],
+        "isWishList": false
       },
       {
         "colorId": 9,
@@ -633,7 +649,8 @@ export class CommonService {
         "hexCode": "#FFC0CB",
         "category": "Soft",
         "description": "A gentle color symbolizing love, femininity, and kindness.",
-        "fabricIds": [106, 108]
+        "fabricIds": [106, 108],
+        "isWishList": false
       },
       {
         "colorId": 10,
@@ -641,7 +658,8 @@ export class CommonService {
         "hexCode": "#A52A2A",
         "category": "Earthy",
         "description": "A warm, natural color associated with reliability, stability, and nature.",
-        "fabricIds": [109, 110]
+        "fabricIds": [109, 110],
+        "isWishList": false
       },
       {
         "colorId": 11,
@@ -649,7 +667,8 @@ export class CommonService {
         "hexCode": "#808080",
         "category": "Neutral",
         "description": "A balanced color that represents sophistication and formality.",
-        "fabricIds": [101, 102]
+        "fabricIds": [101, 102],
+        "isWishList": false
       },
       {
         "colorId": 12,
@@ -657,7 +676,8 @@ export class CommonService {
         "hexCode": "#F5F5DC",
         "category": "Neutral",
         "description": "A soft, warm shade often associated with calmness and simplicity.",
-        "fabricIds": [103, 104]
+        "fabricIds": [103, 104],
+        "isWishList": false
       },
       {
         "colorId": 13,
@@ -665,7 +685,8 @@ export class CommonService {
         "hexCode": "#008080",
         "category": "Cool",
         "description": "A blend of blue and green, symbolizing sophistication and uniqueness.",
-        "fabricIds": [105, 106]
+        "fabricIds": [105, 106],
+        "isWishList": false
       },
       {
         "colorId": 14,
@@ -673,7 +694,8 @@ export class CommonService {
         "hexCode": "#FFD700",
         "category": "Luxury",
         "description": "A rich color representing wealth, success, and prestige.",
-        "fabricIds": [107, 108]
+        "fabricIds": [107, 108],
+        "isWishList": false
       },
       {
         "colorId": 15,
@@ -681,7 +703,8 @@ export class CommonService {
         "hexCode": "#C0C0C0",
         "category": "Luxury",
         "description": "A sleek color associated with modernity, elegance, and high-tech aesthetics.",
-        "fabricIds": [109, 110]
+        "fabricIds": [109, 110],
+        "isWishList": true
       },
       {
         "colorId": 16,
@@ -689,7 +712,8 @@ export class CommonService {
         "hexCode": "#800000",
         "category": "Deep",
         "description": "A deep red shade associated with sophistication and confidence.",
-        "fabricIds": [101, 103]
+        "fabricIds": [101, 103],
+        "isWishList": false
       },
       {
         "colorId": 17,
@@ -697,7 +721,8 @@ export class CommonService {
         "hexCode": "#000080",
         "category": "Cool",
         "description": "A classic dark blue shade representing authority and elegance.",
-        "fabricIds": [102, 104]
+        "fabricIds": [102, 104],
+        "isWishList": false
       },
       {
         "colorId": 18,
@@ -705,7 +730,8 @@ export class CommonService {
         "hexCode": "#40E0D0",
         "category": "Refreshing",
         "description": "A lively and calming color often associated with tropical oceans.",
-        "fabricIds": [105, 107]
+        "fabricIds": [105, 107],
+        "isWishList": false
       }
     ];
     

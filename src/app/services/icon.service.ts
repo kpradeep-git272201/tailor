@@ -56,6 +56,7 @@ import {
   locate,
   addOutline,
   callOutline,
+  heart
 } from 'ionicons/icons';
 
 @Injectable({
@@ -67,6 +68,7 @@ export class IconService {
 
   registerIcons() {
     addIcons({
+      heart,
       callOutline,
       addOutline,
       searchOutline,
