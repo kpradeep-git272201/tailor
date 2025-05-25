@@ -14,7 +14,7 @@ import { AddressPage } from 'src/app/users/pages/address/address.page';
   templateUrl: './order-summary.page.html',
   styleUrls: ['./order-summary.page.scss'],
   standalone: true,
-  imports: [IonRadioGroup, IonRadio, SharedModule]
+  imports: [SharedModule]
 })
 export class OrderSummaryPage implements OnInit {
   articleName: any | null;
@@ -24,7 +24,8 @@ export class OrderSummaryPage implements OnInit {
   color:any;
   tailor:any;
   userAddress: any = null;
-  paymentMode: string = 'cod';
+  paymentMode: string = 'cash';
+  loggedUser: any;
   constructor(
     private iconService: IconService,
     private modalController: ModalController,
@@ -38,7 +39,10 @@ export class OrderSummaryPage implements OnInit {
   }
 
   ngOnInit() {
-
+    const loggedUserString = localStorage.getItem('loggedUser'); 
+     if (loggedUserString) {
+      this.loggedUser = JSON.parse(loggedUserString);
+     }
     this.articleName = this.route.snapshot.paramMap.get('article');
     this.articleId = this.route.snapshot.paramMap.get('articleId');
     const currentBooking = localStorage.getItem('currentBooking');
@@ -54,7 +58,7 @@ export class OrderSummaryPage implements OnInit {
       this.order.fabric=this.navigatedData.fabric;
 
     }
-
+   
   }
 
 
@@ -92,7 +96,7 @@ export class OrderSummaryPage implements OnInit {
     const myAddress = localStorage.getItem("myAddress");
     if(myAddress){
       const address = JSON.parse(myAddress)?.filter((item:any)=>{
-        return item.defaultAddress==true;
+        return item.phoneNumber==this.loggedUser.phoneNumber;
       });
       
       this.userAddress=address[0];

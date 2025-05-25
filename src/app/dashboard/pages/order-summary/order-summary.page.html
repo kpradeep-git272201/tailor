@@ -101,12 +101,12 @@
   </ion-card>
   <ion-card>
     <ion-card-content style="padding-left: 0rem; padding-right: 0rem;">
-      <ion-radio-group value="paymentMode" (ionChange)="getPaymentMode($event)">
+      <ion-radio-group [value]="paymentMode" (ionChange)="getPaymentMode($event)">
         <ion-list>
           <ion-item lines="full" button detail>
             <img src="assets/cash.png" slot="start" style="width: 24px; height: 24px;">
             <ion-label>Cash on Delivery (COD)</ion-label>
-            <ion-radio slot="end" value="cod"></ion-radio>
+            <ion-radio slot="end" value="cash"></ion-radio>
           </ion-item>
     
           <ion-item lines="full" button detail>
