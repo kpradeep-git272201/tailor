@@ -27,6 +27,8 @@ export class MenuPage implements OnInit {
       this.router.navigate(["/main/user"]);
     }else if(action=="Wishlist"){
       this.router.navigate(["/main/user/wish-list"]);
+    }else if(action=="myOrder"){
+      this.router.navigate(['/main/myorder']);
     }
   }
 }

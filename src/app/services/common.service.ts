@@ -607,15 +607,15 @@ export class CommonService {
         "fabricIds": [107, 108],
         "isWishList": false
       },
-      {
-        "colorId": 5,
-        "colorName": "White",
-        "hexCode": "#FFFFFF",
-        "category": "Neutral",
-        "description": "A pure and clean color representing simplicity and peace.",
-        "fabricIds": [101, 103],
-        "isWishList": false
-      },
+      // {
+      //   "colorId": 5,
+      //   "colorName": "White",
+      //   "hexCode": "#FFFFFF",
+      //   "category": "Neutral",
+      //   "description": "A pure and clean color representing simplicity and peace.",
+      //   "fabricIds": [101, 103],
+      //   "isWishList": false
+      // },
       {
         "colorId": 6,
         "colorName": "Black",
@@ -625,78 +625,78 @@ export class CommonService {
         "fabricIds": [109, 110],
         "isWishList": false
       },
-      {
-        "colorId": 7,
-        "colorName": "Purple",
-        "hexCode": "#800080",
-        "category": "Royal",
-        "description": "A luxurious color often associated with royalty, creativity, and mystery.",
-        "fabricIds": [102, 104],
-        "isWishList": false
-      },
-      {
-        "colorId": 8,
-        "colorName": "Orange",
-        "hexCode": "#FFA500",
-        "category": "Warm",
-        "description": "A vibrant color representing energy, enthusiasm, and warmth.",
-        "fabricIds": [105, 107],
-        "isWishList": false
-      },
-      {
-        "colorId": 9,
-        "colorName": "Pink",
-        "hexCode": "#FFC0CB",
-        "category": "Soft",
-        "description": "A gentle color symbolizing love, femininity, and kindness.",
-        "fabricIds": [106, 108],
-        "isWishList": false
-      },
-      {
-        "colorId": 10,
-        "colorName": "Brown",
-        "hexCode": "#A52A2A",
-        "category": "Earthy",
-        "description": "A warm, natural color associated with reliability, stability, and nature.",
-        "fabricIds": [109, 110],
-        "isWishList": false
-      },
-      {
-        "colorId": 11,
-        "colorName": "Gray",
-        "hexCode": "#808080",
-        "category": "Neutral",
-        "description": "A balanced color that represents sophistication and formality.",
-        "fabricIds": [101, 102],
-        "isWishList": false
-      },
-      {
-        "colorId": 12,
-        "colorName": "Beige",
-        "hexCode": "#F5F5DC",
-        "category": "Neutral",
-        "description": "A soft, warm shade often associated with calmness and simplicity.",
-        "fabricIds": [103, 104],
-        "isWishList": false
-      },
-      {
-        "colorId": 13,
-        "colorName": "Teal",
-        "hexCode": "#008080",
-        "category": "Cool",
-        "description": "A blend of blue and green, symbolizing sophistication and uniqueness.",
-        "fabricIds": [105, 106],
-        "isWishList": false
-      },
-      {
-        "colorId": 14,
-        "colorName": "Gold",
-        "hexCode": "#FFD700",
-        "category": "Luxury",
-        "description": "A rich color representing wealth, success, and prestige.",
-        "fabricIds": [107, 108],
-        "isWishList": false
-      },
+      // {
+      //   "colorId": 7,
+      //   "colorName": "Purple",
+      //   "hexCode": "#800080",
+      //   "category": "Royal",
+      //   "description": "A luxurious color often associated with royalty, creativity, and mystery.",
+      //   "fabricIds": [102, 104],
+      //   "isWishList": false
+      // },
+      // {
+      //   "colorId": 8,
+      //   "colorName": "Orange",
+      //   "hexCode": "#FFA500",
+      //   "category": "Warm",
+      //   "description": "A vibrant color representing energy, enthusiasm, and warmth.",
+      //   "fabricIds": [105, 107],
+      //   "isWishList": false
+      // },
+      // {
+      //   "colorId": 9,
+      //   "colorName": "Pink",
+      //   "hexCode": "#FFC0CB",
+      //   "category": "Soft",
+      //   "description": "A gentle color symbolizing love, femininity, and kindness.",
+      //   "fabricIds": [106, 108],
+      //   "isWishList": false
+      // },
+      // {
+      //   "colorId": 10,
+      //   "colorName": "Brown",
+      //   "hexCode": "#A52A2A",
+      //   "category": "Earthy",
+      //   "description": "A warm, natural color associated with reliability, stability, and nature.",
+      //   "fabricIds": [109, 110],
+      //   "isWishList": false
+      // },
+      // {
+      //   "colorId": 11,
+      //   "colorName": "Gray",
+      //   "hexCode": "#808080",
+      //   "category": "Neutral",
+      //   "description": "A balanced color that represents sophistication and formality.",
+      //   "fabricIds": [101, 102],
+      //   "isWishList": false
+      // },
+      // {
+      //   "colorId": 12,
+      //   "colorName": "Beige",
+      //   "hexCode": "#F5F5DC",
+      //   "category": "Neutral",
+      //   "description": "A soft, warm shade often associated with calmness and simplicity.",
+      //   "fabricIds": [103, 104],
+      //   "isWishList": false
+      // },
+      // {
+      //   "colorId": 13,
+      //   "colorName": "Teal",
+      //   "hexCode": "#008080",
+      //   "category": "Cool",
+      //   "description": "A blend of blue and green, symbolizing sophistication and uniqueness.",
+      //   "fabricIds": [105, 106],
+      //   "isWishList": false
+      // },
+      // {
+      //   "colorId": 14,
+      //   "colorName": "Gold",
+      //   "hexCode": "#FFD700",
+      //   "category": "Luxury",
+      //   "description": "A rich color representing wealth, success, and prestige.",
+      //   "fabricIds": [107, 108],
+      //   "isWishList": false
+      // },
       {
         "colorId": 15,
         "colorName": "Silver",
@@ -715,24 +715,24 @@ export class CommonService {
         "fabricIds": [101, 103],
         "isWishList": false
       },
-      {
-        "colorId": 17,
-        "colorName": "Navy Blue",
-        "hexCode": "#000080",
-        "category": "Cool",
-        "description": "A classic dark blue shade representing authority and elegance.",
-        "fabricIds": [102, 104],
-        "isWishList": false
-      },
-      {
-        "colorId": 18,
-        "colorName": "Turquoise",
-        "hexCode": "#40E0D0",
-        "category": "Refreshing",
-        "description": "A lively and calming color often associated with tropical oceans.",
-        "fabricIds": [105, 107],
-        "isWishList": false
-      }
+      // {
+      //   "colorId": 17,
+      //   "colorName": "Navy Blue",
+      //   "hexCode": "#000080",
+      //   "category": "Cool",
+      //   "description": "A classic dark blue shade representing authority and elegance.",
+      //   "fabricIds": [102, 104],
+      //   "isWishList": false
+      // },
+      // {
+      //   "colorId": 18,
+      //   "colorName": "Turquoise",
+      //   "hexCode": "#40E0D0",
+      //   "category": "Refreshing",
+      //   "description": "A lively and calming color often associated with tropical oceans.",
+      //   "fabricIds": [105, 107],
+      //   "isWishList": false
+      // }
     ];
     
   }
@@ -745,8 +745,7 @@ export class CommonService {
         experience: 8,
         expertise: "Men's Suits, Blazers",
         rating: 4.7,
-        distance: 2.5,
-        deliveryIn: 2
+        distance: 2.5
       },
       {
         tailorId: 101,
@@ -755,8 +754,7 @@ export class CommonService {
         experience: 5,
         expertise: "Women's Ethnic, Bridal",
         rating: 4.8,
-        distance: 3.1,
-        deliveryIn: 6
+        distance: 3.1
       },
       {
         tailorId: 102,
@@ -765,8 +763,7 @@ export class CommonService {
         experience: 10,
         expertise: "Casual & Formal Wear",
         rating: 4.9,
-        distance: 1.8,
-        deliveryIn: 9
+        distance: 1.8
       },
       {
         tailorId: 103,
@@ -775,8 +772,7 @@ export class CommonService {
         experience: 7,
         expertise: "Designer Dresses, Western",
         rating: 4.6,
-        distance: 4.2,
-        deliveryIn: 3
+        distance: 4.2
       },
       {
         tailorId: 104,
@@ -785,8 +781,7 @@ export class CommonService {
         experience: 6,
         expertise: "Formal Shirts, Trousers",
         rating: 4.5,
-        distance: 3.0,
-        deliveryIn: 6
+        distance: 3.0
       },
       {
         tailorId: 105,
@@ -795,8 +790,7 @@ export class CommonService {
         experience: 9,
         expertise: "Saree Blouses, Lehengas",
         rating: 4.9,
-        distance: 2.0,
-        deliveryIn: 2
+        distance: 2.0
       },
       {
         tailorId: 106,
@@ -814,8 +808,7 @@ export class CommonService {
         experience: 4,
         expertise: "Kids Wear, Party Dresses",
         rating: 4.3,
-        distance: 3.7,
-        deliveryIn: 4
+        distance: 3.7
       }
     ];
   }

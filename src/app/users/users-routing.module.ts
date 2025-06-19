@@ -22,10 +22,6 @@ const routes: Routes = [
           component: CartPage
         },
         {
-          path: 'myorder',
-          component: MyorderPage
-        },
-        {
           path: 'wish-list',
           component: WishListPage
         },

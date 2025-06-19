@@ -3,29 +3,39 @@ import { IconService } from 'src/app/services/icon.service';
 import { SharedModule } from 'src/app/sharedmodule/sharedmodule.module';
 import { ModalController } from '@ionic/angular';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { IonAccordion, IonCheckbox } from "@ionic/angular/standalone";
+import { IonAccordion, IonCheckbox } from '@ionic/angular/standalone';
 
 @Component({
   selector: 'app-address',
   templateUrl: './address.page.html',
   styleUrls: ['./address.page.scss'],
   standalone: true,
-  imports: [IonCheckbox, IonAccordion, SharedModule]
+  imports: [IonCheckbox, IonAccordion, SharedModule],
 })
 export class AddressPage implements OnInit {
   @Input() title: string | any;
+  @Input() currentLocation: any;
   selectedType: string = '';
   addressForm!: FormGroup;
   @ViewChild('accordionGroup', { static: true }) accordionGroup!: any;
-  userAddressList: any=[];
-  constructor(private iconService: IconService,
+  userAddressList: any = [];
+  loggedUser: any;
+  openedAccordion: string | null = null;
+  constructor(
+    private iconService: IconService,
     private modalController: ModalController,
-    private fb: FormBuilder
+    private fb: FormBuilder,
   ) {
-    this.iconService.registerIcons()
-   }
+    this.iconService.registerIcons();
+  }
 
   ngOnInit() {
+    
+    const loggedUserString = localStorage.getItem('loggedUser');
+    if (loggedUserString) {
+      this.loggedUser = JSON.parse(loggedUserString);
+    }
+    console.log(JSON.stringify(this.currentLocation));
     this.addressForm = this.fb.group({
       fullName: ['', Validators.required],
       phoneNumber: ['', [Validators.required, Validators.pattern('[0-9]{10}')]],
@@ -35,9 +45,19 @@ export class AddressPage implements OnInit {
       houseNo: ['', Validators.required],
       area: ['', Validators.required],
       defaultAddress: [''],
-      landmark: ['']
+      landmark: [''],
     });
 
+    if (this.currentLocation) {
+      const currentLocation = {
+        city: this.currentLocation.address.city,
+        state: this.currentLocation.address.state_district,
+        pincode: this.currentLocation.address.postcode,
+        area: this.currentLocation.display_name,
+        phoneNumber: this.loggedUser.phoneNumber || '',
+      };
+      this.addressForm.patchValue(currentLocation);
+    }
     this.getAddressList();
   }
 
@@ -62,24 +82,23 @@ export class AddressPage implements OnInit {
   }
 
   saveAddress() {
-    const addressList=[];
+    const addressList = [];
     if (this.addressForm.valid) {
-      const myAddress = localStorage.getItem("myAddress");
-      if(myAddress){
-        this.userAddressList = JSON.parse(myAddress)
+      const myAddress = localStorage.getItem('myAddress');
+      if (myAddress) {
+        this.userAddressList = JSON.parse(myAddress);
       }
-   
+
       const addressData = {
         ...this.addressForm.value,
-        addressType: this.selectedType
+        addressType: this.selectedType,
       };
       this.userAddressList.push(addressData);
       console.log('Saved Address: ', JSON.stringify(this.userAddressList));
-      localStorage.setItem("myAddress", JSON.stringify(this.userAddressList));
-      if(this.title){
-        
+      localStorage.setItem('myAddress', JSON.stringify(this.userAddressList));
+      if (this.title) {
         this.modalController.dismiss(addressData, 'confirmed');
-      }else{
+      } else {
         this.getAddressList();
       }
     } else {
@@ -95,10 +114,12 @@ export class AddressPage implements OnInit {
     }
   };
 
-  getAddressList(){
-    const myAddress = localStorage.getItem("myAddress");
-    if(myAddress){
-      this.userAddressList = JSON.parse(myAddress)
+  getAddressList() {
+    const myAddress = localStorage.getItem('myAddress');
+    if (myAddress) {
+      this.userAddressList = JSON.parse(myAddress);
+    }else{
+     this.openedAccordion = 'first';
     }
   }
 }

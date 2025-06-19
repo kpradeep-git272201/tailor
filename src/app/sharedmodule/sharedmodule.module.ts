@@ -45,7 +45,10 @@ import {
   IonChip, 
   IonCardSubtitle,
   IonNote,
-  IonAccordionGroup
+  IonAccordionGroup,
+  IonRadioGroup, 
+  IonRadio,
+  IonItemDivider 
 } from '@ionic/angular/standalone';
 import { IonButton } from '@ionic/angular/standalone';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
@@ -107,7 +110,10 @@ import { ModalController } from '@ionic/angular';
     IonChip, 
     IonCardSubtitle,
     IonNote,
-    IonAccordionGroup
+    IonAccordionGroup,
+    IonRadioGroup, 
+    IonRadio, 
+    IonItemDivider
   ],
   exports: [
     IonContent,
@@ -162,7 +168,10 @@ import { ModalController } from '@ionic/angular';
     IonChip, 
     IonCardSubtitle,
     IonNote,
-    IonAccordionGroup
+    IonAccordionGroup,
+    IonRadioGroup, 
+    IonRadio, 
+    IonItemDivider
   ]
 })
 export class SharedModule { }

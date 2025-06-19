@@ -44,7 +44,7 @@ export class FooterPage implements OnInit {
     }else if(action=="Tailor"){
       this.router.navigate(['/main/tailor']);
     }else if(action=="Order"){
-      this.router.navigate(['/main/dashboard']);
+      this.router.navigate(['/main/myorder']);
     }else if(action=="Cart"){
       this.router.navigate(['/main/cart']);
     }else if(action=="Menu"){
