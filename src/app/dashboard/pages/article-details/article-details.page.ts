@@ -38,7 +38,9 @@ export class ArticleDetailsPage implements OnInit {
   articleName: any | null;
   articleId: any | null;
   loggedUser: any;
-  selectedTailor:any;
+  selectedTailor: any;
+  masterMenu: any=[];
+  selectedArticle:any;
   constructor(
     private iconService: IconService,
     private modalController: ModalController,
@@ -53,19 +55,22 @@ export class ArticleDetailsPage implements OnInit {
   ngOnInit() {
     this.subArtcles = this.commonService.getSubArtcles();
     this.colorMaster = this.commonService.colorClassificationMaster();
-
+    this.masterMenu=this.commonService.getMasterMenu();
     this.articleName = this.route.snapshot.paramMap?.get('article');
     this.articleId = this.route.snapshot.paramMap?.get('articleId');
+    this.selectedArticle=this.articleId;
     const currentBooking = localStorage.getItem('currentBooking');
-    if(currentBooking){
+    if (currentBooking) {
       const parseCurrentBooking = JSON.parse(currentBooking);
       this.selectedColor = parseCurrentBooking?.color;
-      this.selectedTailor =  parseCurrentBooking?.tailor;
-      this.navigatedData = parseCurrentBooking?.itme
+      this.selectedTailor = parseCurrentBooking?.tailor;
+      this.navigatedData = parseCurrentBooking?.itme;
+    }else{
+      this.selectedColor=this.colorMaster[0];
     }
 
     this.route.queryParams.subscribe((params) => {
-      this.loggedUser = !!localStorage.getItem('loggedUser'); 
+      this.loggedUser = !!localStorage.getItem('loggedUser');
       if (params['navigatedData']) {
         this.navigatedData = JSON.parse(params['navigatedData']);
         this.article = this.navigatedData.article;
@@ -112,15 +117,18 @@ export class ArticleDetailsPage implements OnInit {
     this.selectedColor = color;
   }
 
-  removeQuntity() {
+  removeQuntity(fabric:any) {
     if (this.quntity == 1) {
+      fabric.pricePerMeter=fabric.pricePerMeter*this.quntity;
       return;
     }
     this.quntity--;
+    fabric.pricePerMeter=fabric.pricePerMeter*this.quntity;
   }
 
-  addQuntity() {
+  addQuntity(fabric:any) {
     this.quntity++;
+    fabric.pricePerMeter=fabric.pricePerMeter*this.quntity;
   }
 
   openSizeChartModal(action: any, ModelPage?: any) {
@@ -183,19 +191,21 @@ export class ArticleDetailsPage implements OnInit {
   }
 
   myOrders(tailor: any, loggedUser: any) {
-    this.selectedTailor=tailor;
+    this.selectedTailor = tailor;
     this.currentBooking(loggedUser, tailor);
-    this.goToOrderSummary();
+    // this.goToOrderSummary();
     const myOrder: any = localStorage.getItem('myOrder');
     if (myOrder) {
       const order: any = JSON.parse(myOrder);
+
       const data = {
         phoneNumber: loggedUser?.phoneNumber,
         tailor: tailor,
         itme: this.navigatedData,
       };
       order.push(data);
-      localStorage.setItem('myOrder', JSON.stringify(order));
+      // localStorage.setItem('myOrder', JSON.stringify(order));
+      this.goToOrderSummary(order);
     } else {
       const order = [
         {
@@ -204,7 +214,8 @@ export class ArticleDetailsPage implements OnInit {
           itme: this.navigatedData,
         },
       ];
-      localStorage.setItem('myOrder', JSON.stringify(order));
+      // localStorage.setItem('myOrder', JSON.stringify(order));
+      this.goToOrderSummary(order);
     }
   }
   currentBooking(loggedUser: any, tailor: any) {
@@ -217,7 +228,26 @@ export class ArticleDetailsPage implements OnInit {
     localStorage.setItem('currentBooking', JSON.stringify(data));
   }
 
-  goToOrderSummary() {
-    this.router.navigate(['/main/with-fabric', this.articleName, this.articleId, 'order-summary']);
+  goToOrderSummary(myOrder: any) {
+    this.router.navigate(
+      ['/main/with-fabric', this.articleName, this.articleId, 'order-summary'],
+      {
+        queryParams: {
+          order: JSON.stringify(myOrder),
+        },
+      },
+    );
+  }
+
+  addToCart() {
+    const carts = localStorage.getItem('addToCart');
+    const addToCart = [this.navigatedData];
+    if (carts) {
+      const cartParse = JSON.parse(carts);
+      cartParse.push(addToCart);
+    } else {
+      localStorage.setItem('addToCart', JSON.stringify(addToCart));
+    }
+    console.log(JSON.stringify(this.navigatedData));
   }
 }

@@ -38,6 +38,7 @@
   
             <!-- Else Show Add Address Option -->
             <ng-template #addAddress>
+              <p>{{currentLocation?.display_name}}</p>
               <ion-button expand="block" color="primary" (click)="addNewAddress()">
                 + Add Address
               </ion-button>
@@ -93,7 +94,7 @@
           <ion-label>
             <h3>Tailor</h3>
             <p>{{ tailor.name }} ({{ tailor.experience }} yrs)</p>
-            <small>Delivery in {{ tailor.deliveryIn }} days (e.g., 30 April 2025)</small>
+            <!-- <small>Delivery in {{ tailor.deliveryIn }} days (e.g., 30 April 2025)</small> -->
           </ion-label>
         </ion-item>
       </ion-list>
@@ -128,7 +129,7 @@
   </ion-card>
 
   <!-- Confirm Order Button -->
-  <ion-button expand="block" color="success" style="margin-top: 20px; margin-left: 20px; margin-right: 20px;">
+  <ion-button expand="block" (click)="confirmOrder()" color="success" style="margin-top: 20px; margin-left: 20px; margin-right: 20px;">
     Confirm Order
   </ion-button>
   

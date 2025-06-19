@@ -8,6 +8,7 @@ import { OrderSummaryPage } from './pages/order-summary/order-summary.page';
 import { TailorListPage } from '../tailor/pages/tailor-list/tailor-list.page';
 import { MenuPage } from './pages/menu/menu.page';
 import { CartPage } from '../users/pages/cart/cart.page';
+import { MyorderPage } from '../users/pages/myorder/myorder.page';
 
 const routes: Routes = [
   {
@@ -33,6 +34,10 @@ const routes: Routes = [
       {
         path: 'cart',
         component: CartPage
+      },
+        {
+        path: 'myorder',
+        component: MyorderPage
       },
       {
         path: 'tailor',
