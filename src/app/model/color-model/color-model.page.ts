@@ -1,8 +1,8 @@
 import { Component, Input, OnInit } from '@angular/core';
 import { SharedModule } from 'src/app/sharedmodule/sharedmodule.module';
 import { ModalController } from '@ionic/angular';
-import { IconService } from 'src/app/services/icon.service';
-import { WithfabricService } from 'src/app/services/withfabric.service';
+import { IconService } from 'src/app/services/icon/icon.service';
+import { WithfabricService } from 'src/app/services/withfabric/withfabric.service';
 import { IonFabButton, IonFab } from "@ionic/angular/standalone";
 
 @Component({

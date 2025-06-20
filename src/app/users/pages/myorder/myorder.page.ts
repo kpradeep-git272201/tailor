@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { SharedModule } from 'src/app/sharedmodule/sharedmodule.module';
 import { IonItemDivider } from "@ionic/angular/standalone";
-import { IconService } from 'src/app/services/icon.service';
+import { IconService } from 'src/app/services/icon/icon.service';
 
 
 import {inject} from '@angular/core';
@@ -40,6 +40,8 @@ export class MyorderPage implements OnInit {
   secondFormGroup = this._formBuilder.group({
     secondCtrl: ['', Validators.required],
   });
+  selectedItems: any=[];
+  tailor: any;
   constructor(private iconService: IconService) { 
 
   }
@@ -60,6 +62,8 @@ export class MyorderPage implements OnInit {
       this.orderList = order.filter((myOrder: any) => {
         return myOrder.phoneNumber == this.loggedUser.phoneNumber;
       });
+      this.selectedItems=this.orderList[0].selectedItems;
+      this.tailor=this.orderList[0].data[0].tailor;
     } 
   }
 

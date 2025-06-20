@@ -1,10 +1,10 @@
 import { Component, Input, OnInit } from '@angular/core';
-import { IconService } from 'src/app/services/icon.service';
+import { IconService } from 'src/app/services/icon/icon.service';
 import { SharedModule } from 'src/app/sharedmodule/sharedmodule.module';
 import { Router } from '@angular/router';
 import { ModalController } from '@ionic/angular';
 import { ChartModelPage } from 'src/app/model/chart-model/chart-model.page';
-import { CommonService } from 'src/app/services/common.service';
+import { CommonService } from 'src/app/services/common/common.service';
 
 @Component({
   selector: 'app-tailor-list',
@@ -15,7 +15,7 @@ import { CommonService } from 'src/app/services/common.service';
 })
 export class TailorListPage implements OnInit {
   @Input() bookTailor: any;
-  
+  @Input() selectedItms: any;
   allTailors: any[] = [];
   displayedTailors: any[] = [];
   initialDisplayCount = 5;

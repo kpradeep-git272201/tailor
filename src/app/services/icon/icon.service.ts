@@ -58,7 +58,8 @@ import {
   callOutline,
   heart,
   starOutline,
-  ellipseOutline
+  ellipseOutline,
+  ellipse
 } from 'ionicons/icons';
 
 @Injectable({
@@ -127,7 +128,8 @@ export class IconService {
       heartOutline,
       addCircleOutline,
       removeCircleOutline,
-      locate
+      locate,
+      ellipse
     });
   }
 }

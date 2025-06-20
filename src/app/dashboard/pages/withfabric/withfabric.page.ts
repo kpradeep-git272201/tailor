@@ -1,9 +1,9 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { NgbCarousel, NgbSlideEvent, NgbSlideEventSource } from '@ng-bootstrap/ng-bootstrap';
-import { CommonService } from 'src/app/services/common.service';
-import { WithfabricService } from 'src/app/services/withfabric.service';
+import { CommonService } from 'src/app/services/common/common.service';
+import { WithfabricService } from 'src/app/services/withfabric/withfabric.service';
 import { ActivatedRoute, Router } from '@angular/router';
-import { IconService } from 'src/app/services/icon.service';
+import { IconService } from 'src/app/services/icon/icon.service';
 import { SharedModule } from 'src/app/sharedmodule/sharedmodule.module';
 
 @Component({
@@ -175,7 +175,7 @@ export class WithfabricPage implements OnInit {
 	}
 
   goToArticle(article:any){
-    this.router.navigate(['/main/with-fabric', article.articleName],{
+    this.router.navigate(['/main/with-fabric', article.articleId],{
       queryParams: {
         navigatedData: JSON.stringify({
           serviceType: this.navigatedData.serviceType,
