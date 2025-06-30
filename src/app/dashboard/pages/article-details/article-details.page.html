@@ -2,10 +2,10 @@
   <ion-toolbar color="primary">
     <ion-buttons slot="start">
       <ion-back-button
-        defaultHref="/main/dashboard/with-fabric/{{articleName}}"
+        defaultHref="/main/dashboard/with-fabric/{{articleId}}"
       ></ion-back-button>
     </ion-buttons>
-    <ion-title *ngIf="fabric && article">{{ fabric.fabricType }}</ion-title>
+    <ion-title *ngIf="fabric || article">{{ fabric.fabricType }}</ion-title>
   </ion-toolbar>
 </ion-header>
 
@@ -150,10 +150,10 @@
       </ion-row>
       <ion-row  *ngIf="item?.price" style="align-items: center;">
         <ion-col style="padding-left: 12px">Price : </ion-col>
-        <ion-col class="value"><span >&#8377;</span>{{item.price}}</ion-col>
+        <ion-col class="value"><span >&#8377;</span>{{item.price * item.quntity}}</ion-col>
       </ion-row>
       <ion-row *ngIf="item?.quntity" style="align-items: center;">
-        <ion-col style="padding-left: 12px">Quntity : </ion-col>
+        <ion-col style="padding-left: 12px">Quantity : </ion-col>
         <ion-col class="value">
           <span>
           <ion-icon

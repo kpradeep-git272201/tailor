@@ -42,6 +42,8 @@ export class ArticleDetailsPage implements OnInit {
   masterMenu: any=[];
   selectedArticle:any;
   selectedItem: any=[];
+  fabricId: any;
+
   constructor(
     private iconService: IconService,
     private modalController: ModalController,
@@ -57,8 +59,8 @@ export class ArticleDetailsPage implements OnInit {
     this.subArtcles = this.commonService.getSubArtcles();
     this.colorMaster = this.commonService.colorClassificationMaster();
     this.masterMenu=this.commonService.getMasterMenu();
-    this.articleName = this.route.snapshot.paramMap?.get('article');
     this.articleId = this.route.snapshot.paramMap?.get('articleId');
+    this.fabricId = this.route.snapshot.paramMap?.get('fabricId');
    
     const currentBooking = localStorage.getItem('currentBooking');
     if (currentBooking) {
@@ -74,9 +76,9 @@ export class ArticleDetailsPage implements OnInit {
       this.loggedUser = !!localStorage.getItem('loggedUser');
       if (params['navigatedData']) {
         this.navigatedData = JSON.parse(params['navigatedData']);
-        this.article = this.navigatedData.article;
-        this.fabric = this.navigatedData.fabric;
-        this.selectedArticle=this.article.articleId;
+        this.article = this.navigatedData?.article;
+        this.fabric = this.navigatedData?.fabric;
+        this.selectedArticle=this.article?.articleId;
       }
     });
 
@@ -247,7 +249,7 @@ export class ArticleDetailsPage implements OnInit {
 
   goToOrderSummary(myOrder: any) {
     this.router.navigate(
-      ['/main/with-fabric', this.articleName, this.articleId, 'order-summary'],
+      ['/main/with-fabric', this.articleId, this.fabricId, 'order-summary'],
       {
         queryParams: {
           order: JSON.stringify(myOrder),
@@ -271,8 +273,8 @@ export class ArticleDetailsPage implements OnInit {
 
   selectedItems(){
     const items={
-      articleName: this.article.articleName,
-      articleId: this.article.articleId,
+      articleName: (this.article)?this.article.articleName:'',
+      articleId: (this.article)?this.article.articleId:'',
       colorName: this.selectedColor?.colorName,
       colorCode: this.selectedColor?.hexCode,
       colorDescription: this.selectedColor.description,
@@ -280,7 +282,7 @@ export class ArticleDetailsPage implements OnInit {
       fabricType: this.fabric?.fabricType,
       price: this.fabric.pricePerMeter,
 
-      articleUrl: this.article.imageUrl,
+      articleUrl: (this.article)?this.article.imageUrl:'',
       fabricUrl: this.fabric.imageUrl,
       fabricWashingInstruction: this.fabric.washingInstruction,
       fabricIroning: this.fabric.ironing

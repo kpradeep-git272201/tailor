@@ -19,10 +19,9 @@ const routes: Routes = [
       { path: 'with-fabric', component: WithfabricPage },
       { path: 'with-fabric/:article', component: ArticlePage },
       {
-        path: 'with-fabric/:article/:articleId',
+        path: 'with-fabric/:articleId/:fabricId',
         component: ArticleDetailsPage,
       },
-      
       {
         path: 'with-fabric/:article/:articleId/order-summary',
         component: OrderSummaryPage,

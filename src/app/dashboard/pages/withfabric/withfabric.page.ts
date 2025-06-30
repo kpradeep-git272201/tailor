@@ -185,6 +185,17 @@ export class WithfabricPage implements OnInit {
     });
   }
 
+  goToFabric(fabric:any){
+    this.router.navigate([`/main/with-fabric`, 0, fabric.fabricId],{
+      queryParams: {
+        navigatedData: JSON.stringify({
+          serviceType: this.navigatedData.serviceType,
+          article: this.navigatedData.article,
+          fabric: fabric
+        })
+      }
+    });
+  }
   loadMoreFabrics() {
     this.updateDisplayedFabricsByMaterail();
   }

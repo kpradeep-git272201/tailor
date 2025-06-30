@@ -69,6 +69,7 @@
           size-md="4"
           size-lg="3"
           *ngFor="let fabric of displayedFabricsByMat; let i = index"
+           (click)="goToFabric(fabric)"
         >
           <ion-card class="fabric-card">
             <img [src]="fabric.imageUrl" [alt]="fabric.fabricType" />
