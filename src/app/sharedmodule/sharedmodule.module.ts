@@ -48,16 +48,19 @@ import {
   IonAccordionGroup,
   IonRadioGroup, 
   IonRadio,
-  IonItemDivider 
+  IonItemDivider,
+  IonCheckbox
 } from '@ionic/angular/standalone';
 import { IonButton } from '@ionic/angular/standalone';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { NgbAlert, NgbAlertModule, NgbCarouselModule, NgbPaginationModule } from '@ng-bootstrap/ng-bootstrap';
 import { ModalController } from '@ionic/angular';
+
 @NgModule({
   declarations: [],
   providers: [ModalController],
   imports: [
+    IonCheckbox,
     IonContent,
     IonHeader,
     IonTitle,
@@ -116,6 +119,7 @@ import { ModalController } from '@ionic/angular';
     IonItemDivider
   ],
   exports: [
+    IonCheckbox,
     IonContent,
     IonHeader,
     IonTitle,

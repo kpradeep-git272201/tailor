@@ -38,7 +38,7 @@
     </ngb-carousel> -->
     <ion-toolbar class="heart-toolbar">
       <ion-text slot="start" style="padding-left: 0.625rem" class="fs-subtitle"
-        >Color</ion-text
+        ><span style="font-weight: bold;">Color: </span><span style="font-weight: normal;">{{selectedColor?.colorName}}</span></ion-text
       >
       <!-- <ion-buttons slot="end">
         <ion-button (click)="addToWishList()">
@@ -55,13 +55,6 @@
         </ion-button>
       </ion-buttons>
     </ion-toolbar>
-
-    <!-- Select Color -->
-    <!-- <ion-row>
-      <ion-col class="colorText">
-        <ion-text style="padding-left: 0.625rem;" class="fs-subtitle">Color</ion-text>
-      </ion-col>
-    </ion-row> -->
 
     <div class="category-list">
       <div class="category-item" *ngFor="let color of colorMaster">
@@ -119,9 +112,8 @@
     </ion-row>
     <div class="seletedItem" *ngFor="let item of selectedItem; let i=index;">
       <ion-row style="align-items: center;">
-        <!-- <ion-col>Article :</ion-col> -->
         <ion-col class="value" style="border-bottom: 1px solid lightgreen;">
-          <!-- {{article?.articleName}} -->
+           <ion-checkbox class="check-box" labelPlacement="end">Select to book a tailor</ion-checkbox>
           <ion-select
             label="Article: "
             label-placement="fixed"

@@ -13,6 +13,7 @@ import { CommonService } from 'src/app/services/common/common.service';
 import { ColorModelPage } from 'src/app/model/color-model/color-model.page';
 import { TailorListPage } from 'src/app/tailor/pages/tailor-list/tailor-list.page';
 
+
 @Component({
   selector: 'app-article-details',
   templateUrl: './article-details.page.html',
@@ -129,15 +130,19 @@ export class ArticleDetailsPage implements OnInit {
     }
   }
 
-  removeQuntity(item:any) {
-    if (item.quntity == 1) {
+  removeQuntity(article:any) {
+    if (article.quntity == 1) {
       return;
     }
-    item.quntity--;
+    article.quntity--;
   }
 
-  addQuntity(item:any) {
-    item.quntity++;
+  addQuntity(article:any) {
+    if(!article.articleId){
+      this.alertService.showAlerCancel('Alrert!', 'Please select article first before add quantity', 'alert')
+      return;
+    }
+    article.quntity++;
   }
 
   openSizeChartModal(action: any, ModelPage?: any) {
@@ -273,6 +278,7 @@ export class ArticleDetailsPage implements OnInit {
 
   selectedItems(){
     const items={
+      isChecked: false,
       articleName: (this.article)?this.article.articleName:'',
       articleId: (this.article)?this.article.articleId:'',
       colorName: this.selectedColor?.colorName,
@@ -292,6 +298,7 @@ export class ArticleDetailsPage implements OnInit {
 
   addItems(){
      const items={
+      isChecked: false,
       articleName: "",
       articleId: "",
       colorName: this.selectedColor?.colorName,
@@ -315,6 +322,7 @@ export class ArticleDetailsPage implements OnInit {
     });
 
     if(article.length>0){
+      item.isChecked= false,
       item.articleName=article[0].articleName;
       item.articleId=article[0].articleId;
       item.colorName= this.selectedColor?.colorName,
