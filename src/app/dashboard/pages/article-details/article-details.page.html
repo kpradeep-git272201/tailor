@@ -2,10 +2,10 @@
   <ion-toolbar color="primary">
     <ion-buttons slot="start">
       <ion-back-button
-        defaultHref="/main/dashboard/with-fabric/{{articleName}}"
+        defaultHref="/main/dashboard/with-fabric/{{articleId}}"
       ></ion-back-button>
     </ion-buttons>
-    <ion-title *ngIf="fabric && article">{{ fabric.fabricType }}</ion-title>
+    <ion-title *ngIf="fabric || article">{{ fabric.fabricType }}</ion-title>
   </ion-toolbar>
 </ion-header>
 
@@ -84,12 +84,19 @@
     </div>
   </div>
   <ion-grid>
-    <ion-row>
+    <ion-row class="fabric-qunt">
       <ion-col
         ><span class="label">Fabric : </span
         ><span class="value">{{fabric?.fabricType}}</span>
       </ion-col>
-      <ion-col>
+      <ion-button (click)="addItems()"
+        ><ion-icon
+          name="add-outline"
+          style="margin-right: 6px; font-size: 24px"
+        ></ion-icon
+        >Add</ion-button
+      >
+      <!-- <ion-col style="text-align: right;">
         <span class="label">Quantitiy : </span>
         <span>
           <ion-icon
@@ -108,34 +115,68 @@
             (click)="addQuntity(fabric)"
           ></ion-icon>
         </span>
-      </ion-col>
+      </ion-col> -->
     </ion-row>
-    <ion-row>
-      <ion-col>Article :</ion-col>
-      <ion-col class="value">
-        <!-- {{article?.articleName}} -->
-        <ion-select label-placement="fixed" [(ngModel)]="selectedArticle" placeholder="Select Article">
-          <ion-select-option
-            *ngFor="let article of masterMenu"
-            [value]="article.articleId"
-            >{{article.articleName}}</ion-select-option
+    <div class="seletedItem" *ngFor="let item of selectedItem; let i=index;">
+      <ion-row style="align-items: center;">
+        <!-- <ion-col>Article :</ion-col> -->
+        <ion-col class="value" style="border-bottom: 1px solid lightgreen;">
+          <!-- {{article?.articleName}} -->
+          <ion-select
+            label="Article: "
+            label-placement="fixed"
+            [(ngModel)]="item.articleId"
+            placeholder="Select Article"
+            (ionChange)="onArticleChange($event, item)"
+            style="padding-left: 8px"
           >
-        </ion-select>
-      </ion-col>
-    </ion-row>
+            <ion-select-option
+              *ngFor="let article of masterMenu"
+              [value]="article.articleId"
+              >{{article.articleName}}</ion-select-option
+            >
+          </ion-select>
+        </ion-col>
+      </ion-row>
 
-    <ion-row>
-      <ion-col>Color :</ion-col>
-      <ion-col
-        class="value"
-        [style.color]="selectedColor?.hexCode === selectedColor?.hexCode ? selectedColor?.hexCode : ''"
-        >{{selectedColor?.colorName}}</ion-col
-      >
-    </ion-row>
-    <ion-row *ngIf="fabric">
-      <ion-col>Price :</ion-col>
-      <ion-col class="value">{{fabric.pricePerMeter}}</ion-col>
-    </ion-row>
+      <ion-row style="align-items: center;" *ngIf="item?.colorCode || i==0">
+        <ion-col style="padding-left: 12px">Color :</ion-col>
+        <ion-col
+          class="value"
+        >
+        <ion-icon [style.color]="(selectedColor?.hexCode === selectedColor?.hexCode && i==0) ? selectedColor?.hexCode : item.colorCode" name="ellipse" style="margin-bottom: -6px; font-size: 24px;"></ion-icon>
+        {{ (selectedColor?.hexCode === selectedColor?.hexCode && i==0) ? selectedColor?.colorName: item.colorName }}</ion-col
+        >
+      </ion-row>
+      <ion-row  *ngIf="item?.price" style="align-items: center;">
+        <ion-col style="padding-left: 12px">Price : </ion-col>
+        <ion-col class="value"><span >&#8377;</span>{{item.price * item.quntity}}</ion-col>
+      </ion-row>
+      <ion-row *ngIf="item?.quntity" style="align-items: center;">
+        <ion-col style="padding-left: 12px">Quantity : </ion-col>
+        <ion-col class="value">
+          <span>
+          <ion-icon
+            class="icon-md"
+            style="margin-bottom: -0.375rem"
+            name="remove-circle-outline"
+            (click)="removeQuntity(item)"
+          ></ion-icon>
+          <ion-text style="padding-left: 0.625rem; padding-right: 0.625rem"
+            > {{item.quntity}}</ion-text
+          >
+          <ion-icon
+            class="icon-md"
+            style="margin-bottom: -0.375rem"
+            name="add-circle-outline"
+            (click)="addQuntity(item)"
+          ></ion-icon>
+        </span>
+        <ion-icon 
+        (click)="removeItem(item)" class="delete" name="trash-outline"></ion-icon>
+       </ion-col>
+      </ion-row>
+    </div>
   </ion-grid>
 
   <ion-button

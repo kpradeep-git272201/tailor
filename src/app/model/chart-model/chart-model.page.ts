@@ -1,7 +1,7 @@
 import { Component, Input, OnInit } from '@angular/core';
 import { SharedModule } from 'src/app/sharedmodule/sharedmodule.module';
 import { ModalController } from '@ionic/angular';
-import { IconService } from 'src/app/services/icon.service';
+import { IconService } from 'src/app/services/icon/icon.service';
 
 
 @Component({

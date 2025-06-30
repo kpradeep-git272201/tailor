@@ -1,13 +1,14 @@
 import { TestBed } from '@angular/core/testing';
+import { IconService } from './icon.service';
 
-import { AlertService } from './alert.service';
 
-describe('AlertService', () => {
-  let service: AlertService;
+
+describe('IconService', () => {
+  let service: IconService;
 
   beforeEach(() => {
     TestBed.configureTestingModule({});
-    service = TestBed.inject(AlertService);
+    service = TestBed.inject(IconService);
   });
 
   it('should be created', () => {

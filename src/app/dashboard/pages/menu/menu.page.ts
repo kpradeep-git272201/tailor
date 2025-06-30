@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
-import { IconService } from 'src/app/services/icon.service';
+import { IconService } from 'src/app/services/icon/icon.service';
 import { SharedModule } from 'src/app/sharedmodule/sharedmodule.module';
 
 @Component({

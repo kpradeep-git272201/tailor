@@ -7,7 +7,7 @@ import { AlertController, ToastController } from '@ionic/angular';
 export class AlertService {
 
   constructor(private alertController: AlertController,
-    private toastController: ToastController
+    private toastController: ToastController,
   ) { }
 
   async showAlert(header: string, message: string, type: 'success' | 'warning' | 'alert') {
@@ -68,7 +68,41 @@ export class AlertService {
       await alert.present();
     });
   }
+  async showAlerCancel(
+    header: string,
+    message: string,
+    type: 'success' | 'warning' | 'alert'
+  ): Promise<boolean> {
+    let cssType = '';
+    switch (type) {
+      case 'success': cssType = 'success'; break;
+      case 'warning': cssType = 'warning'; break;
+      case 'alert': cssType = 'danger'; break;
+    }
   
+    return new Promise(async (resolve) => {
+      const alert = await this.alertController.create({
+        cssClass: `custom-alert ${cssType}`,
+        header: header,
+        message: message,
+        buttons: [
+          {
+            text: 'Cancel',
+            role: 'cancel',
+            cssClass: 'custom-cancel-button',
+            handler: () => resolve(false)
+          },
+          // {
+          //   text: 'OK',
+          //   cssClass: 'custom-ok-button',
+          //   handler: () => resolve(true)
+          // }
+        ]
+      });
+  
+      await alert.present();
+    });
+  }
 
   async showToast(message: string, type: 'success' | 'error' | 'warning' = 'success') {
     let cssClass = '';

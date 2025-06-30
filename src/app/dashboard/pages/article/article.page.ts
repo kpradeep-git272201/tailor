@@ -7,11 +7,11 @@ import {
 } from '@ng-bootstrap/ng-bootstrap';
 import { addIcons } from 'ionicons';
 import { chevronForward } from 'ionicons/icons';
-import { AlertService } from 'src/app/services/alert.service';
+import { AlertService } from 'src/app/services/alert/alert.service';
 import { SharedModule } from 'src/app/sharedmodule/sharedmodule.module';
 import { ModalController } from '@ionic/angular';
-import { CommonService } from 'src/app/services/common.service';
-import { WithfabricService } from 'src/app/services/withfabric.service';
+import { CommonService } from 'src/app/services/common/common.service';
+import { WithfabricService } from 'src/app/services/withfabric/withfabric.service';
 
 @Component({
   selector: 'app-article',

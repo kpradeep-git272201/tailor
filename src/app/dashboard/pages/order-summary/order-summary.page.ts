@@ -1,9 +1,9 @@
 import { Component, OnInit } from '@angular/core';
-import { IconService } from 'src/app/services/icon.service';
+import { IconService } from 'src/app/services/icon/icon.service';
 import { ModalController } from '@ionic/angular';
 import { ActivatedRoute, Router } from '@angular/router';
-import { AlertService } from 'src/app/services/alert.service';
-import { CommonService } from 'src/app/services/common.service';
+import { AlertService } from 'src/app/services/alert/alert.service';
+import { CommonService } from 'src/app/services/common/common.service';
 import { SharedModule } from 'src/app/sharedmodule/sharedmodule.module';
 import { Location } from '@angular/common';
 import { IonRadio, IonRadioGroup } from '@ionic/angular/standalone';
@@ -30,6 +30,7 @@ export class OrderSummaryPage implements OnInit {
   loggedUser: any;
   myOrder: any;
   currentLocation:any; 
+  selectedItems: any=[];
   
   constructor(
     private iconService: IconService,
@@ -64,6 +65,7 @@ export class OrderSummaryPage implements OnInit {
       this.order.serviceType = this.navigatedData.serviceType;
       this.order.article = this.navigatedData.article;
       this.order.fabric = this.navigatedData.fabric;
+      this.selectedItems=parseCurrentBooking?.selectedItem;
     }
     this.route.queryParams.subscribe((params) => {
       if (params['order']) {
@@ -144,6 +146,7 @@ export class OrderSummaryPage implements OnInit {
         bookingDate: moment().format('DD-MMM-YYYY'),
         orderId: this.getOrderId(),
         data: this.myOrder,
+        selectedItems: this.selectedItems
       });
       localStorage.setItem('myOrder', JSON.stringify(myOrders));
     } else {
@@ -155,6 +158,7 @@ export class OrderSummaryPage implements OnInit {
             bookingDate: moment().format('DD-MMM-YYYY'),
             orderId: this.getOrderId(),
             data: this.myOrder,
+            selectedItems: this.selectedItems
           },
         ]),
       );

@@ -5,11 +5,11 @@ import {
   NgbSlideEvent,
   NgbSlideEventSource,
 } from '@ng-bootstrap/ng-bootstrap';
-import { IconService } from 'src/app/services/icon.service';
+import { IconService } from 'src/app/services/icon/icon.service';
 import { ModalController } from '@ionic/angular';
 import { ActivatedRoute, Router } from '@angular/router';
-import { AlertService } from 'src/app/services/alert.service';
-import { CommonService } from 'src/app/services/common.service';
+import { AlertService } from 'src/app/services/alert/alert.service';
+import { CommonService } from 'src/app/services/common/common.service';
 import { ColorModelPage } from 'src/app/model/color-model/color-model.page';
 import { TailorListPage } from 'src/app/tailor/pages/tailor-list/tailor-list.page';
 
@@ -41,6 +41,9 @@ export class ArticleDetailsPage implements OnInit {
   selectedTailor: any;
   masterMenu: any=[];
   selectedArticle:any;
+  selectedItem: any=[];
+  fabricId: any;
+
   constructor(
     private iconService: IconService,
     private modalController: ModalController,
@@ -56,9 +59,9 @@ export class ArticleDetailsPage implements OnInit {
     this.subArtcles = this.commonService.getSubArtcles();
     this.colorMaster = this.commonService.colorClassificationMaster();
     this.masterMenu=this.commonService.getMasterMenu();
-    this.articleName = this.route.snapshot.paramMap?.get('article');
     this.articleId = this.route.snapshot.paramMap?.get('articleId');
-    this.selectedArticle=this.articleId;
+    this.fabricId = this.route.snapshot.paramMap?.get('fabricId');
+   
     const currentBooking = localStorage.getItem('currentBooking');
     if (currentBooking) {
       const parseCurrentBooking = JSON.parse(currentBooking);
@@ -73,15 +76,20 @@ export class ArticleDetailsPage implements OnInit {
       this.loggedUser = !!localStorage.getItem('loggedUser');
       if (params['navigatedData']) {
         this.navigatedData = JSON.parse(params['navigatedData']);
-        this.article = this.navigatedData.article;
-        this.fabric = this.navigatedData.fabric;
+        this.article = this.navigatedData?.article;
+        this.fabric = this.navigatedData?.fabric;
+        this.selectedArticle=this.article?.articleId;
       }
     });
+
+    this.selectedItems();
   }
 
   ngAfterViewInit() {
     this.commonService.setCurrentPath();
   }
+
+
   togglePaused() {
     if (this.paused) {
       this.carousel.cycle();
@@ -115,20 +123,21 @@ export class ArticleDetailsPage implements OnInit {
 
   selectColor(color: any) {
     this.selectedColor = color;
+    if(this.selectedItem.length==1){
+      this.selectedItem=[];
+      this.selectedItems();
+    }
   }
 
-  removeQuntity(fabric:any) {
-    if (this.quntity == 1) {
-      fabric.pricePerMeter=fabric.pricePerMeter*this.quntity;
+  removeQuntity(item:any) {
+    if (item.quntity == 1) {
       return;
     }
-    this.quntity--;
-    fabric.pricePerMeter=fabric.pricePerMeter*this.quntity;
+    item.quntity--;
   }
 
-  addQuntity(fabric:any) {
-    this.quntity++;
-    fabric.pricePerMeter=fabric.pricePerMeter*this.quntity;
+  addQuntity(item:any) {
+    item.quntity++;
   }
 
   openSizeChartModal(action: any, ModelPage?: any) {
@@ -144,6 +153,7 @@ export class ArticleDetailsPage implements OnInit {
       handle: true,
       componentProps: {
         bookTailor: this.navigatedData, // pass your required data
+        selectedItem: this.selectedItem
       },
     });
 
@@ -157,6 +167,7 @@ export class ArticleDetailsPage implements OnInit {
           tailor: this.selectedTailor,
           itme: this.navigatedData,
           color: this.selectedColor,
+          selectedItem: this.selectedItem
         };
         localStorage.setItem('currentBooking', JSON.stringify(data1));
       } else if (action == 'bookTailor') {
@@ -170,6 +181,11 @@ export class ArticleDetailsPage implements OnInit {
   }
 
   bookTailor() {
+    if(this.validateItem() && !this.validateItem().articleId){
+      this.alertService
+        .showAlerCancel('Alrert!', 'Please select at least one Article', 'alert')
+      return;
+    }
     if (!this.selectedColor) {
       this.openSizeChartModal('selectedColor', ColorModelPage);
       return;
@@ -202,6 +218,7 @@ export class ArticleDetailsPage implements OnInit {
         phoneNumber: loggedUser?.phoneNumber,
         tailor: tailor,
         itme: this.navigatedData,
+        selectedItem: this.selectedItem
       };
       order.push(data);
       // localStorage.setItem('myOrder', JSON.stringify(order));
@@ -212,6 +229,7 @@ export class ArticleDetailsPage implements OnInit {
           phoneNumber: loggedUser?.phoneNumber,
           tailor: tailor,
           itme: this.navigatedData,
+          selectedItem: this.selectedItem
         },
       ];
       // localStorage.setItem('myOrder', JSON.stringify(order));
@@ -224,13 +242,14 @@ export class ArticleDetailsPage implements OnInit {
       tailor: tailor,
       itme: this.navigatedData,
       color: this.selectedColor,
+      selectedItem: this.selectedItem
     };
     localStorage.setItem('currentBooking', JSON.stringify(data));
   }
 
   goToOrderSummary(myOrder: any) {
     this.router.navigate(
-      ['/main/with-fabric', this.articleName, this.articleId, 'order-summary'],
+      ['/main/with-fabric', this.articleId, this.fabricId, 'order-summary'],
       {
         queryParams: {
           order: JSON.stringify(myOrder),
@@ -249,5 +268,78 @@ export class ArticleDetailsPage implements OnInit {
       localStorage.setItem('addToCart', JSON.stringify(addToCart));
     }
     console.log(JSON.stringify(this.navigatedData));
+  }
+
+
+  selectedItems(){
+    const items={
+      articleName: (this.article)?this.article.articleName:'',
+      articleId: (this.article)?this.article.articleId:'',
+      colorName: this.selectedColor?.colorName,
+      colorCode: this.selectedColor?.hexCode,
+      colorDescription: this.selectedColor.description,
+      quntity: 1,
+      fabricType: this.fabric?.fabricType,
+      price: this.fabric.pricePerMeter,
+
+      articleUrl: (this.article)?this.article.imageUrl:'',
+      fabricUrl: this.fabric.imageUrl,
+      fabricWashingInstruction: this.fabric.washingInstruction,
+      fabricIroning: this.fabric.ironing
+    }
+    this.selectedItem.push(items);
+  }
+
+  addItems(){
+     const items={
+      articleName: "",
+      articleId: "",
+      colorName: this.selectedColor?.colorName,
+      colorCode: this.selectedColor?.hexCode,
+      colorDescription: this.selectedColor.description,
+      quntity: 1,
+      fabric: "",
+      price: "",
+      articleUrl: "",
+      fabricUrl: "",
+      fabricWashingInstruction: this.fabric.washingInstruction,
+      fabricIroning: this.fabric.ironing
+    }
+    this.selectedItem.unshift(items);
+  }
+
+  onArticleChange(event: any, item: any) {
+    console.log("Selected Article ID:", event.detail.value);
+    const article= this.masterMenu.filter((data:any)=>{
+      return data.articleId==event.detail.value;
+    });
+
+    if(article.length>0){
+      item.articleName=article[0].articleName;
+      item.articleId=article[0].articleId;
+      item.colorName= this.selectedColor?.colorName,
+      item.colorCode=this.selectedColor?.hexCode,
+      item.colorDescription= this.selectedColor.description,
+      item.quntity=1,
+      item.fabric=this.fabric?.fabricType,
+      item.price=this.fabric.pricePerMeter,
+      item.articleUrl=article[0].imageUrl,
+      item.fabricUrl= this.fabric.imageUrl,
+      item.fabricWashingInstruction=this.fabric.washingInstruction,
+      item.fabricIroning=this.fabric.ironing
+    }
+  }
+
+
+  removeItem(item:any){
+    this.selectedItem=this.selectedItem.filter((element:any)=>{
+      return element.articleId != item.articleId;
+    })
+  }
+
+
+  validateItem(){
+    const isValid = this.selectedItem.find((item: { articleId: any; }) => !item.articleId);
+    return isValid;
   }
 }

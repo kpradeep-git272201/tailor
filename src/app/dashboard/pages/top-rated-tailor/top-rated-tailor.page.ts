@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
-import { CommonService } from 'src/app/services/common.service';
-import { IconService } from 'src/app/services/icon.service';
+import { CommonService } from 'src/app/services/common/common.service';
+import { IconService } from 'src/app/services/icon/icon.service';
 import { SharedModule } from 'src/app/sharedmodule/sharedmodule.module';
 
 @Component({

@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
-import { IconService } from 'src/app/services/icon.service';
-import { WithfabricService } from 'src/app/services/withfabric.service';
+import { IconService } from 'src/app/services/icon/icon.service';
+import { WithfabricService } from 'src/app/services/withfabric/withfabric.service';
 import { SharedModule } from 'src/app/sharedmodule/sharedmodule.module';
 
 @Component({

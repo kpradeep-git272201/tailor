@@ -68,5 +68,34 @@ ion-button {
 }
 
 :host{
-  min-height: 0px;
+  min-height: 0px !important;
+}
+.value{
+  margin-right:10px;
+  text-align: right;
+}
+
+.seletedItem{
+  height: 100%;
+  border: 1px solid #25CE74;
+  margin-right: 10px;
+  background: #EAFBF2;
+  border-radius: 8px;
+  margin-top: 10px;
+}
+.fabric-qunt{
+  border: 1px solid #D09A0E;
+  background: #FBF5E7;
+  border-radius: 8px;
+  margin-right: 10px;
+  margin-top: 10px;
+  padding: 8px;
+  align-items: center;
+}
+
+.delete{
+    margin-bottom: -3px;
+    margin-left: 25px;
+    font-size: 24px;
+    color: red;
 }

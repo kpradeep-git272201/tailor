@@ -1,6 +1,6 @@
 import { Component, EnvironmentInjector, inject, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
-import { IconService } from '../services/icon.service';
+import { IconService } from '../services/icon/icon.service';
 import { SharedModule } from '../sharedmodule/sharedmodule.module';
 
 @Component({
