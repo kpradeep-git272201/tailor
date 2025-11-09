@@ -1,0 +1,206 @@
+<ion-header [translucent]="true">
+  <ion-toolbar class="toolbar">
+    <ion-buttons slot="start">
+      <ion-back-button defaultHref="/main/user"></ion-back-button>
+    </ion-buttons>
+    <ion-title>Shopping Bag</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content [fullscreen]="true">
+  <ion-list *ngIf="shoppingBag.length > 0; else emptyCart">
+    <ion-item lines="none">
+      <ion-label><span>Delivery To: </span>
+        <span style="font-weight: 600">Demo User - 221306</span>
+        <p>B-301, Mayfair Residency, Greater Noida 221306</p>
+      </ion-label>
+
+      <div class="change">Change</div>
+    </ion-item>
+    <div *ngFor="let item of shoppingBag; let i=index">
+      <ion-card>
+        <ion-card-title
+          style="text-align: center; font-size: 14px; align-items: center; justify-content: space-between; display: flex;justify-content: space-between;">
+          <div style="height: 100%;">
+            <p style="margin-bottom: 0px;padding-left: 10px;font-size: 16px; font-weight: 600;">Fabric: <span
+                style="font-weight: 500;">{{ item.fabric }}</span></p>
+
+            <!-- <ion-checkbox [disabled]="item.isFreez" [checked]="item.isChecked"
+            (ionChange)="onTailorSelectChange($event, item)" class="check-box" labelPlacement="end">Select to book a
+            Tailor</ion-checkbox>
+          <ion-icon *ngIf="item.isFreez" (click)="getEdit(item)"
+            style="font-size: 18px; color: green; padding-left: 10px;" name="create-outline"></ion-icon> -->
+          </div>
+          <div style="height: 100%;">
+            <ion-icon (click)="removeItem(item)"
+              style="margin-top: 10px; font-size: 18px; color: red; margin-right: 5px;" name="trash-outline"></ion-icon>
+          </div>
+        </ion-card-title>
+
+        <ion-item lines="none">
+          <ion-thumbnail slot="start" class="ion-thumbnail" (click)="selecteArticle(item)">
+            <img [src]="item.imageUrl" alt="{{ item.articleName }}" />
+            <ion-icon [name]="(item.isChecked)?'checkbox':'checkbox-outline'" class="check-icon"></ion-icon>
+          </ion-thumbnail>
+          <ion-label>
+            <ion-select *ngIf="i>0" [(ngModel)]="selectedArticle[i]" label="Article: " 
+              (ionChange)="onArticleChange($event, item)">
+              <ion-select-option value="">--Select--</ion-select-option>
+              <ion-select-option *ngFor="let article of articles"
+                [value]="article">{{article.articleName}}</ion-select-option>
+            </ion-select>
+            <p *ngIf="i==0" style="margin-top: -25px;">Article: <span style="font-weight: 500;">{{ item.articleName }}</span></p>
+
+            <p><span style="font-weight: 200;">MRP </span> <span style="font-weight: normal;">&#8377;{{ item.price
+                }}</span></p>
+            <label style="font-weight: 500;">Qty:</label>
+            <select (change)="onChangeQty($event, item)" style="border: none;">
+              <option *ngFor="let qty of quntity" [value]="qty">{{qty}}</option>
+            </select>
+            <div>
+              <ion-button fill="outline" (click)="addMoreArticle(item, i)">
+                <ion-icon name="add-outline" style="margin-left: -8px;padding-right: 2px;"></ion-icon>
+                Add</ion-button>
+            </div>
+          </ion-label>
+        </ion-item>
+        <!-- <ion-list *ngIf="item.addMore.length>0">
+          <ion-item *ngFor="let add of item.addMore; let i=index" lines="none">
+            <ion-thumbnail slot="start">
+              <img [src]="selectedArticle[i]?.imageUrl" alt="{{ item.articleName }}" />
+            </ion-thumbnail>
+            <ion-label>
+              <p><span style="font-weight: 200;">MRP </span> <span style="font-weight: normal;">&#8377;{{ add.price
+                  }}</span></p>
+              <label style="font-weight: 500;">Qty:</label>
+              <select (change)="addMoreOnChangeQty($event, add)" style="border: none;">
+                <option *ngFor="let qty of quntity" [value]="qty">{{qty}}</option>
+              </select>
+            </ion-label>
+            <ion-select label="Article: " [(ngModel)]="selectedArticle[i]" (ionChange)="onArticleChange($event, add)">
+              <ion-select-option value="">--Select--</ion-select-option>
+              <ion-select-option *ngFor="let article of add.articles"
+                [value]="article">{{article.articleName}}</ion-select-option>
+            </ion-select>
+          </ion-item>
+        </ion-list> -->
+
+        <ion-list *ngIf="item?.tailor">
+          <ion-item lines="none">
+            <ion-avatar slot="start">
+              <img [src]="item.tailor.imageUrl" alt="Tailor Image">
+            </ion-avatar>
+            <ion-label>
+              <h3>Tailor</h3>
+              <p>{{ item.tailor.name }} | {{ item.tailor.experience }} yrs | ⭐ {{ item.tailor.rating }}/5</p>
+            </ion-label>
+            <div class="change" (click)="changeTailor(item)">Change</div>
+          </ion-item>
+        </ion-list>
+      </ion-card>
+      <!-- <div *ngIf="item.addMore.length>0">
+        <ion-card *ngFor="let add of item.addMore; let i=index">
+          <ion-card-title
+            style="text-align: center; font-size: 14px; align-items: center; justify-content: space-between; display: flex;justify-content: space-between;">
+            <div style="height: 100%;">
+              <p style="margin-bottom: 0px;padding-left: 10px;font-size: 16px; font-weight: 600;">Fabric: <span
+                  style="font-weight: 500;">{{ item.fabric }}</span></p>
+            </div>
+            <div style="height: 100%;">
+              <ion-icon (click)="removeItem(item)"
+                style="margin-top: 10px; font-size: 18px; color: red; margin-right: 5px;"
+                name="trash-outline"></ion-icon>
+            </div>
+          </ion-card-title>
+          <ion-list>
+            <ion-item lines="none">
+              <ion-thumbnail class="ion-thumbnail" (click)="selecteArticle(add)" slot="start">
+                <img [src]="selectedArticle[i]?.imageUrl" alt="{{ item.articleName }}" />
+                <ion-icon [name]="(add.isChecked)?'checkbox':'checkbox-outline'" class="check-icon"></ion-icon>
+              </ion-thumbnail>
+              <ion-label>
+                <ion-select label="Article: " [(ngModel)]="selectedArticle[i]"
+                  (ionChange)="onArticleChange($event, add)">
+                  <ion-select-option value="">--Select--</ion-select-option>
+                  <ion-select-option *ngFor="let article of add.articles"
+                    [value]="article">{{article.articleName}}</ion-select-option>
+                </ion-select>
+                <p><span style="font-weight: 200;">MRP </span> <span style="font-weight: normal;">&#8377;{{ add.price
+                    }}</span></p>
+                <label style="font-weight: 500;">Qty:</label>
+                <select (change)="addMoreOnChangeQty($event, add)" style="border: none;">
+                  <option *ngFor="let qty of quntity" [value]="qty">{{qty}}</option>
+                </select>
+              </ion-label>
+
+            </ion-item>
+          </ion-list>
+
+          <ion-list *ngIf="item?.tailor">
+            <ion-item lines="none">
+              <ion-avatar slot="start">
+                <img [src]="item.tailor.imageUrl" alt="Tailor Image">
+              </ion-avatar>
+              <ion-label>
+                <h3>Tailor</h3>
+                <p>{{ item.tailor.name }} | {{ item.tailor.experience }} yrs | ⭐ {{ item.tailor.rating }}/5</p>
+              </ion-label>
+              <div class="change" (click)="changeTailor(item)">Change</div>
+            </ion-item>
+          </ion-list>
+        </ion-card>
+      </div> -->
+    </div>
+    <ion-card>  
+      <ion-card-content>
+        <ion-card-title>Bill Details</ion-card-title>
+        <ion-grid style="padding: 0px;">
+          <ion-row>
+            <ion-col>Item Total</ion-col>
+            <ion-col style="text-align: right;">&#8377; {{calculateTotalPrice()}}</ion-col>
+          </ion-row>
+          <ion-row>
+            <ion-col>Delivery Charge</ion-col>
+            <ion-col style="text-align: right;">&#8377; 0</ion-col>
+          </ion-row>
+          <ion-row>
+            <ion-col>Handling Charge</ion-col>
+            <ion-col style="text-align: right;">&#8377; 9</ion-col>
+          </ion-row>
+        </ion-grid>
+        <ion-card-header style="padding: 0px;">
+          <ion-row >
+            <ion-col><h2><span style="font-weight: 600;">Grand Total</span></h2></ion-col>
+            <ion-col style="text-align: right;"><h2><span style="font-weight: 600;">&#8377; {{calculateTotalPrice()+9}}</span></h2></ion-col>
+          </ion-row>
+        </ion-card-header>
+      </ion-card-content>
+    </ion-card>
+    <div style="display: flex; justify-content: center; gap: 10px; width: 100%; margin-left: 10px;">
+      <ion-button fill="outline" (click)="getAutoAssignTailor(item)"
+        style="font-size: 12px; flex: 1; margin-left: 5px;">
+        <ion-icon *ngIf="item.isAutoAssign" name="checkmark-circle-outline"
+          style="padding-right: 8px; color: #04c504;"></ion-icon>
+        Auto Assign
+      </ion-button>
+      <ion-button fill="outline" (click)="getBookTailor(item)" style="font-size: 12px; flex: 1; margin-right: 25px;">
+        <ion-icon *ngIf="item.isBookTailor" name="checkmark-circle-outline"
+          style="padding-right: 8px; color: #04c504;"></ion-icon>
+        Book Tailor
+      </ion-button>
+    </div>
+    <ion-button expand="block" color="success" class="ion-margin" (click)="placeOrder(item)"
+      [disabled]="!(item.isAutoAssign || item.isBookTailor)">
+      Place Order
+    </ion-button>
+  </ion-list>
+
+  <ng-template #emptyCart>
+    <ion-text color="medium">
+      <div class="ion-text-center ion-padding">
+        <h2>Your cart is empty</h2>
+        <p>Add some items to get started.</p>
+      </div>
+    </ion-text>
+  </ng-template>
+</ion-content>

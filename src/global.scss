@@ -1,0 +1,478 @@
+/*
+ * App Global CSS
+ * ----------------------------------------------------------------------------
+ * Put style rules here that you want to apply globally. These styles are for
+ * the entire app and not just one component. Additionally, this file can be
+ * used as an entry point to import other CSS/Sass files to be included in the
+ * output CSS.
+ * For more information on global stylesheets, visit the documentation:
+ * https://ionicframework.com/docs/layout/global-stylesheets
+ */
+
+/* Core CSS required for Ionic components to work properly */
+@import "@ionic/angular/css/core.css";
+
+/* Basic CSS for apps built with Ionic */
+@import "@ionic/angular/css/normalize.css";
+@import "@ionic/angular/css/structure.css";
+@import "@ionic/angular/css/typography.css";
+@import "@ionic/angular/css/display.css";
+
+/* Optional CSS utils that can be commented out */
+@import "@ionic/angular/css/padding.css";
+@import "@ionic/angular/css/float-elements.css";
+@import "@ionic/angular/css/text-alignment.css";
+@import "@ionic/angular/css/text-transformation.css";
+@import "@ionic/angular/css/flex-utils.css";
+
+/**
+ * Ionic Dark Mode
+ * -----------------------------------------------------
+ * For more info, please see:
+ * https://ionicframework.com/docs/theming/dark-mode
+ */
+
+/* @import "@ionic/angular/css/palettes/dark.always.css"; */
+/* @import "@ionic/angular/css/palettes/dark.class.css"; */
+@import "@ionic/angular/css/palettes/dark.system.css";
+
+:root {
+  --primary-color: #880e4f; //#673ab7;
+  --secondary-color: #ff4081;
+  --primary-font-color: #ffffff;
+  --over-layer-color: rgba(190, 186, 186, 0.8);
+  --rem-to-px: 10px;
+  --overdue-bg-color: #ff5151;
+  --incomplete-bg-color: #ff9800;
+  --upcoming-bg-color: #d5b60a;
+  --incomplete-badge-bg-color: #f57c00;
+  --overdue-badge-bg-color: #e53935;
+  --upcoming-badge-bg-color: #a6860a;
+  --overdue-badge-txt-color: #000000;
+  --incomplete-badge-txt-color: #000000;
+  --upcoming-badge-txt-color: #000000;
+  --my-theme-bg: #2c3e50;
+}
+
+.category-list {
+  display: flex;
+  overflow-x: auto;
+  gap: 0.625rem;
+  padding: 0.625rem;
+}
+.category-item {
+  flex: 0 0 auto;
+  text-align: center;
+}
+.category-item ion-thumbnail.large-thumbnail {
+  width: 6.25rem;
+  height: 6.25rem;
+}
+.logo-container {
+  display: flex;
+  align-items: center;
+}
+
+.logo-thumbnail {
+  width: 40px; /* Adjust size as needed */
+  height: 40px;
+  border-radius: 50%; /* Makes it circular */
+  overflow: hidden; /* Ensures the image stays inside the circle */
+  margin-right: 10px; /* Adds spacing between logo and text */
+}
+
+.logo-thumbnail img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover; /* Ensures the image covers the circle properly */
+}
+
+.title-text {
+  font-size: 1.2rem;
+  font-weight: bold;
+}
+
+.char-avatar {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  margin-right: 18px;
+  background-color: var(--primary-color); /* Background when logged in */
+}
+
+.avatar-text {
+  font-size: 18px;
+  font-weight: bold;
+  color: white;
+}
+
+.default-avatar {
+  width: 100%;
+  height: 100%;
+  border-radius: 50%; /* Ensures the image stays circular */
+}
+
+ion-card{
+  border-radius: 0.625rem;
+}
+ion-content {
+  --background: linear-gradient(to bottom, #e0f2f1, #f7fafa);
+  // --background: url('/assets/images/background/Background5.jpg') no-repeat center center / cover !important;
+  // background-attachment: fixed !important;  /* Keeps the background fixed */
+}
+.toolbar{
+  --background: linear-gradient(to bottom, #e0f2f1, #e0f2f1);
+}
+/* For small screens (mobile phones) */
+// @media (max-width: 600px) {
+//   ion-content {
+//     --background: url('/assets/images/background/Background5.jpg') no-repeat center center / cover !important;
+//   }
+// }
+
+/* For tablets mediuam imgae*/
+// @media (min-width: 601px) and (max-width: 1024px) {
+//   ion-content {
+//     --background: url('/assets/images/background/Background1.jpg') no-repeat center center / cover !important;
+//   }
+// }
+
+/* For large screens largs size  */
+// @media (min-width: 1025px) {
+//   ion-content {
+//     --background: url('/assets/images/background/Background2.jpg') no-repeat center center / cover !important;
+//   }
+// }
+
+// Banner
+.search-text::after {
+  // content: "|";
+  animation: blink 1s step-start infinite;
+}
+
+.carousel {
+  margin: 0.625rem;
+}
+
+.search-container {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 94%; /* Adjust width as needed */
+  max-width: 37.5rem; /* Prevents too wide UI */
+  margin: 0.938rem auto; /* Center align */
+  border-radius: 0.625rem;
+  background: #fff;
+  padding: 0.188rem; /* Reduce padding */
+  border: 0.063 solid #ccc;
+  transition: all 0.3s ease-in-out;
+  height: 3.063rem; /* Reduced height */
+}
+
+/* Custom Styling for Search Bar */
+.custom-searchbar {
+  // --background: transparent !important; /* Match container */
+  --border-radius: 10px !important;
+  --box-shadow: none !important; /* Prevents double shadow */
+  --color: #333 !important;
+  --placeholder-color: #888 !important;
+  --clear-button-color: #ff6600 !important;
+  --cancel-button-color: #ff6600 !important;
+
+  width: 100%;
+  font-size: 12px; /* Reduce font-size */
+  padding: 6px; /* Reduce padding */
+  // height: 38px !important; /* Adjust height */
+  transition: all 0.3s ease-in-out;
+}
+
+/** ************************************* */
+//-------------------------------
+.articles {
+    --size: 4rem;
+    --border-radius: 2.875rem;
+    border: 0.5px solid #e7e7e7;
+}
+.thumbnail-text{
+  font-size: 12px;
+}
+.carousel-slide {
+  border-radius: 10px;
+  overflow: hidden; // Prevents the sharp edges during transition
+}
+.custom-header {
+  // background-color: #fef3e2;
+  padding: 8px;
+
+  .location-bar {
+    display: flex;
+    align-items: center;
+    font-size: 12px;
+    padding-bottom: 4px;
+
+    .location-icon {
+      font-size: 18px;
+      margin-right: 4px;
+      color: black;
+    }
+
+    .location-text {
+      display: flex;
+      justify-content: center;
+      .deliver-text {
+        font-weight: 500;
+        color: #555;
+      }
+
+      .location-details {
+        // font-weight: 600;
+        // color: #000;
+        font-size: 12px;
+      }
+    }
+  }
+
+  .search-bar-row {
+    display: flex;
+    align-items: center;
+
+    .custom-searchbar {
+      // --background: #fff;
+      --border-radius: 8px;
+      flex: 1;
+      // margin-right: 10px;
+    }
+
+    .icon-row {
+      display: flex;
+      gap: 10px;
+
+      ion-icon {
+        font-size: 22px;
+        color: #000;
+      }
+    }
+  }
+}
+ion-title {
+  padding-left: 0px;
+}
+.carousel-slide img {
+  border-radius: 10px !important;
+  transition: border-radius 0.3s ease-in-out; // Smooth transition effect
+}
+
+.carousel-caption {
+  position: absolute;
+  bottom: 58px;
+  height: 70px;
+  margin-bottom: 45px;
+  left: 50%;
+  transform: translateX(-50%);
+  background: rgba(0, 0, 0, 0.7);
+  color: white;
+  padding: 10px 15px;
+  border-radius: 10px;
+  width: 64%;
+  text-align: center;
+}
+
+.carousel-caption .h2 {
+  margin-top: 0rem !important;
+  padding-top: 0rem !important;
+  color: white;
+  font-size: 1.25rem;
+  margin-bottom: 0.313rem;
+}
+
+.carousel-caption p {
+  font-size: 0.875rem;
+  font-weight: bold;
+  color: #ffcc00; /* Yellow highlight for discount */
+}
+/* Convert default dashes (—) into circular dots */
+.custom-carousel .carousel-indicators [data-bs-target] {
+  width: 0.75rem !important;
+  height: 0.75rem !important;
+  background-color: #bbb !important; /* Inactive dot color */
+  border-radius: 50% !important;
+  border: none !important;
+  transition:
+    background-color 0.3s ease-in-out,
+    width 0.3s ease-in-out;
+}
+
+/* Highlight active dot */
+.custom-carousel .carousel-indicators .active {
+  background-color: #ffcc00 !important; /* Highlighted active dot */
+  width: 0.875rem !important;
+  height: 0.875rem !important;
+}
+
+.carousel-container {
+  position: relative;
+  border-radius: 10px;
+  max-height: 150px !important; /* Apni required height set karein */
+  overflow: hidden;
+  padding-bottom: 30px;
+  margin-left: 0.75rem;
+  margin-right: 0.75rem;
+}
+
+.custom-carousel .carousel-indicators .active {
+  background-color: #ffcc00 !important; /* Yellow highlighted active dot */
+  width: 0.875rem !important;
+  height: 0.875rem !important;
+}
+
+.custom-carousel .carousel-indicators [data-bs-target] {
+  width: 0.75rem !important;
+  height: 0.75rem !important;
+  background-color: #bbb !important; /* Inactive dot color */
+  border-radius: 50% !important;
+  border: none !important;
+  transition:
+    background-color 0.3s ease-in-out,
+    width 0.3s ease-in-out;
+}
+/* Move indicators (dots) below the carousel */
+.custom-carousel .carousel-indicators {
+  position: absolute !important;
+  bottom: -1.875rem !important; /* Adjust this value to position dots correctly */
+  left: 50%;
+  transform: translateX(-50%);
+  display: flex !important;
+  justify-content: center;
+  align-items: center;
+  gap: 0.5rem; /* Space between dots */
+  list-style: none;
+}
+
+// Location header
+.location-icon {
+  font-size: 24px;
+  margin-left: 8px; /* Adds space between Login and Location */
+  color: white; /* Match toolbar color */
+}
+
+.section-title {
+  padding-left: 1.063rem;
+}
+
+.view-more {
+  margin-left: 6.375rem;
+  margin-right: 6.375rem;
+  color: black;
+  span {
+    color: black;
+    margin-top: 0.188rem;
+  }
+}
+
+ion-header {
+  --box-shadow: none !important;
+  --border-width: 0 !important;
+  box-shadow: none !important;
+  border-bottom: none !important;
+  padding-top: env(safe-area-inset-top);
+}
+
+
+.custom-modal-class {
+  --width: 90%;
+  --max-width: 400px;
+  --height: auto;
+  --max-height: 80%;
+  --border-radius: 20px;
+  --box-shadow: 0px 4px 16px rgba(0, 0, 0, 0.25);
+  --background: #fff;
+
+  &::part(content) {
+    padding: 20px;
+  }
+}
+.alert-style-modal .modal-wrapper {
+  --width: 90%;
+  --max-width: 300px;
+  --border-radius: 12px;
+  --box-shadow: 0 4px 16px rgba(0, 0, 0, 0.2);
+  --background: white;
+  align-self: center;
+}
+
+.custom-alert {
+  max-width: 31.25rem;
+  border-radius: 0.75rem;
+}
+
+.custom-loading {
+  --background: #e3edff;
+  --spinner-color: var(--ion-color-primary);
+  color: var(--ion-color-primary);
+}
+
+.custom-alert .alert-wrapper {
+  width: calc(100% - 60px) !important;
+  max-width: calc(100% - 60px) !important;
+  margin: 0 auto;
+  border-radius: 12px;
+  box-shadow: 0px 4px 12px rgba(0, 0, 0, 0.1);
+}
+
+.custom-alert.success .alert-head {
+  color: green;
+  text-align: center;
+}
+
+.custom-alert.warning .alert-head {
+  color: orange;
+  text-align: center;
+}
+
+.custom-alert.danger .alert-head {
+  color: red;
+  text-align: center;
+}
+
+.custom-ok-button {
+  color: green !important;
+  font-weight: bold;
+}
+
+.custom-alert .alert-head {
+  background-color: var(--ion-color-primary);
+  color: white !important;
+  text-align: left;
+}
+.custom-alert .alert-head .alert-title.sc-ion-alert-md {
+  color: white !important;
+}
+
+.custom-alert .alert-head .alert-title.sc-ion-alert-md {
+  padding-top: 0 !important;
+}
+
+.toast-success {
+  --background: #FFFFFF !important; /* Light green */
+  --color: #0bc436 !important; /* Dark green text */
+  text-align: center !important;
+}
+
+.toast-error {
+  --background: #f8d7da !important; /* Light red */
+  --color: #721c24 !important; /* Dark red text */
+  text-align: center !important;
+}
+
+.toast-warning {
+  --background: #fff3cd !important; /* Light orange */
+  --color: #856404 !important; /* Dark orange text */
+  text-align: center !important;
+}
+
+.alert-head.sc-ion-alert-md+.alert-message.sc-ion-alert-md{
+  padding-top: 15px !important;
+}

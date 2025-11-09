@@ -1,0 +1,68 @@
+ion-grid {
+  padding: 0px;
+}
+ion-row {
+  padding: 0px;
+}
+ion-col {
+  padding: 0px;
+}
+.size-chart {
+  color: red;
+  text-align: right;
+}
+#size-chart-icon {
+  margin-bottom: -4px !important;
+  color: red;
+}
+.color {
+  text-align: left;
+}
+
+.bottom-modal {
+  --border-radius: 16px 16px 0 0; /* Rounded top corners */
+  --height: auto;
+  --width: 100%;
+}
+
+.fabric-grid {
+  padding: 0 10px;
+}
+
+.fabric-card {
+  border-radius: 8px;
+  box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1);
+  overflow: hidden;
+  transition: transform 0.3s ease-in-out;
+
+  &:hover {
+    transform: scale(1.03);
+  }
+}
+
+
+.checked {
+  position: relative;
+  border: 2px solid transparent;
+  border-radius: 50%;
+  overflow: hidden;
+}
+
+.selected .checked {
+  border-color: red;
+}
+
+.selected .check-icon {
+  display: block;
+}
+
+.check-icon {
+  position: absolute;
+  top: 5px;
+  right: 5px;
+  color: red;
+  font-size: 24px;
+  background-color: white;
+  border-radius: 50%;
+  display: none;
+}

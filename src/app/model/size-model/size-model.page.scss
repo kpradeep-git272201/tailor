@@ -1,0 +1,14 @@
+.size-card {
+  text-align: center;
+  transition: 0.2s ease-in-out;
+}
+
+.size-card:hover {
+  transform: scale(1.05);
+  cursor: pointer;
+}
+
+.size-card.selected {
+  border: 2px solid #3880ff;
+  box-shadow: 0 0 10px #3880ff;
+}

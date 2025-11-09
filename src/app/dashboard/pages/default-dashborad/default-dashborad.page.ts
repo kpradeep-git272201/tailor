@@ -1,0 +1,227 @@
+import { Component, inject, OnInit, ViewChild } from '@angular/core';
+import { SharedModule } from 'src/app/sharedmodule/sharedmodule.module';
+import { NgbCarousel, NgbSlideEvent, NgbSlideEventSource } from '@ng-bootstrap/ng-bootstrap';
+import { MatDialog } from '@angular/material/dialog';
+import { ActivatedRoute, Router } from '@angular/router';
+import { IconService } from 'src/app/services/icon/icon.service';
+import { CommonService } from 'src/app/services/common/common.service';
+import { TopRatedFabricPage } from "../top-rated-fabric/top-rated-fabric.page";
+import { TopRatedTailorPage } from "../top-rated-tailor/top-rated-tailor.page";
+import { IonPopover } from '@ionic/angular';
+import { MasterService } from 'src/app/services/master/master.service';
+
+@Component({
+  selector: 'app-default-dashborad',
+  templateUrl: './default-dashborad.page.html',
+  styleUrls: ['./default-dashborad.page.scss'],
+  standalone: true,
+  imports: [SharedModule, TopRatedFabricPage, TopRatedTailorPage]
+})
+export class DefaultDashboradPage implements OnInit {
+  @ViewChild('popover') popover!: IonPopover;
+  isOpen = false;
+  isLoggedIn = false;
+  userName = 'Customer';
+  userInitial = this.userName.charAt(0).toUpperCase();
+  appRole: any;
+
+  /*** Permotional Banner use by carosel */
+  paused = false;
+  unpauseOnArrow = false;
+  pauseOnIndicator = false;
+  pauseOnHover = true;
+  pauseOnFocus = true;
+
+  @ViewChild('carousel', { static: true }) carousel: NgbCarousel | any;
+  permotionalBanner: any = [];
+  interval: any;
+  searchQuery: any = '';
+  searchQueryAuto: string = 'Search for ';
+  filteredItems: any[] = [];
+  autoSearchTexts: string[] = ['Shirts', 'Jeans', 'T-Shirts', 'Casual Shoes'];
+  searchIndex: number = 0;
+  articles: any[] | any;
+  isTyping: boolean = false;
+  ourService: any = [];
+  currentLocation: Promise<void> | undefined;
+  navigatedData: any;
+  private masterService = inject(MasterService);
+  constructor(
+    public dialog: MatDialog,
+    private router: Router,
+    private iconService: IconService,
+    private commonService: CommonService,
+    private route: ActivatedRoute,
+  ) {
+    this.iconService.registerIcons();
+
+  }
+
+  ngOnInit() {
+    this.ourService = this.commonService.getService();
+    /* this.getCurrentLocation(); */
+    this.articles=this.masterService.getArticles();
+    this.permotionalBanner = this.commonService.getMasterBrand();
+    this.startAutoTyping();
+    /* this.route.queryParams.subscribe(params => {
+      const navigatedData = params['navigatedData'];
+      if (navigatedData) {
+        this.navigatedData = JSON.parse(navigatedData);
+        console.log(this.navigatedData.serviceType);
+      }
+    }); */
+    
+  }
+
+
+  getCurrentLocation(){
+   this.currentLocation=this.commonService.getCurrentCoordinates();
+  }
+
+  ionViewDidEnter() {
+    this.loadLoggedUser();
+  }
+  ngAfterViewInit(){
+    this.commonService.setCurrentPath();
+  }
+  
+  ngOnDestroy() {
+    clearInterval(this.interval);
+  }
+
+  presentPopover(e: Event) {
+    this.popover.event = e;
+    this.isOpen = true;
+  }
+
+  startAutoTyping() {
+    if (this.isTyping) return;
+    this.interval = setInterval(() => {
+      this.typeText('Search for ' + this.autoSearchTexts[this.searchIndex]);
+      this.searchIndex = (this.searchIndex + 1) % this.autoSearchTexts.length;
+    }, 5000);
+  }
+
+  stopAutoTyping() {
+    this.isTyping = true;
+    clearInterval(this.interval);
+  }
+
+  restartAutoTyping() {
+    if (!this.searchQuery) {
+      this.isTyping = false;
+      this.startAutoTyping();
+    }
+  }
+
+  typeText(text: string) {
+    let index = 0;
+    this.searchQueryAuto = '';
+    const typingInterval = setInterval(() => {
+      if (index < text.length) {
+        this.searchQueryAuto += text.charAt(index);
+        index++;
+      } else {
+        clearInterval(typingInterval);
+        /** this.filterItems({ target: { value: this.searchQueryAuto } }); */
+      }
+    }, 200);
+  }
+
+
+  filterItems(event: any) {
+    const searchTerm = event.target.value.toLowerCase();
+    if (searchTerm && searchTerm.trim() !== '') {
+      this.filteredItems = this.articles.filter((item: any) =>
+        item.articleName.toLowerCase().includes(searchTerm),
+      );
+    } else {
+      this.filteredItems = this.articles;
+    }
+  }
+
+  togglePaused() {
+    if (this.paused) {
+      this.carousel.cycle();
+    } else {
+      this.carousel.pause();
+    }
+    this.paused = !this.paused;
+  }
+
+  onSlide(slideEvent: NgbSlideEvent) {
+    if (
+      this.unpauseOnArrow &&
+      slideEvent.paused &&
+      (slideEvent.source === NgbSlideEventSource.ARROW_LEFT ||
+        slideEvent.source === NgbSlideEventSource.ARROW_RIGHT)
+    ) {
+      this.togglePaused();
+    }
+    if (
+      this.pauseOnIndicator &&
+      !slideEvent.paused &&
+      slideEvent.source === NgbSlideEventSource.INDICATOR
+    ) {
+      this.togglePaused();
+    }
+  }
+
+  loadLoggedUser() {
+    const loggedUserString = localStorage.getItem('loggedUser');
+    if (loggedUserString) {
+      const loggedUser: any = JSON.parse(loggedUserString);
+      this.appRole = loggedUser.appRole;
+      this.isLoggedIn = true;
+    } else {
+      this.appRole = '';
+      this.isLoggedIn = false;
+    }
+  }
+  
+  goToArticle(article:any){
+    this.router.navigate(['/main/article', article.articleId],{
+      queryParams: {
+        navigatedData: JSON.stringify({
+          serviceType: 'With Fabric'
+        })
+      }
+    });
+  }
+
+  navigateTo() {
+    this.router.navigate(['/auth']);
+  }
+
+  getExpTailors() {
+    this.router.navigate(['/tabs/customer/tailors']);
+  }
+
+  viewProfile(tailor: any) {
+    this.router.navigate(['/tabs/customer/tailor-profile', tailor.id], {
+      queryParams: {
+        tailor: JSON.stringify(tailor),
+      },
+    });
+  }
+
+  getService(action: any) {
+    const path = '/main/' + action.subUrl;
+    this.router.navigate([path],{
+      queryParams: {
+        navigatedData: JSON.stringify({
+          serviceType: action.serviceType
+        })
+      }
+    });
+  }
+
+  getLogout(){
+    this.popover.event = undefined;
+    this.isOpen = false;
+    this.isLoggedIn = false;
+    localStorage.removeItem('loggedUser');
+    this.router.navigate(['/auth']);
+    this.popover.dismiss();
+  }
+}

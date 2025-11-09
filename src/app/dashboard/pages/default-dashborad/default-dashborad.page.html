@@ -1,0 +1,134 @@
+
+
+<ion-popover #popover [isOpen]="isOpen" (didDismiss)="isOpen = false">
+  <ng-template>
+    <ion-list>
+      <ion-item (click)="getLogout()">
+        <ion-icon
+          name="log-out-outline"
+          style="padding-right: 0.625rem"
+        ></ion-icon>
+        <ion-label>Logout</ion-label>
+      </ion-item>
+    </ion-list>
+  </ng-template>
+</ion-popover>
+<ion-toolbar class="toolbar">
+  <ion-header class="custom-header">
+    <div class="location-bar">
+      <ion-icon name="location-outline" class="location-icon"></ion-icon>
+      <div class="location-text">
+        <span class="location-details">
+          Bhopura - Ghaziabad, 201005, Uttar Pradesh</span
+        >
+      </div>
+    </div>
+
+    <div class="search-bar-row">
+      <ion-searchbar
+        [(ngModel)]="searchQuery"
+        [placeholder]="searchQueryAuto"
+        (click)="stopAutoTyping()"
+        (ionBlur)="restartAutoTyping()"
+        class="custom-searchbar"
+        searchIcon="search-outline"
+        mode="md"
+        showCancelButton="never"
+        animated="true"
+        slot="end"
+      ></ion-searchbar>
+
+      <div class="icon-row">
+        <ion-icon name="notifications-outline"></ion-icon>
+        <ion-icon
+          (click)="!isLoggedIn ? navigateTo() : ''"
+          name="heart-outline"
+        ></ion-icon>
+        <ion-icon
+          (click)="!isLoggedIn ? navigateTo() : presentPopover($event)"
+          name="person-outline"
+        ></ion-icon>
+      </div>
+    </div>
+  </ion-header>
+</ion-toolbar>
+
+<ion-content [fullscreen]="true">
+  <div class="category-list">
+    <div class="category-item" *ngFor="let article of articles">
+      <ion-thumbnail class="articles" (click)="goToArticle(article)">
+        <img [src]="article.path" [alt]="article.articleName" />
+      </ion-thumbnail>
+      <p class="thumbnail-text">{{ article.articleName }}</p>
+    </div>
+  </div>
+
+  <div *ngIf="permotionalBanner.length > 0">
+    <ngb-carousel
+      #carousel
+      [interval]="3000"
+      [pauseOnFocus]="pauseOnFocus"
+      (slide)="onSlide($event)"
+      [showNavigationArrows]="true"
+      [showNavigationIndicators]="false"
+      class="carousel-container custom-carousel"
+    >
+      <ng-template ngbSlide *ngFor="let brand of permotionalBanner">
+        <div class="carousel-slide">
+          <div class="picsum-img-wrapper">
+            <img
+              [src]="brand.logoUrl"
+              [alt]="brand.brandName"
+              height="245px"
+              width="455px"
+            />
+          </div>
+          <div class="carousel-caption">
+            <p class="h2"><strong>{{ brand.brandName }}</strong></p>
+            <p>Get up to <strong>{{ brand.discount }}% OFF</strong>!</p>
+          </div>
+        </div>
+      </ng-template>
+    </ngb-carousel>
+  </div>
+
+  <div class="grid grid-cols-2 gap-6 p-1" style="margin-top: 1.563rem">
+    <ion-grid *ngIf="ourService">
+      <ion-row class="flex justify-center items-center gap-6">
+        <ion-col
+          *ngFor="let service of ourService; let i = index"
+          (click)="getService(service)"
+          size="6"
+          class="flex flex-col items-center"
+        >
+          <div
+            class="bg-white rounded-[10px] shadow-lg p-3 transform hover:scale-105 transition duration-300"
+            style="margin: 7px; border-radius: 10px"
+          >
+            <img
+              [src]="service.image"
+              [alt]="service.alt"
+              class="w-full h-20 object-cover rounded-[10px]"
+            />
+            <div
+              class="text-black font-bold text-center mt-2 text-base sm:text-lg"
+            >
+              {{ service.serviceType }}
+            </div>
+          </div>
+        </ion-col>
+      </ion-row>
+    </ion-grid>
+  </div>
+
+  <!-- Popular Tailors Section -->
+  <!-- Top Rated Fabric -->
+  <div class="top-rated">
+    <h3 class="section-title fs-subtitle">Top Rated Fabrics</h3>
+    <app-top-rated-fabric></app-top-rated-fabric>
+  </div>
+
+  <!-- Top rated Tailor -->
+  <app-top-rated-tailor></app-top-rated-tailor>
+</ion-content>
+<!-- <app-footer></app-footer> -->

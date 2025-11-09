@@ -1,0 +1,99 @@
+<ion-toolbar class="toolbar">
+  <ion-header class="custom-header">
+    <div style="display: flex;">
+      <ion-title style="padding-left: 10px;">Tailor</ion-title>
+      <ion-buttons *ngIf="bookTailor?.serviceType" style="margin-right: -12px;">
+        <ion-button (click)="dismiss()">
+          <ion-icon style="font-size: 24px; color: red;" name="close-outline"></ion-icon>
+        </ion-button>
+      </ion-buttons>
+    </div>
+
+    <div class="search-bar-row">
+      <ion-searchbar [placeholder]="'Search for Tailor'" class="custom-searchbar" searchIcon="search-outline" mode="md"
+        showCancelButton="never" animated="true" slot="end"></ion-searchbar>
+
+      <div class="icon-row">
+        <ion-icon name="notifications-outline"></ion-icon>
+        <ion-icon name="heart-outline"></ion-icon>
+        <ion-icon name="person-outline"></ion-icon>
+      </div>
+    </div>
+  </ion-header>
+</ion-toolbar>
+<ion-content [fullscreen]="true">
+  <div class="sticky-container">
+    <!-- <div class="search-container">
+      <ion-searchbar
+        [placeholder]="'Search for Tailor'"
+        class="custom-searchbar"
+      ></ion-searchbar>
+    </div> -->
+    <div class="filter-container">
+      <ion-chip (click)="openSortOptions('Sort By')">Sort By
+        <ion-icon name="chevron-down-outline"></ion-icon>
+      </ion-chip>
+      <ion-chip (click)="openFilterOptions('Filter')">Filter
+        <ion-icon name="chevron-down-outline"></ion-icon>
+      </ion-chip>
+      <ion-chip (click)="openPriceOptions('Price')">Price
+        <ion-icon name="chevron-down-outline"></ion-icon>
+      </ion-chip>
+      <ion-chip (click)="openRatingOptions('Rating')">Rating
+        <ion-icon name="chevron-down-outline"></ion-icon>
+      </ion-chip>
+      <ion-chip (click)="openGenderOptions('Gender')">Gender
+        <ion-icon name="chevron-down-outline"></ion-icon>
+      </ion-chip>
+    </div>
+  </div>
+
+  <ion-grid>
+    <ion-row>
+      <ion-col size="12" *ngFor="let tailor of displayedTailors" style="padding: 0px">
+        <ion-card class="tailor-card">
+          <ion-card-header>
+            <div class="card-header-container">
+              <ion-thumbnail class="tailor-thumbnail">
+                <img [src]="tailor.imageUrl" [alt]="tailor.name" />
+              </ion-thumbnail>
+              <div class="tailor-info">
+                <ion-card-title>{{ tailor.name }}</ion-card-title>
+                <ion-card-subtitle>
+                  <span class="FontSize">Expertise: {{ tailor.expertise }}</span>
+                  <!-- <p *ngIf="bookTailor">Delivery In : {{tailor.deliveryIn}} day</p> -->
+                </ion-card-subtitle>
+              </div>
+              <ion-button color="primary" fill="clear" class="view-profile-button"
+                (click)="(bookTailor?.serviceType)? getBookTailor(tailor) : viewTailor(tailor)">
+                <ion-text *ngIf="!bookTailor?.serviceType">View</ion-text>
+                <ion-text *ngIf="bookTailor?.serviceType">Book</ion-text>
+              </ion-button>
+            </div>
+          </ion-card-header>
+          <ion-card-content>
+            <ion-row>
+              <ion-col style="padding: 0rem">
+                <p class="FontSize">
+                  ⭐ {{ tailor.rating }}/5 | {{ tailor.experience }} yrs
+                </p>
+              </ion-col>
+              <ion-col style="padding: 0rem; text-align: right">
+                <p>
+                  <ion-icon class="locationIcon" name="location-outline"></ion-icon>
+                  <span class="FontSize">{{ tailor.distance }} km away</span>
+                </p>
+              </ion-col>
+            </ion-row>
+          </ion-card-content>
+        </ion-card>
+      </ion-col>
+    </ion-row>
+  </ion-grid>
+
+  <div class="load-more-container" *ngIf="showLoadMoreButton">
+    <ion-button class="view-more" (click)="loadMore()" expand="block" color="secondary">
+      <span>View More Tailors</span>
+    </ion-button>
+  </div>
+</ion-content>

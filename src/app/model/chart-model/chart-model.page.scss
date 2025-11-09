@@ -1,0 +1,12 @@
+ion-content {
+  --background: none; /* Remove default IonContent background */
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+img {
+  width: 100%; /* Full width */
+  height: 50%; /* Full height */
+  // object-fit: cover; /* Ensures the image covers the entire space without distortion */
+}

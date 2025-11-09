@@ -1,0 +1,46 @@
+<ion-header>
+  <ion-toolbar color="primary">
+    <ion-title>Select Color</ion-title>
+    <ion-buttons slot="end">
+      <ion-button (click)="dismiss()">
+        <ion-icon style="color: white;" name="close"></ion-icon>
+      </ion-button>
+    </ion-buttons>
+  </ion-toolbar>
+</ion-header>
+<ion-content [fullscreen]="true">
+  <ion-grid>
+    <ion-row class="color-grid" justify-content-center>
+      <ion-col
+        size="4"
+        size-sm="3"
+        size-md="2"
+        *ngFor="let color of colorMaster"
+        class="color-col"
+        (click)="selectColor(color)"
+      >
+        <div
+          class="color-box"
+          [class.selected]="selectedColor?.hexCode === color.hexCode"
+          [style.backgroundColor]="color.hexCode"
+        >
+          <ion-icon
+            *ngIf="selectedColor?.hexCode === color.hexCode"
+            name="checkmark-circle-outline"
+            class="check-icon"
+          ></ion-icon>
+        </div>
+        <p class="color-label" [style.color]="color.hexCode">
+          {{ color.colorName }}
+        </p>
+      </ion-col>
+    </ion-row>
+  </ion-grid>
+
+  <!-- FAB Confirm Button -->
+  <ion-fab vertical="bottom" *ngIf="selectedColor">
+    <ion-fab-button color="success" (click)="confirmSelection()">
+      <ion-icon name="checkmark"></ion-icon>
+    </ion-fab-button>
+  </ion-fab>
+</ion-content>
