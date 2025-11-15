@@ -179,7 +179,7 @@ export class CartPage implements OnInit {
     item.quntity = quntity;
   }
   removeItem(item: any) {
-    this.shoppingBag = this.shoppingBag.filter((i: { artCatId: any; }) => i.artCatId !== item.artCatId);
+    this.shoppingBag = this.shoppingBag.filter((i: { articleId: any; }) => i.articleId !== item.articleId);
     localStorage.setItem('shopping_bag', JSON.stringify(this.shoppingBag));
   }
 
@@ -217,10 +217,10 @@ export class CartPage implements OnInit {
   addMoreArticle(item: any, index: number) {
     console.log(JSON.stringify(item))
     const newItem = {
-      "colorId": null,
+      "colorId": item.colorId,
       "articleId": null,
-      "artCatId": null,
-      "articleName": item.articleName,
+      "artCatId": item.artCatId,
+      "articleName": null,
       "fabric": item.fabric,
       "imageUrl": null,
       "price": item.price,
@@ -285,6 +285,7 @@ export class CartPage implements OnInit {
     if(article){
       const articleObj=article[0];
       item.imageUrl=articleObj.path,
+      item.articleName=articleObj.articleName,
       this.getArticleCategoryByArticleId(item, articleObj);
     }
   }
