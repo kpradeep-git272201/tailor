@@ -766,4 +766,29 @@ export class MasterService {
       }
     ]
   }
+
+  fabricPriceRange(){
+    return [
+      {
+        grade: 'A',
+        min: 0,
+        max: 500 
+      },
+        {
+        grade: 'B',
+        min: 501,
+        max: 1500 
+      },
+      {
+        grade: 'C',
+        min: 1501,
+        max: 2500 
+      },
+      {
+        grade: 'D',
+        min: 2501,
+        max: 5000 
+      }
+    ]
+  }
 }

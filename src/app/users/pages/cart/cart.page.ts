@@ -187,7 +187,14 @@ export class CartPage implements OnInit {
     item.isAutoAssign = true;
     item.isBookTailor = false;
     item.tailor = null
+    let totalPrice = 0;
+    item.serviceType = "With Fabric";
+    const subArticleIds: any = [];
     const checkedBag: any = [] = this.shoppingBag.filter((item: any) => {
+      totalPrice = totalPrice + item.price;
+       if (item.isChecked) {
+        subArticleIds.push(item.artCatId);
+      }
       return item.isChecked;
     });
 
@@ -198,6 +205,24 @@ export class CartPage implements OnInit {
         'alert',
       );
       return;
+    }
+    const fabricPriceRange = this.masterService.fabricPriceRange();
+    const avgPrice = totalPrice / this.shoppingBag.length;
+
+    if (avgPrice) {
+      const fabricRange = fabricPriceRange.find((price: any) => avgPrice >= price.min && avgPrice <= price.max);
+      if(fabricRange){
+        // Get Tailor for this grad
+        const allTailors = this.commonService.getTopRatedTailor();
+        const tailor=allTailors.find((tailor:any)=> tailor.grade==fabricRange.grade);
+        console.log(tailor)
+         this.shoppingBag.forEach((element: any) => {
+        if (subArticleIds.includes(element.artCatId) && !element.isFreez) {
+          element.tailor = tailor;
+          element.isFreez = true;
+        }
+      });
+      }
     }
   }
 
@@ -268,7 +293,7 @@ export class CartPage implements OnInit {
 
   onArticleChange(event: any, item: any) {
     console.log('Selected Article ID:', event.detail.value);
-   
+
     item.articleId = event.detail.value.articleId;
     this.getArticleById(item);
     // item.imageUrl = event.detail.value.imageUrl;
@@ -278,32 +303,32 @@ export class CartPage implements OnInit {
     // item.subArticle.subArticleId = event.detail.value.articleId;
   }
 
-    getArticleById(item:any){
-    const article=this.articles.filter((artilce:any)=>{
-      return artilce.articleId==item.articleId;
+  getArticleById(item: any) {
+    const article = this.articles.filter((artilce: any) => {
+      return artilce.articleId == item.articleId;
     });
-    if(article){
-      const articleObj=article[0];
-      item.imageUrl=articleObj.path,
-      item.articleName=articleObj.articleName,
-      this.getArticleCategoryByArticleId(item, articleObj);
+    if (article) {
+      const articleObj = article[0];
+      item.imageUrl = articleObj.path,
+        item.articleName = articleObj.articleName,
+        this.getArticleCategoryByArticleId(item, articleObj);
     }
   }
-  getArticleCategoryByArticleId(item:any, articleObj: any){
-    const articlesCategories = this.masterService.getArticleCategory().filter((resp:any)=>{
-      return resp.articleId==articleObj.articleId;
+  getArticleCategoryByArticleId(item: any, articleObj: any) {
+    const articlesCategories = this.masterService.getArticleCategory().filter((resp: any) => {
+      return resp.articleId == articleObj.articleId;
     });
-    const articlesCategoryObj=articlesCategories[0];
-    if(articlesCategories.length>0){
-      item.articleId=item.articleId,
-      item.artCatId=articlesCategoryObj.artCatId,
-      item.articleName=articleObj.articleName,
-      item.fabric=articlesCategoryObj.fabric,
-      item.imageUrl=articlesCategoryObj.path,
-      item.price=articlesCategoryObj.priceId,
-      item.hrs=articlesCategoryObj.workHrsId
+    const articlesCategoryObj = articlesCategories[0];
+    if (articlesCategories.length > 0) {
+      item.articleId = item.articleId,
+        item.artCatId = articlesCategoryObj.artCatId,
+        item.articleName = articleObj.articleName,
+        item.fabric = articlesCategoryObj.fabric,
+        item.imageUrl = articlesCategoryObj.path,
+        item.price = articlesCategoryObj.priceId,
+        item.hrs = articlesCategoryObj.workHrsId
     }
-   
+
   }
 
   calculateTotalPrice(): number {
