@@ -1,4 +1,4 @@
-import { NgModule } from '@angular/core';
+/* import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import {MatMenuModule, MatMenuTrigger} from '@angular/material/menu';
 
@@ -182,3 +182,35 @@ import { CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
   ]
 })
 export class SharedModule { }
+ */
+
+import { NgModule } from '@angular/core';
+import { CommonModule } from '@angular/common';
+import { IonicModule } from '@ionic/angular';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { MatMenuModule } from '@angular/material/menu';
+import { NgbAlertModule, NgbCarouselModule, NgbPaginationModule } from '@ng-bootstrap/ng-bootstrap';
+
+@NgModule({
+  imports: [
+    CommonModule,
+    FormsModule,
+    ReactiveFormsModule,
+    IonicModule,
+    MatMenuModule,
+    NgbPaginationModule,
+    NgbAlertModule,
+    NgbCarouselModule
+  ],
+  exports: [
+    CommonModule,
+    FormsModule,
+    ReactiveFormsModule,
+    IonicModule,
+    MatMenuModule,
+    NgbPaginationModule,
+    NgbAlertModule,
+    NgbCarouselModule
+  ]
+})
+export class SharedModule {}

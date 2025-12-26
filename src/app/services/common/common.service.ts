@@ -1336,6 +1336,7 @@ export class CommonService {
     ];
   }
 
+  
   async getCurrentCoordinates() {
     const coordinates = await Geolocation.getCurrentPosition();
     console.log('Current position:', coordinates.coords);

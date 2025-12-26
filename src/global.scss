@@ -476,3 +476,14 @@ ion-header {
 .alert-head.sc-ion-alert-md+.alert-message.sc-ion-alert-md{
   padding-top: 15px !important;
 }
+
+.price-popover {
+  --width: calc(100vw - 32px);   /* 👈 left-right small margin */
+  --max-width: calc(100vw - 32px);
+  --min-width: calc(100vw - 32px);
+
+  --left: 16px !important;
+  --right: 16px !important;
+
+  --border-radius: 12px;
+}

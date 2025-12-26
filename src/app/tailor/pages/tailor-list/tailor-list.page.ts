@@ -5,6 +5,9 @@ import { Router } from '@angular/router';
 import { ModalController } from '@ionic/angular';
 import { ChartModelPage } from 'src/app/model/chart-model/chart-model.page';
 import { CommonService } from 'src/app/services/common/common.service';
+import { PopoverController } from '@ionic/angular';
+import { StichingPricePage } from 'src/app/model/stiching-price/stiching-price.page';
+import { MasterService } from 'src/app/services/master/master.service';
 
 @Component({
   selector: 'app-tailor-list',
@@ -26,6 +29,9 @@ export class TailorListPage implements OnInit {
     private iconService: IconService,
     private router: Router,
     private modalController: ModalController,
+    private popoverCtrl: PopoverController,
+    private masterService: MasterService
+
   ) {
     this.iconService.registerIcons();
   }
@@ -34,7 +40,7 @@ export class TailorListPage implements OnInit {
     this.allTailors = this.commonService.getTopRatedTailor();
     this.displayedTailors = this.allTailors.slice(0, this.initialDisplayCount);
     console.log('Received data:', this.bookTailor);
-  
+
   }
 
   loadMore() {
@@ -54,7 +60,7 @@ export class TailorListPage implements OnInit {
     });
   }
 
-  async openSortOptions(title:any) {
+  async openSortOptions(title: any) {
     const modal = await this.modalController.create({
       component: ChartModelPage,
       cssClass: 'bottom-modal', // Apply custom styles (optional)
@@ -72,7 +78,7 @@ export class TailorListPage implements OnInit {
     }
   }
 
-  async openFilterOptions(title:any) {
+  async openFilterOptions(title: any) {
     const modal = await this.modalController.create({
       component: ChartModelPage,
       cssClass: 'bottom-modal',
@@ -89,22 +95,22 @@ export class TailorListPage implements OnInit {
     }
   }
 
-  openPriceOptions(title:any) {
+  openPriceOptions(title: any) {
     this.genericModal(title);
   }
-  openRatingOptions(title:any) {
+  openRatingOptions(title: any) {
     this.genericModal(title);
   }
-  openGenderOptions(title:any) {
+  openGenderOptions(title: any) {
     this.genericModal(title);
   }
-  async genericModal(title:any) {
+  async genericModal(title: any) {
     const modal = await this.modalController.create({
       component: ChartModelPage,
       cssClass: 'bottom-modal',
-      breakpoints: [0, 0.5, 1], 
-      initialBreakpoint: 0.7, 
-      handle: true, 
+      breakpoints: [0, 0.5, 1],
+      initialBreakpoint: 0.7,
+      handle: true,
       componentProps: { title: title }
     });
 
@@ -123,8 +129,25 @@ export class TailorListPage implements OnInit {
     this.modalController.dismiss();
   }
 
-  getBookTailor(tailor:any){
-    this.modalController.dismiss(tailor,'confirmed');
+  getBookTailor(tailor: any) {
+    this.modalController.dismiss(tailor, 'confirmed');
+  }
+
+  async viewPriceList(tailor: any, ev: any) {
+    const stichingPrice = this.masterService.getTailorArticleRates().filter((rate: any) => {
+      return rate.tailorId == tailor.tailorId;
+    })
+
+    const popover = await this.popoverCtrl.create({
+      component: StichingPricePage,
+      event: ev,
+      translucent: true,
+      cssClass: 'price-popover',
+      componentProps: {
+        stichingPrice: (stichingPrice) ? stichingPrice[0].rates : stichingPrice,
+      },
+    });
+    await popover.present();
   }
 }
 

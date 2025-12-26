@@ -1,0 +1,31 @@
+<ion-header [translucent]="true">
+  <ion-toolbar>
+    <ion-title style="padding-left: 0.625rem;">Stiching Price</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content [fullscreen]="true">
+  <div class="table-container">
+    <ion-grid class="price-table">
+
+      <!-- Header (Fixed) -->
+      <ion-row class="table-header">
+        <ion-col size="3">S.No.</ion-col>
+        <ion-col size="5">Article Name</ion-col>
+        <ion-col size="4">Price (₹)</ion-col>
+      </ion-row>
+
+      <!-- Scrollable Body -->
+      <div class="table-body">
+        <ion-row class="table-row" *ngFor="let price of stichingPrice; let i = index">
+          <ion-col size="3">{{ i + 1 }}</ion-col>
+          <ion-col size="5">{{ price.articleName }}</ion-col>
+          <ion-col size="4">₹ {{ price.stitchingPrice }}</ion-col>
+        </ion-row>
+      </div>
+
+    </ion-grid>
+  </div>
+
+
+</ion-content>

@@ -63,7 +63,9 @@ import {
   bagOutline,
   pencilOutline,
   checkbox,
-  stopOutline
+  stopOutline,
+  eyeOutline,
+ walletOutline
 } from 'ionicons/icons';
 
 @Injectable({
@@ -91,6 +93,7 @@ export class IconService {
       home,
       business,
       close,
+      walletOutline,
       barChartOutline,
       cut,
       shirt,
@@ -137,7 +140,9 @@ export class IconService {
       addCircleOutline,
       removeCircleOutline,
       locate,
-      ellipse
+      ellipse,
+      eyeOutline
+
     });
   }
 }

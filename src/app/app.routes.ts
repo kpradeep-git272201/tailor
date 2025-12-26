@@ -13,7 +13,11 @@ export const routes: Routes = [
     path: '',
     redirectTo: 'main',
     pathMatch: 'full',
+  },  {
+    path: 'stiching-price',
+    loadComponent: () => import('./model/stiching-price/stiching-price.page').then( m => m.StichingPricePage)
   },
+
  
 
   // {

@@ -65,9 +65,12 @@
                 </ion-card-subtitle>
               </div>
               <ion-button color="primary" fill="clear" class="view-profile-button"
-                (click)="(bookTailor?.serviceType)? getBookTailor(tailor) : viewTailor(tailor)">
-                <ion-text *ngIf="!bookTailor?.serviceType">View</ion-text>
-                <ion-text *ngIf="bookTailor?.serviceType">Book</ion-text>
+                >
+                <ion-text *ngIf="!bookTailor?.serviceType" style="text-align: right;">
+                  <ion-icon (click)="viewPriceList(tailor, $event)" style="font-size: 1.5rem; padding-right: 0.938rem;" name="wallet-outline"></ion-icon>
+                  <ion-icon (click)="viewTailor(tailor)" style="font-size: 1.5rem;" name="eye-outline"></ion-icon>
+                </ion-text>
+                <ion-text (click)="getBookTailor(tailor)" *ngIf="bookTailor?.serviceType">Book</ion-text>
               </ion-button>
             </div>
           </ion-card-header>

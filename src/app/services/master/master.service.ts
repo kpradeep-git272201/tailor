@@ -494,7 +494,7 @@ export class MasterService {
         colorTexture: [
           {
             colorId: 1,
-            selected:false,
+            selected: false,
             path: 'assets/images/article/Master/Article1/Article1_Main_image.png',
             texture: [
               {
@@ -521,7 +521,7 @@ export class MasterService {
           },
           {
             colorId: 2,
-            selected:false,
+            selected: false,
             path: 'assets/images/article/Master/Article1/Article1_inside_image1_Color2.png',
             texture: [
               {
@@ -553,7 +553,7 @@ export class MasterService {
         colorTexture: [
           {
             colorId: 3,
-            selected:false,
+            selected: false,
             path: 'assets/images/article/Master/Article2/Article2_inside_image1_Color1.png',
             texture: [
               {
@@ -580,7 +580,7 @@ export class MasterService {
           },
           {
             colorId: 4,
-            selected:false,
+            selected: false,
             path: 'assets/images/article/Master/Article2/Article2_inside_image1_Color2.png',
             texture: [
               {
@@ -593,13 +593,13 @@ export class MasterService {
               },
               {
                 artCatTextureId: 7,
-                path:  'assets/images/article/Master/Article2/Article2_inside_image3_Color2.png',
+                path: 'assets/images/article/Master/Article2/Article2_inside_image3_Color2.png',
               },
               {
                 artCatTextureId: 8,
                 path: 'assets/images/article/Master/Article2/Article2_inside_image4_Color2.png',
               },
-              
+
             ]
           }
         ],
@@ -609,7 +609,7 @@ export class MasterService {
         colorTexture: [
           {
             colorId: 5,
-            selected:false,
+            selected: false,
             path: 'assets/images/article/Master/Article3/Article3_inside_image1_color1.png',
             texture: [
               {
@@ -624,7 +624,7 @@ export class MasterService {
           },
           {
             colorId: 6,
-            selected:false,
+            selected: false,
             path: 'assets/images/article/Master/Article3/Article3_inside_image1_color2.png',
             texture: [
               {
@@ -637,7 +637,7 @@ export class MasterService {
               },
               {
                 artCatTextureId: 7,
-                path:  'assets/images/article/Master/Article3/Article3_inside_image3_color2.png',
+                path: 'assets/images/article/Master/Article3/Article3_inside_image3_color2.png',
               }
             ]
           }
@@ -648,7 +648,7 @@ export class MasterService {
         colorTexture: [
           {
             colorId: 7,
-            selected:false,
+            selected: false,
             path: 'assets/images/article/Master/Article4/Article4_main_image.png',
             texture: [
               {
@@ -663,7 +663,7 @@ export class MasterService {
           },
           {
             colorId: 8,
-            selected:false,
+            selected: false,
             path: 'assets/images/article/Master/Article4/Article4_inside_image1_color2.png',
             texture: [
               {
@@ -683,7 +683,7 @@ export class MasterService {
         colorTexture: [
           {
             colorId: 9,
-            selected:false,
+            selected: false,
             path: 'assets/images/article/Master/Article5/Article5_inside_image1_Color1.png',
             texture: [
               {
@@ -702,7 +702,7 @@ export class MasterService {
           },
           {
             colorId: 10,
-            selected:false,
+            selected: false,
             path: 'assets/images/article/Master/Article5/Article5_inside_image1_Color2.png',
             texture: [
               {
@@ -721,12 +721,12 @@ export class MasterService {
           }
         ],
       },
-       {
+      {
         artCatId: 6,
         colorTexture: [
           {
             colorId: 11,
-            selected:false,
+            selected: false,
             path: 'assets/images/article/Master/Article6/Article6_inside_image1_color1.png',
             texture: [
               {
@@ -745,7 +745,7 @@ export class MasterService {
           },
           {
             colorId: 12,
-            selected:false,
+            selected: false,
             path: 'assets/images/article/Master/Article6/Article6_inside_image1_color2.png',
             texture: [
               {
@@ -767,28 +767,139 @@ export class MasterService {
     ]
   }
 
-  fabricPriceRange(){
+  fabricPriceRange() {
     return [
       {
         grade: 'A',
         min: 0,
-        max: 500 
+        max: 500
       },
-        {
+      {
         grade: 'B',
         min: 501,
-        max: 1500 
+        max: 1500
       },
       {
         grade: 'C',
         min: 1501,
-        max: 2500 
+        max: 2500
       },
       {
         grade: 'D',
         min: 2501,
-        max: 5000 
+        max: 5000
       }
     ]
   }
+
+
+  getTailorArticleRates() {
+    return [
+      {
+        tailorId: 100,
+        rates: [
+          { articleId: 1, articleName: 'Shirt', stitchingPrice: 500 },
+          { articleId: 2, articleName: 'Pant', stitchingPrice: 600 },
+          { articleId: 3, articleName: 'Kurta', stitchingPrice: 700 },
+          { articleId: 4, articleName: 'Blouse', stitchingPrice: 450 },
+          { articleId: 5, articleName: 'Suit', stitchingPrice: 1800 },
+          { articleId: 6, articleName: 'Jeans', stitchingPrice: 650 },
+          { articleId: 7, articleName: 'T-Shirt', stitchingPrice: 400 },
+          { articleId: 9, articleName: 'Lehenga', stitchingPrice: 2500 }
+        ]
+      },
+      {
+        tailorId: 101,
+        rates: [
+          { articleId: 1, articleName: 'Shirt', stitchingPrice: 550 },
+          { articleId: 2, articleName: 'Pant', stitchingPrice: 650 },
+          { articleId: 3, articleName: 'Kurta', stitchingPrice: 800 },
+          { articleId: 4, articleName: 'Blouse', stitchingPrice: 700 },
+          { articleId: 5, articleName: 'Suit', stitchingPrice: 2200 },
+          { articleId: 6, articleName: 'Jeans', stitchingPrice: 700 },
+          { articleId: 7, articleName: 'T-Shirt', stitchingPrice: 450 },
+          { articleId: 9, articleName: 'Lehenga', stitchingPrice: 3200 }
+        ]
+      },
+      {
+        tailorId: 102,
+        rates: [
+          { articleId: 1, articleName: 'Shirt', stitchingPrice: 600 },
+          { articleId: 2, articleName: 'Pant', stitchingPrice: 700 },
+          { articleId: 3, articleName: 'Kurta', stitchingPrice: 850 },
+          { articleId: 4, articleName: 'Blouse', stitchingPrice: 500 },
+          { articleId: 5, articleName: 'Suit', stitchingPrice: 2400 },
+          { articleId: 6, articleName: 'Jeans', stitchingPrice: 750 },
+          { articleId: 7, articleName: 'T-Shirt', stitchingPrice: 500 },
+          { articleId: 9, articleName: 'Lehenga', stitchingPrice: 2800 }
+        ]
+      },
+      {
+        tailorId: 103,
+        rates: [
+          { articleId: 1, articleName: 'Shirt', stitchingPrice: 480 },
+          { articleId: 2, articleName: 'Pant', stitchingPrice: 580 },
+          { articleId: 3, articleName: 'Kurta', stitchingPrice: 720 },
+          { articleId: 4, articleName: 'Blouse', stitchingPrice: 550 },
+          { articleId: 5, articleName: 'Suit', stitchingPrice: 1900 },
+          { articleId: 6, articleName: 'Jeans', stitchingPrice: 630 },
+          { articleId: 7, articleName: 'T-Shirt', stitchingPrice: 420 },
+          { articleId: 9, articleName: 'Lehenga', stitchingPrice: 2600 }
+        ]
+      },
+      {
+        tailorId: 104,
+        rates: [
+          { articleId: 1, articleName: 'Shirt', stitchingPrice: 520 },
+          { articleId: 2, articleName: 'Pant', stitchingPrice: 620 },
+          { articleId: 3, articleName: 'Kurta', stitchingPrice: 780 },
+          { articleId: 4, articleName: 'Blouse', stitchingPrice: 480 },
+          { articleId: 5, articleName: 'Suit', stitchingPrice: 2000 },
+          { articleId: 6, articleName: 'Jeans', stitchingPrice: 680 },
+          { articleId: 7, articleName: 'T-Shirt', stitchingPrice: 430 },
+          { articleId: 9, articleName: 'Lehenga', stitchingPrice: 2700 }
+        ]
+      },
+      {
+        tailorId: 105,
+        rates: [
+          { articleId: 1, articleName: 'Shirt', stitchingPrice: 560 },
+          { articleId: 2, articleName: 'Pant', stitchingPrice: 670 },
+          { articleId: 3, articleName: 'Kurta', stitchingPrice: 820 },
+          { articleId: 4, articleName: 'Blouse', stitchingPrice: 750 },
+          { articleId: 5, articleName: 'Suit', stitchingPrice: 2300 },
+          { articleId: 6, articleName: 'Jeans', stitchingPrice: 720 },
+          { articleId: 7, articleName: 'T-Shirt', stitchingPrice: 460 },
+          { articleId: 9, articleName: 'Lehenga', stitchingPrice: 3400 }
+        ]
+      },
+      {
+        tailorId: 106,
+        rates: [
+          { articleId: 1, articleName: 'Shirt', stitchingPrice: 650 },
+          { articleId: 2, articleName: 'Pant', stitchingPrice: 780 },
+          { articleId: 3, articleName: 'Kurta', stitchingPrice: 950 },
+          { articleId: 4, articleName: 'Blouse', stitchingPrice: 600 },
+          { articleId: 5, articleName: 'Suit', stitchingPrice: 2600 },
+          { articleId: 6, articleName: 'Jeans', stitchingPrice: 800 },
+          { articleId: 7, articleName: 'T-Shirt', stitchingPrice: 520 },
+          { articleId: 9, articleName: 'Lehenga', stitchingPrice: 3800 }
+        ]
+      },
+      {
+        tailorId: 107,
+        rates: [
+          { articleId: 1, articleName: 'Shirt', stitchingPrice: 450 },
+          { articleId: 2, articleName: 'Pant', stitchingPrice: 520 },
+          { articleId: 3, articleName: 'Kurta', stitchingPrice: 650 },
+          { articleId: 4, articleName: 'Blouse', stitchingPrice: 400 },
+          { articleId: 5, articleName: 'Suit', stitchingPrice: 1600 },
+          { articleId: 6, articleName: 'Jeans', stitchingPrice: 580 },
+          { articleId: 7, articleName: 'T-Shirt', stitchingPrice: 380 },
+          { articleId: 9, articleName: 'Lehenga', stitchingPrice: 2300 }
+        ]
+      }
+    ];
+  }
+
 }
