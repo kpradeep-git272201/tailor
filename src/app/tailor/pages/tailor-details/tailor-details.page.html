@@ -1,13 +1,66 @@
-<ion-header [translucent]="true">
-  <ion-toolbar>
-    <ion-title>tailorDetails</ion-title>
-  </ion-toolbar>
-</ion-header>
+<ion-toolbar class="toolbar">
+  <ion-buttons slot="start">
+    <ion-back-button defaultHref="/main/tailor/tailorList"></ion-back-button>
+  </ion-buttons>
+  <ion-header class="custom-header">
+    <div style="display: flex;">
+      <ion-title>{{tailor.name}}</ion-title>
+    </div>
+  </ion-header>
+</ion-toolbar>
+
 
 <ion-content [fullscreen]="true">
-  <ion-header collapse="condense">
-    <ion-toolbar>
-      <ion-title size="large">tailorDetails</ion-title>
-    </ion-toolbar>
-  </ion-header>
+
+  <!-- Profile Card -->
+  <ion-card class="profile-card">
+    <img [src]="tailor?.imageUrl" class="profile-img" />
+
+    <ion-card-content>
+      <h2><span>⭐ {{ tailor?.rating || '4.7' }}</span></h2>
+    </ion-card-content>
+  </ion-card>
+
+  <!-- Expertise Section -->
+  <ion-card>
+    <ion-card-header>
+      <ion-card-title>Expertise</ion-card-title>
+    </ion-card-header>
+    <ion-card-content>
+      {{ tailor?.expertise }}
+    </ion-card-content>
+  </ion-card>
+
+  <!-- Experience Section -->
+  <ion-card>
+    <ion-card-header>
+      <ion-card-title>Experience</ion-card-title>
+    </ion-card-header>
+    <ion-card-content>
+      {{ tailor?.experience }} years of professional tailoring experience
+    </ion-card-content>
+  </ion-card>
+
+  <!-- Old Work / Gallery -->
+  <ion-card>
+    <ion-card-header>
+      <ion-card-title>Previous Work</ion-card-title>
+    </ion-card-header>
+
+    <ion-card-content>
+      <div class="gallery" *ngIf="tailor?.oldWorks">
+        <img *ngFor="let img of tailor?.oldWorks" [src]="img" class="work-img" />
+      </div>
+    </ion-card-content>
+  </ion-card>
+
+  <!-- Rate List Button -->
+  <ion-card>
+    <ion-card-content>
+      <ion-button expand="block" color="primary" (click)="viewPriceList($event)">
+        View Rate List
+      </ion-button>
+    </ion-card-content>
+  </ion-card>
+
 </ion-content>

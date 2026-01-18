@@ -53,12 +53,17 @@ export class TailorListPage implements OnInit {
     return this.displayedTailors.length < this.allTailors.length;
   }
 
-  viewTailor(tailor: any) {
-    console.log(JSON.stringify(tailor));
-    this.router.navigate(['/tabs/tailor', tailor.tailorId], {
-      queryParams: { tailor: JSON.stringify(tailor) },
-    });
-  }
+ viewTailor(tailor: any) {
+  this.router.navigate(
+    ['/main/tailor/tailorList', tailor.tailorId],
+    {
+      state: {
+        tailor: tailor
+      }
+    }
+  );
+}
+
 
   async openSortOptions(title: any) {
     const modal = await this.modalController.create({

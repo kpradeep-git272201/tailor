@@ -23,7 +23,7 @@
               </span>
               <!-- Change Address Button Top Right -->
               <ion-button *ngIf="userAddress" fill="outline" size="small" color="primary"
-                 (click)="changeAddress()">
+                 (click)="addNewAddress()">
                 Change
               </ion-button>
             </h3>
@@ -132,6 +132,10 @@
           <ion-col>Handling Charge</ion-col>
           <ion-col style="text-align: right;">&#8377;  {{billDetails.handlingCharge}}</ion-col>
         </ion-row>
+         <ion-row>
+            <ion-col>Tailor Charge</ion-col>
+            <ion-col style="text-align: right;">&#8377; {{billDetails?.totalTailorCharge || 0}}</ion-col>
+          </ion-row>
       </ion-grid>
       <ion-card-header style="padding: 0px;">
         <ion-row >

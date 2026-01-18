@@ -1,6 +1,7 @@
-/* import { NgModule } from '@angular/core';
+import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import {MatMenuModule, MatMenuTrigger} from '@angular/material/menu';
+import { IonicModule } from '@ionic/angular';
 
 import {
   IonCard,
@@ -119,7 +120,8 @@ import { CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
     IonAccordionGroup,
     IonRadioGroup, 
     IonRadio, 
-    IonItemDivider
+    IonItemDivider,
+    IonicModule
   ],
   exports: [
     IonCheckbox,
@@ -178,13 +180,13 @@ import { CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
     IonAccordionGroup,
     IonRadioGroup, 
     IonRadio, 
-    IonItemDivider
+    IonItemDivider,
   ]
 })
 export class SharedModule { }
- */
 
-import { NgModule } from '@angular/core';
+
+/* import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { IonicModule } from '@ionic/angular';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
@@ -213,4 +215,4 @@ import { NgbAlertModule, NgbCarouselModule, NgbPaginationModule } from '@ng-boot
     NgbCarouselModule
   ]
 })
-export class SharedModule {}
+export class SharedModule {} */

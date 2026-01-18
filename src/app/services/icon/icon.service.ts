@@ -65,7 +65,8 @@ import {
   checkbox,
   stopOutline,
   eyeOutline,
- walletOutline
+ walletOutline,
+ notificationsOutline
 } from 'ionicons/icons';
 
 @Injectable({
@@ -77,6 +78,7 @@ export class IconService {
 
   registerIcons() {
     addIcons({
+      notificationsOutline,
       stopOutline,
       checkbox,
       pencilOutline,

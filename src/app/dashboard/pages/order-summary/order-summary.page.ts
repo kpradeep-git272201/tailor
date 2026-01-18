@@ -32,7 +32,7 @@ export class OrderSummaryPage implements OnInit {
   myOrder: any;
   currentLocation: any;
   selectedItems: any = [];
-  APP_KEY='AIzaSyBZkhDjfujpipN2BX8tBQttWO-MON96QzI';
+  APP_KEY = 'AIzaSyBZkhDjfujpipN2BX8tBQttWO-MON96QzI';
   billDetails: any;
   constructor(
     private iconService: IconService,
@@ -58,7 +58,7 @@ export class OrderSummaryPage implements OnInit {
     const currentBooking = localStorage.getItem('currentBooking');
     // this.getAddress();
     // if(!this.userAddress){
-      this.getCurrentCoordinates()
+    this.getCurrentCoordinates()
     // }
     // if (currentBooking) {
     //   const parseCurrentBooking = JSON.parse(currentBooking);
@@ -74,16 +74,16 @@ export class OrderSummaryPage implements OnInit {
       if (params['order']) {
         this.myOrder = JSON.parse(params['order']);
         this.selectedItems = this.myOrder;
-        this.calculateExpectedDeliveryDate();
+        // this.calculateExpectedDeliveryDate();
       }
-      if(params['billDetails']){
+      if (params['billDetails']) {
         this.billDetails = JSON.parse(params['billDetails']);
       }
     });
   }
 
-  getAddressCurrent(lat:any, lon:any){
-    this.commonService.getAddress(lat,lon).subscribe((res)=>{
+  getAddressCurrent(lat: any, lon: any) {
+    this.commonService.getAddress(lat, lon).subscribe((res) => {
       console.log(res);
     })
   }
@@ -96,55 +96,53 @@ export class OrderSummaryPage implements OnInit {
     // this.getAddressCurrent(latitude, longitude);
   }
   async getCurrentLocation(lat: number, lon: number) {
-  try {
-    // ✅ Google Maps Geocoding API URL
-    const url = `https://maps.googleapis.com/maps/api/geocode/json?latlng=28.7055796,77.3287977&key=AIzaSyAoYbrW-KNT-M5K4JvCf1JAVWVf49Iu6sQ`;
+    try {
+      // ✅ Google Maps Geocoding API URL
+      const url = `https://maps.googleapis.com/maps/api/geocode/json?latlng=28.7055796,77.3287977&key=AIzaSyAoYbrW-KNT-M5K4JvCf1JAVWVf49Iu6sQ`;
 
-    const response = await fetch(url);
-    const data = await response.json();
+      const response = await fetch(url);
+      const data = await response.json();
 
-    console.log("Google API Response:", data);
+      console.log("Google API Response:", data);
 
-    if (data.results.length > 0) {
-      const components = data.results[0].address_components;
+      if (data.results.length > 0) {
+        const components = data.results[0].address_components;
 
-      this.currentLocation = {
-        fullAddress: data.results[0].formatted_address,
-        area: components.find((x: any) =>
-          x.types.includes("sublocality_level_1")
-        )?.long_name,
-        city: components.find((x: any) =>
-          x.types.includes("locality")
-        )?.long_name,
-        district: components.find((x: any) =>
-          x.types.includes("administrative_area_level_2")
-        )?.long_name,
-        state: components.find((x: any) =>
-          x.types.includes("administrative_area_level_1")
-        )?.long_name,
-        pin: components.find((x: any) =>
-          x.types.includes("postal_code")
-        )?.long_name
-      };
+        this.currentLocation = {
+          fullAddress: data.results[0].formatted_address,
+          area: components.find((x: any) =>
+            x.types.includes("sublocality_level_1")
+          )?.long_name,
+          city: components.find((x: any) =>
+            x.types.includes("locality")
+          )?.long_name,
+          district: components.find((x: any) =>
+            x.types.includes("administrative_area_level_2")
+          )?.long_name,
+          state: components.find((x: any) =>
+            x.types.includes("administrative_area_level_1")
+          )?.long_name,
+          pin: components.find((x: any) =>
+            x.types.includes("postal_code")
+          )?.long_name
+        };
 
-      console.log("Parsed Location:", this.currentLocation);
-    } else {
-      console.warn("No address found for given coordinates.");
+        console.log("Parsed Location:", this.currentLocation);
+      } else {
+        console.warn("No address found for given coordinates.");
+      }
+    } catch (err) {
+      console.error("Error fetching location:", err);
     }
-  } catch (err) {
-    console.error("Error fetching location:", err);
   }
-}
 
 
-  addNewAddress() {
-    this.presentModal(AddressPage);
-  }
-  async presentModal(ModelPage: any) {
+
+  async addNewAddress() {
     const modal = await this.modalController.create({
-      component: ModelPage,
+      component: AddressPage,
       cssClass: 'bottom-modal',
-      breakpoints: [0, 0.5, 1],
+      breakpoints: [0, 0.5, 0.7, 1],   // <-- include 0.7
       initialBreakpoint: 0.7,
       handle: true,
       componentProps: {
@@ -241,7 +239,7 @@ export class OrderSummaryPage implements OnInit {
     if (shoppingBag) {
       const parseShoppingBag = JSON.parse(shoppingBag);
 
-      const removeBag:any=[]=parseShoppingBag.filter((item: any) => {
+      const removeBag: any = [] = parseShoppingBag.filter((item: any) => {
         return !removeIds.includes(item.artCatId);
       });
       localStorage.setItem('shopping_bag', JSON.stringify(removeBag));
@@ -249,36 +247,37 @@ export class OrderSummaryPage implements OnInit {
     this.router.navigate(['/main/dashboard']);
   }
 
-  calculateExpectedDeliveryDate(){
+  calculateExpectedDeliveryDate() {
 
     const data = this.masterService.getTailorWorkHrs();
     let startDate = moment();
     let tailorWorkHrs = data.map((item, index) => {
-    return {
-      ...item,
+      return {
+        ...item,
         date: moment(startDate).add(index, "days").format("DD-MM-YYYY")
       };
     });
 
-    this.selectedItems.forEach((element:any={})=>{
-      const selectedTailor=  tailorWorkHrs.filter((tailor:any)=>{
-          return tailor.tailorId==element.tailor.tailorId
-        })
-        let makingHrs=0;
-        let makingDays=0;
-        for (let i = 0; i < selectedTailor.length; i++) {
-      const item = selectedTailor[i];
-          makingHrs=makingHrs+item.hrs;
-          if(element.hrs>=makingHrs){
-            makingDays++;
-            element.trialDate=moment(startDate).add((makingDays)*Number(element.quntity), "days").format("DD-MM-YYYY")
-            element.expectedDeliveryDate=moment(startDate).add((makingDays+2)*Number(element.quntity), "days").format("DD-MM-YYYY")
-          }else{
-            element.trialDate=moment(startDate).add((makingDays)*Number(element.quntity), "days").format("DD-MM-YYYY")
-            element.expectedDeliveryDate=moment(startDate).add((makingDays+2)*Number(element.quntity), "days").format("DD-MM-YYYY")
-            break;
-          }
+    this.selectedItems.forEach((element: any = {}) => {
+      const selectedTailor = tailorWorkHrs.filter((tailor: any) => {
+        return tailor.tailorId == element.tailor.tailorId
+      })
+      let makingHrs = 0;
+      let makingDays = 0;
+      for (let i = 0; i < selectedTailor.length; i++) {
+        const item = selectedTailor[i];
+        makingHrs = makingHrs + item.hrs;
+        if (element.hrs >= makingHrs) {
+          makingDays++;
+          element.trialDate = moment(startDate).add((makingDays) * Number(element.quntity), "days").format("DD-MM-YYYY")
+          element.expectedDeliveryDate = moment(startDate).add((makingDays + 2) * Number(element.quntity), "days").format("DD-MM-YYYY")
+        } else {
+          makingDays = 1;
+          element.trialDate = moment(startDate).add((makingDays) * Number(element.quntity), "days").format("DD-MM-YYYY")
+          element.expectedDeliveryDate = moment(startDate).add((makingDays + 2) * Number(element.quntity), "days").format("DD-MM-YYYY")
+          break;
         }
+      }
     })
     console.log(JSON.stringify(this.selectedItems));
   }

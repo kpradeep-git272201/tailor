@@ -19,6 +19,7 @@ import { ModalController } from '@ionic/angular';
 import { CommonService } from 'src/app/services/common/common.service';
 import { WithfabricService } from 'src/app/services/withfabric/withfabric.service';
 import { MasterService } from 'src/app/services/master/master.service';
+import { IconService } from 'src/app/services/icon/icon.service';
 
 
 @Component({
@@ -56,16 +57,10 @@ export class ArticlePage implements OnInit {
     private commonService: CommonService,
     private wfService: WithfabricService,
     private router: Router,
-    private masterService: MasterService
+    private masterService: MasterService,
+    private iconService: IconService
   ) {
-    addIcons({
-      notificationsOutline,
-      heartOutline,
-      personOutline,
-      checkmarkCircle,
-      locationOutline,
-      chevronForward,
-    });
+    
   }
 
   onScroll(event: any) {
@@ -73,19 +68,11 @@ export class ArticlePage implements OnInit {
     this.isScrolled = scrollTop > 10;
   }
   ngOnInit() {
+    this.iconService.registerIcons();
     const artilceId = this.route.snapshot.paramMap.get('articleId');
     this.getArticleById(artilceId);
     this.getArticleCategoryByArticleId(artilceId);
     this.fabricByArticle = this.wfService.getFabricMasterData();
-    // this.masterArticle = this.commonService.masterArticle();
-    /* this.colorClassificatioMaster =this.commonService.getColorClassificatioMaster(); */
-    /* this.route.queryParams.subscribe((params) => {
-      if (params['navigatedData']) {
-        this.navigatedData = JSON.parse(params['navigatedData']);
-        this.article = this.navigatedData.article;
-      }
-      this.updateDisplayedFabrics();
-    }); */
     this.updateDisplayedFabrics();
   }
   ngAfterViewInit() {

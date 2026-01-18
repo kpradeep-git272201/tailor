@@ -6,6 +6,7 @@ import { ModalController } from '@ionic/angular';
 import { AlertService } from 'src/app/services/alert/alert.service';
 import { CommonService } from 'src/app/services/common/common.service';
 import { MasterService } from 'src/app/services/master/master.service';
+import moment from 'moment';
 
 
 @Component({
@@ -57,6 +58,7 @@ export class CartPage implements OnInit {
         item.tailor = null;
         item.quntity = 1;
         item.isFreez = false;
+        item.isChecked = false;
         // item.addMore=[];
         item.basePrice = item.price;
       })
@@ -88,6 +90,7 @@ export class CartPage implements OnInit {
   }
 
   changeTailor(item: any) {
+    item.isFreez = !item.isFreez;
     this.getBookTailor(item);
   }
   async getBookTailor(item: any) {
@@ -127,23 +130,40 @@ export class CartPage implements OnInit {
       item.isBookTailor = true;
       item.isAutoAssign = false;
       item.tailor = data;
+      const checkedArticle = this.shoppingBag.filter((ele: any) => {
+        return ele.isChecked;
+      })
+      item.totalTailorCharge = 0;
       this.shoppingBag.forEach((element: any) => {
-        if (subArticleIds.includes(element.artCatId) && !element.isFreez) {
+        if (subArticleIds.includes(element.artCatId) && !element.isFreez && element.isChecked) {
           element.tailor = data;
           element.isFreez = true;
         }
+        if (element.isChecked) {
+          element.stitchingPrice = this.getStichingPriceByTailorId(element, data);
+          item.totalTailorCharge = item.totalTailorCharge + element.stitchingPrice;
+          this.calculateExpectedDeliveryDate(element, data, checkedArticle?.length);
+        }
       });
-      // this.handleModalData(data, this.loggedUser, item);
+    } else {
+      item.isFreez = !item.isFreez;
     }
   }
 
 
+
   goToOrderSummary(myOrder: any, bookArticle: any) {
+    this.shoppingBag = this.shoppingBag.filter((item: any) => {
+      return !item.isChecked;
+    });
+    localStorage.setItem('shopping_bag', JSON.stringify(this.shoppingBag));
     const billDetails = {
       itemTotal: this.calculateTotalPrice(),
       deliveryCharge: 0,
       handlingCharge: 9,
-      grandTotal: this.calculateTotalPrice() + 9
+      totalTailorCharge: myOrder.totalTailorCharge,
+      grandTotal: this.calculateTotalPrice(9, myOrder.totalTailorCharge)
+
     }
     this.router.navigate(
       ['/main/with-fabric', bookArticle[0].articleId, bookArticle[0].fabric, 'order-summary'],
@@ -171,6 +191,12 @@ export class CartPage implements OnInit {
     const quntity = event.target.value;
     item.price = item.basePrice * quntity;
     item.quntity = quntity;
+    if (item?.expectedDeliveryDate) {
+      item.expectedDeliveryDate = moment(item?.expectedDeliveryDate).add((Number(item.quntity)), "days").format("DD-MM-YYYY")
+    }
+    if (item?.stitchingPrice) {
+      item.stitchingPrice = item?.stitchingPrice * Number(item.quntity);
+    }
   }
 
   addMoreOnChangeQty(event: any, item: any) {
@@ -192,7 +218,7 @@ export class CartPage implements OnInit {
     const subArticleIds: any = [];
     const checkedBag: any = [] = this.shoppingBag.filter((item: any) => {
       totalPrice = totalPrice + item.price;
-       if (item.isChecked) {
+      if (item.isChecked) {
         subArticleIds.push(item.artCatId);
       }
       return item.isChecked;
@@ -211,17 +237,17 @@ export class CartPage implements OnInit {
 
     if (avgPrice) {
       const fabricRange = fabricPriceRange.find((price: any) => avgPrice >= price.min && avgPrice <= price.max);
-      if(fabricRange){
+      if (fabricRange) {
         // Get Tailor for this grad
         const allTailors = this.commonService.getTopRatedTailor();
-        const tailor=allTailors.find((tailor:any)=> tailor.grade==fabricRange.grade);
+        const tailor = allTailors.find((tailor: any) => tailor.grade == fabricRange.grade);
         console.log(tailor)
-         this.shoppingBag.forEach((element: any) => {
-        if (subArticleIds.includes(element.artCatId) && !element.isFreez) {
-          element.tailor = tailor;
-          element.isFreez = true;
-        }
-      });
+        this.shoppingBag.forEach((element: any) => {
+          if (subArticleIds.includes(element.artCatId) && !element.isFreez) {
+            element.tailor = tailor;
+            element.isFreez = true;
+          }
+        });
       }
     }
   }
@@ -231,7 +257,7 @@ export class CartPage implements OnInit {
     item.isChecked = isChecked;
   }
 
-  selecteArticle(item: any) {
+  selecteArticle(item: any, index: number) {
     item.isChecked = !item.isChecked;
   }
   getEdit(item: any) {
@@ -255,6 +281,7 @@ export class CartPage implements OnInit {
       "tailor": null,
       "quntity": 1,
       "isFreez": false,
+      "isChecked": false,
       "basePrice": item.price
       // articleId: item.articleId,
       // subArticleId: null,
@@ -331,9 +358,70 @@ export class CartPage implements OnInit {
 
   }
 
-  calculateTotalPrice(): number {
-    return this.shoppingBag.reduce((sum: number, current: { price: number }) => {
-      return sum + current.price;
-    }, 0);
+  calculateTotalPrice(tailorCharge?: any, gstAmount?: any): number {
+    // shopping bag total
+    const bagTotal = this.shoppingBag.reduce(
+      (sum: number, current: { price: number }) => {
+        return sum + (typeof current.price === 'number' ? current.price : 0);
+      },
+      0
+    );
+
+    // validation: tailorCharge
+    const validTailorCharge =
+      typeof tailorCharge === 'number' && !isNaN(tailorCharge)
+        ? tailorCharge
+        : 0;
+
+    // validation: gstAmount
+    const validGstAmount =
+      typeof gstAmount === 'number' && !isNaN(gstAmount)
+        ? gstAmount
+        : 0;
+
+    return bagTotal + validTailorCharge + validGstAmount;
+  }
+
+
+  getStichingPriceByTailorId(element: any, tailor: any) {
+    let priceList: any = this.masterService.getTailorArticleRates().find((price: any) => {
+      return price.tailorId == tailor.tailorId;
+    })
+    const stichingPrice = priceList?.rates.find((article: any) => article.articleId == element.articleId);
+    console.log(JSON.stringify(stichingPrice))
+    return stichingPrice.stitchingPrice * Number(element.quntity);
+  }
+
+  calculateExpectedDeliveryDate(element: any, tailor: any, countArticle: any = 0) {
+    const data = this.masterService.getTailorWorkHrs().filter((tailor1: any) => {
+      return tailor1.tailorId == tailor.tailorId;
+    });
+    let startDate = moment();
+    let tailorWorkHrs = data.map((item, index) => {
+      return {
+        ...item,
+        date: moment(startDate).add(index, "days").format("DD-MM-YYYY")
+      };
+    });
+    const selectedTailor = tailorWorkHrs.filter((tailor: any) => {
+      return tailor.tailorId == tailor.tailorId
+    })
+    let makingHrs = 0;
+    let makingDays = 0;
+    for (let i = 0; i < selectedTailor.length; i++) {
+      const item = selectedTailor[i];
+      makingHrs = makingHrs + item.hrs;
+      if (element.hrs >= makingHrs) {
+        makingDays++;
+        element.trialDate = moment(startDate).add(((makingDays) * Number(element.quntity) + countArticle), "days").format("DD-MM-YYYY")
+        element.expectedDeliveryDate = moment(startDate).add(((makingDays + 2) * Number(element.quntity) + countArticle), "days").format("DD-MM-YYYY")
+      } else {
+        makingDays = 1;
+        element.trialDate = moment(startDate).add(((makingDays) * Number(element.quntity) + countArticle), "days").format("DD-MM-YYYY")
+        element.expectedDeliveryDate = moment(startDate).add(((makingDays + 2) * Number(element.quntity) + countArticle), "days").format("DD-MM-YYYY")
+        break;
+      }
+    }
+    console.log(JSON.stringify(element));
   }
 }
