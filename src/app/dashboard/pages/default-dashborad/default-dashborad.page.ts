@@ -9,6 +9,7 @@ import { TopRatedFabricPage } from "../top-rated-fabric/top-rated-fabric.page";
 import { TopRatedTailorPage } from "../top-rated-tailor/top-rated-tailor.page";
 import { IonPopover } from '@ionic/angular';
 import { MasterService } from 'src/app/services/master/master.service';
+import { forkJoin } from 'rxjs';
 
 @Component({
   selector: 'app-default-dashborad',
@@ -59,32 +60,34 @@ export class DefaultDashboradPage implements OnInit {
 
   ngOnInit() {
     this.ourService = this.commonService.getService();
+    this.loadRequiredData();
     /* this.getCurrentLocation(); */
-    this.articles=this.masterService.getArticles();
     this.permotionalBanner = this.commonService.getMasterBrand();
     this.startAutoTyping();
-    /* this.route.queryParams.subscribe(params => {
-      const navigatedData = params['navigatedData'];
-      if (navigatedData) {
-        this.navigatedData = JSON.parse(navigatedData);
-        console.log(this.navigatedData.serviceType);
+  }
+  loadRequiredData() {
+    const articles$ = this.commonService.getArticles();
+    forkJoin([articles$,]).subscribe(([articles]: any) => {
+      if (articles.body.data) {
+        this.articles = articles.body.data;
+      } else {
+        this.articles = [];
       }
-    }); */
-    
+    });
   }
 
 
-  getCurrentLocation(){
-   this.currentLocation=this.commonService.getCurrentCoordinates();
+  getCurrentLocation() {
+    this.currentLocation = this.commonService.getCurrentCoordinates();
   }
 
   ionViewDidEnter() {
     this.loadLoggedUser();
   }
-  ngAfterViewInit(){
+  ngAfterViewInit() {
     this.commonService.setCurrentPath();
   }
-  
+
   ngOnDestroy() {
     clearInterval(this.interval);
   }
@@ -178,13 +181,12 @@ export class DefaultDashboradPage implements OnInit {
       this.isLoggedIn = false;
     }
   }
-  
-  goToArticle(article:any){
-    this.router.navigate(['/main/article', article.articleId],{
-      queryParams: {
-        navigatedData: JSON.stringify({
-          serviceType: 'With Fabric'
-        })
+
+  goToArticle(article: any) {
+    this.router.navigate(['/main/article', article.articleId], {
+      state: {
+        serviceType: 'With Fabric',
+        articleData: article
       }
     });
   }
@@ -207,7 +209,7 @@ export class DefaultDashboradPage implements OnInit {
 
   getService(action: any) {
     const path = '/main/' + action.subUrl;
-    this.router.navigate([path],{
+    this.router.navigate([path], {
       queryParams: {
         navigatedData: JSON.stringify({
           serviceType: action.serviceType
@@ -216,7 +218,7 @@ export class DefaultDashboradPage implements OnInit {
     });
   }
 
-  getLogout(){
+  getLogout() {
     this.popover.event = undefined;
     this.isOpen = false;
     this.isLoggedIn = false;

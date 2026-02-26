@@ -1,4 +1,5 @@
 export const environment = {
     production: false,
-    apiUrl: 'http://localhost:8100',  
+    BASE_URL: 'http://localhost:8080/', 
+    CONREXT_PATH:'tailor/' 
   };

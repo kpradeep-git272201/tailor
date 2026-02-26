@@ -9,7 +9,9 @@ export class MasterService {
 
 
 
+  /************************ API Integration ********************* */
 
+ /************************ ************************************** */
   // This is master data
   getTailorWorkHrs() {
     return [

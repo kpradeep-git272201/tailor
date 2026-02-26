@@ -44,7 +44,7 @@ export class CartPage implements OnInit {
       this.loggedUser = !!localStorage.getItem('loggedUser');
 
     });
-    this.getShoppingBag();
+    // this.getShoppingBag();
     this.articles = this.masterService.getArticles();
   }
 

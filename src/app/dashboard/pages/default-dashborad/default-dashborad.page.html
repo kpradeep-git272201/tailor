@@ -57,7 +57,7 @@
   <div class="category-list">
     <div class="category-item" *ngFor="let article of articles">
       <ion-thumbnail class="articles" (click)="goToArticle(article)">
-        <img [src]="article.path" [alt]="article.articleName" />
+        <img [src]="article.imagePath" [alt]="article.articleName" />
       </ion-thumbnail>
       <p class="thumbnail-text">{{ article.articleName }}</p>
     </div>

@@ -44,19 +44,19 @@
   <div class="category-list">
     <div
       class="category-item"
-      *ngFor="let articleCat of articlesCategory"
-      [ngClass]="{ 'selected': articleCat.selected }"
-      (click)="toggleSelection(articleCat)"
+      *ngFor="let fabCat of fabricCategory"
+      [ngClass]="{ 'selected': fabCat.selected }"
+      (click)="toggleSelection(fabCat)"
     >
       <ion-thumbnail class="articles checked">
-        <img [src]="articleCat.path" [alt]="articleCat.artCatName" />
+        <img [src]="fabCat.fabricCategoryImagePath" [alt]="fabCat.fabricCategoryName" />
         <ion-icon
-          *ngIf="articleCat.selected"
+          *ngIf="fabCat.selected"
           name="checkmark-circle"
           class="check-icon"
         ></ion-icon>
       </ion-thumbnail>
-      <p class="thumbnail-text">{{ articleCat.fabric }}</p>
+      <p class="thumbnail-text">{{ fabCat.fabricCategoryName }}</p>
     </div>
   </div>
 
@@ -72,9 +72,7 @@
     >
       <ng-template ngbSlide *ngIf="article">
         <div class="carousel-slide">
-          <!-- <div class="carousel-caption">
-            <h3>{{article.articleName}}</h3>
-          </div> -->
+         
           <a>
             <div class="picsum-img-wrapper">
               <img
@@ -102,20 +100,20 @@
           size="6"
           size-md="4"
           size-lg="3"
-          *ngFor="let artCat of articlesCategories; let i = index;"
+          *ngFor="let fabric of articlesCategories; let i = index;"
         >
-          <ion-card class="fabric-card" (click)="selectedArticle(artCat)">
-            <img [src]="artCat.path" [alt]="artCat.fabric" />
+          <ion-card class="fabric-card" (click)="selectedFabric(fabric)">
+            <img [src]="fabric.imagePath" class="fabric-img" [alt]="fabric.fabricName" />
             <ion-card-header>
               <ion-card-title class="font-16">
                 <span style="font-size: 0.75rem; font-weight: 600"
-                  >{{ artCat.fabric }}</span
+                  >{{ fabric.categoryName }}</span
                 >
                 <br />
-                <span style="font-size: 0.75rem">{{artCat.articleName}}</span>
+                <span style="font-size: 0.75rem">{{fabric.fabricName}}</span>
                 <br />
                 <span style="font-size: 0.75rem"
-                  >&#8377;{{ artCat.priceId }}</span
+                  >&#8377;{{ fabric?.pricePerMeter }}</span
                 >
               </ion-card-title>
             </ion-card-header>
@@ -123,17 +121,6 @@
         </ion-col>
       </ion-row>
 
-      <!-- View More Button -->
-      <!-- <div class="load-more-container" *ngIf="!allFabricsLoaded">
-        <ion-button
-          class="view-more"
-          (click)="loadMoreFabrics()"
-          expand="full"
-          color="secondary"
-        >
-          <span>View More Article</span>
-        </ion-button>
-      </div> -->
     </ion-grid>
   </div>
 </ion-content>

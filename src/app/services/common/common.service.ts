@@ -1,23 +1,87 @@
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Geolocation } from '@capacitor/geolocation';
+import { catchError, map, Observable, ObservableInput, of } from 'rxjs';
+import { AppConfig } from 'src/app/app.config';
+
 
 @Injectable({
   providedIn: 'root',
 })
 export class CommonService {
 
-  APP_KEY='AIzaSyAoYbrW-KNT-M5K4JvCf1JAVWVf49Iu6sQ';
-
+  APP_KEY = 'AIzaSyAoYbrW-KNT-M5K4JvCf1JAVWVf49Iu6sQ';
+  handleError: ((err: any, caught: Observable<any>) => ObservableInput<any>) | any;
 
   constructor(
     private router: Router,
     private route: ActivatedRoute,
     private http: HttpClient
-  ) {}
+  ) { }
 
-   getMasterBrand() {
+  /************************ API Integration ********************* */
+  /************************** Common API's call ********************************** */
+  /* public request(
+    method: string,
+    url: string,
+    options: { body?: any; headers?: any; observe?: any; reportProgress?: boolean }
+  ): Observable<any> {
+    return this.http.request(method, url, options).pipe(catchError(this.handleError));
+  } */
+  public request<T>(
+    method: string,
+    url: string,
+    options: {
+      body?: any;
+      headers?: any;
+      responseType?: any;
+      observe?: any;
+      reportProgress?: boolean;
+    } = {},
+  ): Observable<T> {
+    return this.http.request<T>(method, url, options);
+  }
+  getRequest(url: any): Observable<any[]> {
+    const fullPath = AppConfig.BASE_API + url;
+    const headers = new HttpHeaders().set('content-type', 'application/json').set('Accept', 'application/json');
+    return this.request<any[]>('GET', `${fullPath}`, { headers: headers, reportProgress: false, observe: 'response' }).pipe(
+      catchError((error) => of(error)),
+    );
+  }
+
+  getArticles() {
+    const url = `${AppConfig.ENDPOINTS.PRIVATE.ARTICLE}`;
+    return this.getRequest(url);
+  }
+
+  getFabricCategory(articleId: any) {
+    const url = `${AppConfig.ENDPOINTS.PRIVATE.FABRIC_CATEGORY}/${articleId}/fabric-categories`;
+    return this.getRequest(url);
+  }
+
+  getAllFabricCategory() {
+    const url = `${AppConfig.ENDPOINTS.PRIVATE.ALL_FABRIC_CATEGORIES}`;
+    return this.getRequest(url);
+  }
+
+  getFabricCategoryByFabricId(fabricId: any) {
+    const url = `${AppConfig.ENDPOINTS.PRIVATE.FABRIC_CATEGORY_BY_ID}/${fabricId}`;
+    return this.getRequest(url);
+  }
+  getFabricByFabricId(fabricId: any) {
+    const url = `${AppConfig.ENDPOINTS.MASTER.FABRIC_COLOR}/${fabricId}`;
+    return this.getRequest(url);
+  }
+  getFabricColorByFabricId(fabricId: any) {
+    const url = `${AppConfig.ENDPOINTS.MASTER.FABRIC_COLOR_BY_FABRIC_ID}/${fabricId}/colors`;
+    return this.getRequest(url);
+  }
+  
+
+  /************************ ************************************** */
+
+  getMasterBrand() {
     return [
       {
         brandId: 201,
@@ -101,7 +165,7 @@ export class CommonService {
   }
   /** ****************************************************** above code cleanup ******* */
 
-  
+
   setCurrentPath() {
     const currentUrl = decodeURIComponent(this.router.url.split('?')[0]);
     console.log('Path:', currentUrl);
@@ -118,7 +182,7 @@ export class CommonService {
       }
     });
   }
- 
+
 
   getColorClassificatioMaster() {
     // atricle Id as list
@@ -312,7 +376,7 @@ export class CommonService {
         modifiedDate: '2025-03-11T10:00:00Z',
         isDelete: false,
         isActive: true,
-        hrs:16,
+        hrs: 16,
         fabricIds: [101, 102],
       },
       {
@@ -323,7 +387,7 @@ export class CommonService {
         modifiedDate: '2025-03-11T10:05:00Z',
         isDelete: false,
         isActive: true,
-        hrs:8,
+        hrs: 8,
         fabricIds: [102, 103],
       },
       {
@@ -334,7 +398,7 @@ export class CommonService {
         modifiedDate: '2025-03-11T10:10:00Z',
         isDelete: false,
         isActive: true,
-        hrs:12,
+        hrs: 12,
         fabricIds: [103, 104],
       },
       {
@@ -345,7 +409,7 @@ export class CommonService {
         modifiedDate: '2025-03-11T10:15:00Z',
         isDelete: false,
         isActive: true,
-        hrs:5,
+        hrs: 5,
         fabricIds: [104, 105],
       },
       {
@@ -356,7 +420,7 @@ export class CommonService {
         modifiedDate: '2025-03-11T10:20:00Z',
         isDelete: false,
         isActive: true,
-        hrs:24,
+        hrs: 24,
         fabricIds: [105, 106],
       },
       {
@@ -367,7 +431,7 @@ export class CommonService {
         modifiedDate: '2025-03-11T10:25:00Z',
         isDelete: false,
         isActive: true,
-        hrs:12,
+        hrs: 12,
         fabricIds: [106, 107],
       },
       {
@@ -378,7 +442,7 @@ export class CommonService {
         modifiedDate: '2025-03-11T10:30:00Z',
         isDelete: false,
         isActive: true,
-        hrs:10,
+        hrs: 10,
         fabricIds: [107, 108],
       },
       {
@@ -389,7 +453,7 @@ export class CommonService {
         modifiedDate: '2025-03-11T10:40:00Z',
         isDelete: false,
         isActive: true,
-        hrs:36,
+        hrs: 36,
         fabricIds: [109, 110],
       },
     ];
@@ -761,7 +825,7 @@ export class CommonService {
         expertise: "Women's Ethnic, Bridal",
         rating: 4.8,
         distance: 3.1,
-         grade: "A",
+        grade: "A",
       },
       {
         tailorId: 102,
@@ -780,7 +844,7 @@ export class CommonService {
         expertise: 'Designer Dresses, Western',
         rating: 4.6,
         distance: 4.2,
-         grade: "B",
+        grade: "B",
       },
       {
         tailorId: 104,
@@ -790,7 +854,7 @@ export class CommonService {
         expertise: 'Formal Shirts, Trousers',
         rating: 4.5,
         distance: 3.0,
-         grade: "A",
+        grade: "A",
       },
       {
         tailorId: 105,
@@ -819,7 +883,7 @@ export class CommonService {
         expertise: 'Kids Wear, Party Dresses',
         rating: 4.3,
         distance: 3.7,
-         grade: "D",
+        grade: "D",
       },
     ];
   }
@@ -988,7 +1052,7 @@ export class CommonService {
         articleName: 'Formal Shirt',
         fabric: 'Linen',
         price: 650,
-         hrs: 16,
+        hrs: 16,
         imageUrl:
           'assets/images/article/Master/Article2/Article2_main_image.png',
         subArticles: [
@@ -1336,7 +1400,7 @@ export class CommonService {
     ];
   }
 
-  
+
   async getCurrentCoordinates() {
     const coordinates = await Geolocation.getCurrentPosition();
     console.log('Current position:', coordinates.coords);
@@ -1353,7 +1417,7 @@ export class CommonService {
   }
 
   getAddress(lat: number, lng: number) {
-      const url = `https://maps.googleapis.com/maps/api/geocode/json?latlng=28.7055796,77.3287977&key=AIzaSyAoYbrW-KNT-M5K4JvCf1JAVWVf49Iu6sQ`;
-      return this.http.get<any>(url);
+    const url = `https://maps.googleapis.com/maps/api/geocode/json?latlng=28.7055796,77.3287977&key=AIzaSyAoYbrW-KNT-M5K4JvCf1JAVWVf49Iu6sQ`;
+    return this.http.get<any>(url);
   }
 }

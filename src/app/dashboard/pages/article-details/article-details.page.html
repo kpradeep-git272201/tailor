@@ -1,92 +1,27 @@
 <ion-toolbar class="toolbar">
   <ion-buttons slot="start">
-    <ion-back-button
-      defaultHref="/main/with-fabric/{{articleId}}"
-    ></ion-back-button>
+    <ion-back-button defaultHref="/main/with-fabric/{{fabricId}}"></ion-back-button>
   </ion-buttons>
-  <ion-title *ngIf="article">{{ article?.articleName }}</ion-title>
+  <ion-title *ngIf="fabricCategory">{{ fabricCategory.fabricName }}</ion-title>
 </ion-toolbar>
 
 <ion-content [fullscreen]="true">
-  <div *ngIf="artCatTexture.length > 0">
+  <div *ngIf="fabricColors">
     <div style="margin-right: 24px;">
-      <swiper-container
-        class="carousel-container custom-carousel"
-        slides-per-view="1"
-        pagination="true"
-        navigation="false"
-        style="width: 100%; height: 250px"
-      >
-        <swiper-slide *ngFor="let sArticle of colorTextures.texture">
-          <img
-            [src]="sArticle.path"
-            [alt]="sArticle.artCatTextureId"
-            height="210px"
-            width="455px"
-          />
+      <swiper-container class="carousel-container custom-carousel" slides-per-view="1" pagination="true"
+        navigation="false" style="width: 100%; height: 250px">
+        <swiper-slide *ngFor="let img of selectedFabricColor.images">
+          <img [src]="img.imageUrl" [alt]="selectedFabricColor.colorName" height="210px" width="455px" />
         </swiper-slide>
       </swiper-container>
     </div>
-    <!-- <ngb-carousel
-      #carousel
-      [interval]="0"
-      [pauseOnHover]="pauseOnHover"
-      [pauseOnFocus]="pauseOnFocus"
-      [showNavigationArrows]="false"
-      [showNavigationIndicators]="false"
-      [wrap]="true"
-      [keyboard]="true"
-      [animation]="true"
-      (slide)="onSlide($event)"
-      [showNavigationArrows]="false"
-      [showNavigationIndicators]="false"
-      class="carousel-container custom-carousel"
-    >
-      <ng-template
-        ngbSlide
-        *ngFor="let sArticle of articleColor.articleColor; let i = index"
-        [id]="'slide-' + i"
-      >
-        <div class="carousel-slide">
-          <div class="picsum-img-wrapper">
-            <img
-              [src]="sArticle.imageUrl"
-              [alt]="sArticle.articleName"
-              height="210px"
-              width="455px"
-            />
-          </div>
-        
-        </div>
-   
-      </ng-template>
-    </ngb-carousel> -->
-    <!-- <div style="text-align: center">
-      <span class="dot" *ngFor="let sArticle of articleColor.articleColor;">
-        <ion-icon
-          [style.color]="(sArticle.currentCarosel)? 'red': 'gray'"
-          name="ellipse"
-        ></ion-icon>
-      </span>
-    </div> -->
-    <ion-toolbar *ngIf="articlesCategory" class="heart-toolbar">
-      <ion-title style="text-align: left; padding-left: 15px; font-size: 14px;">Article: {{articlesCategory?.artCatName}}
-         <br><span style="font-weight: 200;">MRP </span> <span style="font-weight: normal;">&#8377;{{ articlesCategory.priceId }}</span></ion-title>
-      <!-- <ion-text slot="start" style="padding-left: 0.625rem">
-        <span style="font-weight: normal"
-          ><br />
-          <span style="font-size: 0.75rem">&#8377;{{ article.price }}</span>
-        </span>
-      </ion-text> -->
-      <!-- <ion-buttons slot="end">
-        <ion-button (click)="addToWishList()">
-          <ion-icon
-            id="heart-outline"
-            name="heart" aria-label="Favorite"
-            [style.color]="isWishlisted ? 'red' : ''"
-          ></ion-icon
-        ></ion-button>
-      </ion-buttons> -->
+
+    <ion-toolbar *ngIf="articleData && fabricCategory" class="heart-toolbar">
+      <ion-title style="text-align: left; padding-left: 15px; font-size: 14px;">{{articleData.articleName}} |
+        {{fabricCategory.categoryName}}
+        <br><span style="font-weight: 200;">MRP </span> <span style="font-weight: normal;">&#8377;{{
+          fabricCategory.pricePerMeter }}</span></ion-title>
+
       <ion-buttons slot="end">
         <ion-button>
           <ion-icon id="share-outline" name="share-outline"></ion-icon>
@@ -95,30 +30,23 @@
     </ion-toolbar>
     <span style="font-weight: 600; font-size: 14px; margin-left: 15px;">Color</span>
     <div class="category-list">
-      <div
-        class="category-item"
-        *ngFor="let clrTexture of artCatTexture[0].colorTexture; let i = index"
-        [ngClass]="{ 'selected': clrTexture.selected }"
-        (click)="toggleSelection(clrTexture, i)"
-      >
+      <div class="category-item" *ngFor="let color of fabricColors; let i = index"
+        [ngClass]="{ 'selected': color?.selected }" (click)="toggleSelection(color, i)">
         <ion-thumbnail class="articles checked">
-          <img [src]="clrTexture.path" [alt]="clrTexture.colorId" />
-          <ion-icon
-            *ngIf="clrTexture.selected"
-            name="checkmark-circle"
-            class="check-icon"
-          ></ion-icon>
+          <img [src]="color.images[0].imageUrl" [style.filter]="getColorFilter(color.hexCode)"
+            [alt]="color.colorName" />
+          <ion-icon *ngIf="color?.selected" name="checkmark-circle" class="check-icon"></ion-icon>
         </ion-thumbnail>
-        <!-- <p class="thumbnail-text">{{ article.fabric }}</p> -->
+        <span>{{color.colorName}}</span>
       </div>
     </div>
     <div style="display: flex; justify-content: center; gap: 25px;">
-      <span><ion-button (click)="addToWishList(article)"  fill="outline">
-        <ion-icon [style.color]="isWishlisted ? 'red' : 'gray'" style="padding-right: 10px;" name="heart">
-      </ion-icon> Wishlist</ion-button></span>
+      <span><ion-button (click)="addToWishList(article)" fill="outline">
+          <ion-icon [style.color]="isWishlisted ? 'red' : 'gray'" style="padding-right: 10px;" name="heart">
+          </ion-icon> Wishlist</ion-button></span>
       <span><ion-button fill="solid" (click)="addToBag()">
-        <ion-icon style="padding-right: 10px;" name="bag-outline">
-        </ion-icon> Add to Bag</ion-button></span>
+          <ion-icon style="padding-right: 10px;" name="bag-outline">
+          </ion-icon> Add to Bag</ion-button></span>
     </div>
     <div style="padding-left: 10px; padding-right: 10px; height: 50px;">
       <h6 style="margin-left: 10px;">Delivery & Services</h6>
@@ -128,113 +56,12 @@
         </span>
         <span><ion-button fill="clear">Chnage</ion-button></span>
       </div>
-      
+
     </div>
     <div class="product-detail">
       <span style="font-weight: 600; padding-left: 20px;">Product Details</span>
       <p style="padding-left: 20px;">Solid formal shirt</p>
     </div>
   </div>
-  <!-- <ion-grid>
-    <ion-row class="fabric-qunt">
-      <ion-col
-        ><span class="label">Fabric : </span
-        ><span class="value">{{article?.fabric}}</span>
-      </ion-col>
-      <ion-button (click)="addItems()"
-        ><ion-icon
-          name="add-outline"
-          style="margin-right: 6px; font-size: 24px"
-        ></ion-icon
-        >Add</ion-button
-      ></ion-row
-    >
-   
-    <div class="seletedItem" *ngFor="let item of selectedItem; let i=index;">
-      <ion-row style="align-items: center">
-        <ion-col class="value" style="border-bottom: 1px solid lightgreen">
-          <ion-checkbox
-            [checked]="item.isChecked"
-            (ionChange)="onTailorSelectChange($event, item)"
-            class="check-box"
-            labelPlacement="end"
-            >Select to book a tailor</ion-checkbox
-          >
-          <ion-select
-            label="Article: "
-            label-placement="fixed"
-            [(ngModel)]="item.articleId"
-            placeholder="Select Article"
-            (ionChange)="onArticleChange($event, item)"
-            style="padding-left: 8px"
-          >
-            <ion-select-option
-              *ngFor="let article of masterMenu"
-              [value]="article.articleId"
-              >{{article.articleName}}</ion-select-option
-            >
-          </ion-select>
-        </ion-col>
-      </ion-row>
 
-      <ion-row *ngIf="item?.price" style="align-items: center">
-        <ion-col style="padding-left: 12px">Price : </ion-col>
-        <ion-col class="value"
-          ><span>&#8377;</span>{{item.price * item.quntity}}</ion-col
-        >
-      </ion-row>
-      <ion-row *ngIf="item?.quntity" style="align-items: center">
-        <ion-col style="padding-left: 12px">Quantity : </ion-col>
-        <ion-col class="value">
-          <span>
-            <ion-icon
-              class="icon-md"
-              style="margin-bottom: -0.375rem"
-              name="remove-circle-outline"
-              (click)="removeQuntity(item)"
-            ></ion-icon>
-            <ion-text style="padding-left: 0.625rem; padding-right: 0.625rem">
-              {{item.quntity}}</ion-text
-            >
-            <ion-icon
-              class="icon-md"
-              style="margin-bottom: -0.375rem"
-              name="add-circle-outline"
-              (click)="addQuntity(item)"
-            ></ion-icon>
-          </span>
-          <ion-icon
-            (click)="removeItem(item)"
-            class="delete"
-            name="trash-outline"
-          ></ion-icon>
-        </ion-col>
-      </ion-row>
-    </div>
-  </ion-grid>
-
-  <ion-button
-    expand="block"
-    class="add-to-cart"
-    (click)="addToCart()"
-    shape="round"
-  >
-    <ion-icon name="cloud-upload-outline" slot="start"></ion-icon>
-    Add To Cart
-  </ion-button>
-
-  <ion-button
-    (click)="bookTailor()"
-    expand="block"
-    shape="round"
-    class="book-tailor"
-  >
-    <ion-icon
-      style="padding-right: 0.438rem"
-      class="icon-md"
-      name="reader-outline"
-      slot="start"
-    ></ion-icon>
-    Book Tailor
-  </ion-button> -->
 </ion-content>

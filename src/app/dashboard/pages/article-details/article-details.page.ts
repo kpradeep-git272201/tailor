@@ -15,6 +15,7 @@ import { TailorListPage } from 'src/app/tailor/pages/tailor-list/tailor-list.pag
 import 'swiper/css';
 import { register } from 'swiper/element/bundle';
 import { MasterService } from 'src/app/services/master/master.service';
+import { forkJoin } from 'rxjs';
 
 @Component({
   selector: 'app-article-details',
@@ -41,23 +42,28 @@ export class ArticleDetailsPage implements OnInit {
   selectedColor: any;
   quntity: number = 1;
   articleName: any | null;
-  articleId: any | null;
+  fabricId: any | null;
   loggedUser: any;
   selectedTailor: any;
   masterMenu: any = [];
   selectedArticle: any;
   selectedItem: any = [];
-  fabricId: any;
   colorModelPage: any = ColorModelPage;
   subArticles: any;
   currentSlideId = 'slide-0';
   articleColor: any;
   currentBag: any;
   articles: any;
-  artCatTexture:any=[];
-  colorTextures: any=[];
+  artCatTexture: any = [];
+  colorTextures: any = [];
   articlesCategories: any;
   articlesCategory: any;
+  fabricCategory: any;
+  fabricColor: any;
+  serviceType: any;
+  articleData: any;
+  fabricColors: any;
+  selectedFabricColor: any;
   constructor(
     private iconService: IconService,
     private modalController: ModalController,
@@ -70,111 +76,121 @@ export class ArticleDetailsPage implements OnInit {
     this.iconService.registerIcons();
   }
 
-
-  ngOnInit() {
-    const artCatId = this.route.snapshot.paramMap.get('artCatId');
-    this.articleId = this.route.snapshot.paramMap?.get('articleId');
-    this.getColorTextureById(artCatId);
-    this.getArticleById(this.articleId);
-
-    // this.subArtcles = this.commonService.getSubArtcles();
-    // this.colorMaster = this.commonService.colorClassificationMaster();
-    // this.masterMenu = this.commonService.getMasterMenu();
-   
-    // this.fabricId = this.route.snapshot.paramMap?.get('fabricId');
-
-    // const currentBooking = localStorage.getItem('currentBooking');
-    // if (currentBooking) {
-    //   const parseCurrentBooking = JSON.parse(currentBooking);
-    //   this.selectedColor = parseCurrentBooking?.color;
-    //   this.selectedTailor = parseCurrentBooking?.tailor;
-    //   this.navigatedData = parseCurrentBooking?.itme;
-    // } else {
-    //   this.selectedColor = this.colorMaster[0];
-    // }
-
-    this.route.queryParams.subscribe((params) => {
-      this.loggedUser = !!localStorage.getItem('loggedUser');
-    //   if (params['navigatedData']) {
-    //     this.navigatedData = JSON.parse(params['navigatedData']);
-    //     this.article = this.navigatedData?.article;
-    //     this.fabric = this.navigatedData?.fabric;
-    //     this.selectedArticle = this.article?.articleId;
-    //     this.subArticles = this.article?.subArticles;
-    //     if(this.subArticles){
-    //       this.subArticles[0].selected=true;
-    //       this.articleColor = this.subArticles[0];
-    //       this.addToCurrentBag(this.article, this.subArticles[0]);
-    //     }
-    //   }
-    });
-
-    // this.selectedItems();
-  }
-
   ngAfterViewInit() {
     register();
     this.commonService.setCurrentPath();
   }
 
-  getColorTextureById(id:any){
-    this.artCatTexture=this.masterService.getArticleCatTexture().filter((item:any)=>{
-      return item.artCatId==id;
+  ngOnInit() {
+    this.getRouterState();
+    const fabricCategoryId = this.route.snapshot.paramMap.get('artCatId');
+    this.fabricId = this.route.snapshot.paramMap?.get('articleId');
+    this.loadData(this.fabricId);
+    // this.getColorTextureById(fabricCategoryId);
+    // this.getArticleById(this.fabricId);
+
+
+    this.route.queryParams.subscribe((params) => {
+      this.loggedUser = !!localStorage.getItem('loggedUser');
     });
-    if(this.artCatTexture){
-      this.colorTextures=this.artCatTexture[0]?.colorTexture[0];
-      this.colorTextures.selected=true;
+  }
+
+  getRouterState() {
+    const state = history.state;
+    this.serviceType = state.serviceType;
+    this.articleData = state.articleData;
+    this.fabric = state.fabric;
+
+    console.log(state);
+  }
+  loadData(fabricId: any) {
+    const fabricCategory$ = this.commonService.getFabricCategoryByFabricId(fabricId);
+    const fabricColor$ = this.commonService.getFabricByFabricId(fabricId);
+    const fabricColorByFabricId$ = this.commonService.getFabricColorByFabricId(fabricId);
+    forkJoin([fabricCategory$, fabricColor$, fabricColorByFabricId$]).subscribe(([fabricCategory, fabricColor, fabricColorByFabricId]: any) => {
+      if (fabricCategory.status == 200) {
+        this.fabricCategory = fabricCategory.body.data;
+      } else {
+        this.fabricCategory = {};
+      }
+      if (fabricColor.status == 200) {
+        this.fabricColor = fabricColor.body.data;
+       
+      } else {
+        this.fabricColor = [];
+      }
+      if (fabricColorByFabricId.status == 200) {
+        this.fabricColors = fabricColorByFabricId.body.data;
+         if (this.fabricColors.length > 0) {
+          this.fabricColors[0].selected = true;   // first selected
+          this.selectedFabricColor = this.fabricColors[0];
+        }
+      } else {
+        this.fabricColors = [];
+      }
+    });
+  }
+
+
+  getColorTextureById(id: any) {
+    this.artCatTexture = this.masterService.getArticleCatTexture().filter((item: any) => {
+      return item.artCatId == id;
+    });
+    if (this.artCatTexture) {
+      this.colorTextures = this.artCatTexture[0]?.colorTexture[0];
+      this.colorTextures.selected = true;
     }
   }
-  getArticleById(articleId:any){
-    this.articles=this.masterService.getArticles();
-    this.article=this.articles.filter((artilce:any)=>{
-      return artilce.articleId==articleId;
+  getArticleById(articleId: any) {
+    this.articles = this.masterService.getArticles();
+    this.article = this.articles.filter((artilce: any) => {
+      return artilce.articleId == articleId;
     });
-    if(this.articles){
-      this.article= this.article[0];
+    if (this.articles) {
+      this.article = this.article[0];
       this.getArticleCategoryByArticleId(this.article);
     }
   }
 
-  getArticleCategoryByArticleId(article: any){
-    this.articlesCategories = this.masterService.getArticleCategory().filter((item:any)=>{
-      return item.articleId==article.articleId;
+  getArticleCategoryByArticleId(article: any) {
+    this.articlesCategories = this.masterService.getArticleCategory().filter((item: any) => {
+      return item.articleId == article.articleId;
     });
-    this.articlesCategory=this.articlesCategories[0];
+    this.articlesCategory = this.articlesCategories[0];
 
     this.addToCurrentBag(article, this.articlesCategory, this.colorTextures);
   }
-  toggleSelection(clrTexture: any, index: number): void {
-    this.artCatTexture[0].colorTexture.forEach((element:any)=>{
-      element.selected=false;
-    })
-     this.colorTextures=this.artCatTexture[0].colorTexture[index];
-      this.colorTextures.selected=true;
-    // this.subArticles.forEach(
-    //   (a: { selected: boolean }) => (a.selected = false),
-    // );
-    // subArticle.selected = true;
-    // this.articleColor = subArticle;
-    this.addToCurrentBag(this.article, this.articlesCategory, clrTexture);
+
+  toggleSelection(color: any, index: number): void {
+    this.fabricColors.forEach((c: any) => (c.selected = false));
+
+    color.selected = true;
+    this.selectedFabricColor = color;
 
   }
 
-  addToCurrentBag(article:any, artCategory:any, clrTexture?:any){
-    this.currentBag={
-      colorId: clrTexture.colorId,
+  // toggleSelection(color: any, index: number): void {
+  //   this.artCatTexture[0].colorTexture.forEach((element: any) => {
+  //     element.selected = false;
+  //   })
+  //   this.colorTextures = this.artCatTexture[0].colorTexture[index];
+  //   this.colorTextures.selected = true;
+
+  //   this.addToCurrentBag(this.article, this.articlesCategory, color);
+
+  // }
+
+  addToCurrentBag(article: any, artCategory: any, color?: any) {
+    this.currentBag = {
+      colorId: color.colorId,
       articleId: article.articleId,
       artCatId: artCategory.artCatId,
       articleName: article.articleName,
       fabric: artCategory.fabric,
-      imageUrl: clrTexture.path,
+      imageUrl: color.path,
       price: artCategory.priceId,
       hrs: artCategory.workHrsId,
-      // subArticle:{
-      //   imageUrl: artCategory.path,
-      //   selected: artCategory.selected,
-      //   subArticleId: artCategory.subArticleId
-      // }
+
     }
     console.log(JSON.stringify(this.currentBag));
   }
@@ -395,7 +411,7 @@ export class ArticleDetailsPage implements OnInit {
 
   goToOrderSummary(myOrder: any) {
     this.router.navigate(
-      ['/main/with-fabric', this.articleId, this.fabricId, 'order-summary'],
+      ['/main/with-fabric', this.fabricId, this.fabricId, 'order-summary'],
       {
         queryParams: {
           order: JSON.stringify(myOrder),
@@ -404,31 +420,7 @@ export class ArticleDetailsPage implements OnInit {
     );
   }
 
-  // addToCart() {
-  //   let isChecked = false;
-  //   this.selectedItem.filter((item: any) => {
-  //     if (item.isChecked) {
-  //       isChecked = true;
-  //     }
-  //     return;
-  //   });
-  //   if (isChecked) {
-  //     const carts = localStorage.getItem('addToCart');
-  //     const addToCart = this.selectedItem;
-  //     if (carts) {
-  //       const cartParse = JSON.parse(carts);
-  //       cartParse.concat(addToCart);
-  //     } else {
-  //       localStorage.setItem('addToCart', JSON.stringify(this.selectedItem));
-  //     }
-  //   } else {
-  //     this.alertService.showAlerCancel(
-  //       'Alrert!',
-  //       'Please check at least one Article',
-  //       'alert',
-  //     );
-  //   }
-  // }
+
 
   selectedItems() {
     const items = {
@@ -514,7 +506,7 @@ export class ArticleDetailsPage implements OnInit {
 
     return invalidItems.length > 0 ? invalidItems[0] : null;
   }
-  addToWishList(article:any) {
+  addToWishList(article: any) {
     if (!this.loggedUser) {
       this.alertService
         .showAlertWithCancel('Alrert!', 'Please login to continue', 'alert')
@@ -531,7 +523,7 @@ export class ArticleDetailsPage implements OnInit {
   }
 
 
-  addToBag(){
+  addToBag() {
     if (!this.loggedUser) {
       this.alertService
         .showAlertWithCancel('Alrert!', 'Please login to continue', 'alert')
@@ -544,19 +536,36 @@ export class ArticleDetailsPage implements OnInit {
         });
       return;
     }
-    if(localStorage.getItem('shopping_bag')){
-      const currentBag:any = localStorage.getItem('shopping_bag');
-      const currentBagJson:any = JSON.parse(currentBag);
-      const filterCart = currentBagJson.find((item:any)=>{
+    if (localStorage.getItem('shopping_bag')) {
+      const currentBag: any = localStorage.getItem('shopping_bag');
+      const currentBagJson: any = JSON.parse(currentBag);
+      const filterCart = currentBagJson.find((item: any) => {
         return item.artCatId == this.currentBag.artCatId;
       });
-      if(!filterCart){
+      if (!filterCart) {
         const data = currentBagJson.concat(this.currentBag);
         localStorage.setItem('shopping_bag', JSON.stringify(data));
       }
-    }else{
+    } else {
       localStorage.setItem('shopping_bag', JSON.stringify([this.currentBag]));
     }
     this.router.navigate(['/main/cart']);
   }
+
+  getColorFilter(hex: string): string {
+    switch (hex) {
+      case '#F6D2D2':
+        return 'hue-rotate(350deg) saturate(1.2)';
+      case '#D3C8F4':
+        return 'hue-rotate(250deg) saturate(1.1)';
+      case '#F6F6F6':
+        return 'grayscale(1) brightness(1.2)';
+      case '#F6CA99':
+        return 'hue-rotate(20deg) saturate(1.3)';
+      default:
+        return '';
+    }
+  }
+
+
 }
