@@ -68,7 +68,7 @@ export class DefaultDashboradPage implements OnInit {
   loadRequiredData() {
     const articles$ = this.commonService.getArticles();
     forkJoin([articles$,]).subscribe(([articles]: any) => {
-      if (articles.body.data) {
+      if (articles?.body?.data) {
         this.articles = articles.body.data;
       } else {
         this.articles = [];

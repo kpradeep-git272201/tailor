@@ -12,7 +12,7 @@ import { AlertService } from 'src/app/services/alert/alert.service';
 import { CommonService } from 'src/app/services/common/common.service';
 import { ColorModelPage } from 'src/app/model/color-model/color-model.page';
 import { TailorListPage } from 'src/app/tailor/pages/tailor-list/tailor-list.page';
-import 'swiper/css';
+// import 'swiper/css';
 import { register } from 'swiper/element/bundle';
 import { MasterService } from 'src/app/services/master/master.service';
 import { forkJoin } from 'rxjs';
@@ -23,7 +23,7 @@ import { forkJoin } from 'rxjs';
   styleUrls: ['./article-details.page.scss'],
   standalone: true,
   imports: [SharedModule],
-  schemas: [CUSTOM_ELEMENTS_SCHEMA] // ✅ add here
+  schemas: [CUSTOM_ELEMENTS_SCHEMA] //add here
 })
 export class ArticleDetailsPage implements OnInit {
 
@@ -57,13 +57,14 @@ export class ArticleDetailsPage implements OnInit {
   artCatTexture: any = [];
   colorTextures: any = [];
   articlesCategories: any;
-  articlesCategory: any;
+  // articlesCategory: any;
   fabricCategory: any;
   fabricColor: any;
   serviceType: any;
   articleData: any;
   fabricColors: any;
   selectedFabricColor: any;
+  selectedImage: any;
   constructor(
     private iconService: IconService,
     private modalController: ModalController,
@@ -88,8 +89,6 @@ export class ArticleDetailsPage implements OnInit {
     this.loadData(this.fabricId);
     // this.getColorTextureById(fabricCategoryId);
     // this.getArticleById(this.fabricId);
-
-
     this.route.queryParams.subscribe((params) => {
       this.loggedUser = !!localStorage.getItem('loggedUser');
     });
@@ -100,9 +99,9 @@ export class ArticleDetailsPage implements OnInit {
     this.serviceType = state.serviceType;
     this.articleData = state.articleData;
     this.fabric = state.fabric;
-
     console.log(state);
   }
+
   loadData(fabricId: any) {
     const fabricCategory$ = this.commonService.getFabricCategoryByFabricId(fabricId);
     const fabricColor$ = this.commonService.getFabricByFabricId(fabricId);
@@ -115,82 +114,48 @@ export class ArticleDetailsPage implements OnInit {
       }
       if (fabricColor.status == 200) {
         this.fabricColor = fabricColor.body.data;
-       
+
       } else {
         this.fabricColor = [];
       }
       if (fabricColorByFabricId.status == 200) {
         this.fabricColors = fabricColorByFabricId.body.data;
-         if (this.fabricColors.length > 0) {
+        if (this.fabricColors.length > 0) {
           this.fabricColors[0].selected = true;   // first selected
           this.selectedFabricColor = this.fabricColors[0];
         }
       } else {
         this.fabricColors = [];
       }
+      this.addToCurrentBag(this.articleData, this.selectedFabricColor);
     });
   }
 
 
-  getColorTextureById(id: any) {
-    this.artCatTexture = this.masterService.getArticleCatTexture().filter((item: any) => {
-      return item.artCatId == id;
-    });
-    if (this.artCatTexture) {
-      this.colorTextures = this.artCatTexture[0]?.colorTexture[0];
-      this.colorTextures.selected = true;
-    }
-  }
-  getArticleById(articleId: any) {
-    this.articles = this.masterService.getArticles();
-    this.article = this.articles.filter((artilce: any) => {
-      return artilce.articleId == articleId;
-    });
-    if (this.articles) {
-      this.article = this.article[0];
-      this.getArticleCategoryByArticleId(this.article);
-    }
-  }
-
-  getArticleCategoryByArticleId(article: any) {
-    this.articlesCategories = this.masterService.getArticleCategory().filter((item: any) => {
-      return item.articleId == article.articleId;
-    });
-    this.articlesCategory = this.articlesCategories[0];
-
-    this.addToCurrentBag(article, this.articlesCategory, this.colorTextures);
-  }
 
   toggleSelection(color: any, index: number): void {
     this.fabricColors.forEach((c: any) => (c.selected = false));
-
     color.selected = true;
     this.selectedFabricColor = color;
 
+    this.addToCurrentBag(this.articleData, color);
   }
 
-  // toggleSelection(color: any, index: number): void {
-  //   this.artCatTexture[0].colorTexture.forEach((element: any) => {
-  //     element.selected = false;
-  //   })
-  //   this.colorTextures = this.artCatTexture[0].colorTexture[index];
-  //   this.colorTextures.selected = true;
 
-  //   this.addToCurrentBag(this.article, this.articlesCategory, color);
 
-  // }
-
-  addToCurrentBag(article: any, artCategory: any, color?: any) {
+  addToCurrentBag(article: any, color: any) {
+    this.currentBag={};
     this.currentBag = {
-      colorId: color.colorId,
       articleId: article.articleId,
-      artCatId: artCategory.artCatId,
       articleName: article.articleName,
-      fabric: artCategory.fabric,
-      imageUrl: color.path,
-      price: artCategory.priceId,
-      hrs: artCategory.workHrsId,
-
+      colorId: color.colorId,
+      colorName: color.colorName,
+      hexCode: color.hexCode,
+      fabric: this.fabricCategory.fabricName,
+      imageUrl: color.images[0].imageUrl,
+      categoryName: this.fabricCategory.categoryName,
+      quntity: 1,
+      price: this.fabricCategory.pricePerMeter
     }
     console.log(JSON.stringify(this.currentBag));
   }
@@ -223,33 +188,6 @@ export class ArticleDetailsPage implements OnInit {
   }
 
 
-
-  selectColor(color: any) {
-    this.selectedColor = color;
-    if (this.selectedItem.length == 1) {
-      this.selectedItem = [];
-      this.selectedItems();
-    }
-  }
-
-  removeQuntity(article: any) {
-    if (article.quntity == 1) {
-      return;
-    }
-    article.quntity--;
-  }
-
-  addQuntity(article: any) {
-    if (!article.articleId) {
-      this.alertService.showAlerCancel(
-        'Alrert!',
-        'Please select article first before add quantity',
-        'alert',
-      );
-      return;
-    }
-    article.quntity++;
-  }
 
   openSizeChartModal(action: any, ModelPage?: any) {
     this.presentModal(action, ModelPage);
@@ -308,7 +246,7 @@ export class ArticleDetailsPage implements OnInit {
         });
         this.selectedColor = data;
         const data1 = {
-          phoneNumber: this.loggedUser?.phoneNumber,
+          phoneNumber: this.loggedUser?.mobile,
           tailor: this.selectedTailor,
           itme: this.navigatedData,
           color: this.selectedColor,
@@ -374,7 +312,7 @@ export class ArticleDetailsPage implements OnInit {
     if (myOrder) {
       const order: any = JSON.parse(myOrder);
       const data = {
-        phoneNumber: loggedUser?.phoneNumber,
+        phoneNumber: loggedUser?.mobile,
         tailor: tailor,
         itme: this.navigatedData,
         selectedItem: selectedItem,
@@ -385,7 +323,7 @@ export class ArticleDetailsPage implements OnInit {
     } else {
       const order = [
         {
-          phoneNumber: loggedUser?.phoneNumber,
+          phoneNumber: loggedUser?.mobile,
           tailor: tailor,
           itme: this.navigatedData,
           selectedItem: this.selectedItem,
@@ -400,7 +338,7 @@ export class ArticleDetailsPage implements OnInit {
       return item.isChecked;
     });
     const data = {
-      phoneNumber: loggedUser?.phoneNumber,
+      phoneNumber: loggedUser?.mobile,
       tailor: tailor,
       itme: this.navigatedData,
       color: this.selectedColor,
@@ -420,46 +358,6 @@ export class ArticleDetailsPage implements OnInit {
     );
   }
 
-
-
-  selectedItems() {
-    const items = {
-      isChecked: false,
-      articleName: this.article ? this.article.articleName : '',
-      articleId: this.article ? this.article.articleId : '',
-      colorName: this.selectedColor?.colorName,
-      colorCode: this.selectedColor?.hexCode,
-      colorDescription: this.selectedColor.description,
-      quntity: 1,
-      fabricType: this.fabric?.fabricType,
-      price: this.fabric.pricePerMeter,
-      hrs: this.article.hrs,
-      articleUrl: this.article ? this.article.imageUrl : '',
-      fabricUrl: this.fabric.imageUrl,
-      fabricWashingInstruction: this.fabric.washingInstruction,
-      fabricIroning: this.fabric.ironing,
-    };
-    this.selectedItem.push(items);
-  }
-
-  addItems() {
-    const items = {
-      isChecked: false,
-      articleName: '',
-      articleId: '',
-      colorName: this.selectedColor?.colorName,
-      colorCode: this.selectedColor?.hexCode,
-      colorDescription: this.selectedColor.description,
-      quntity: 1,
-      fabric: '',
-      price: '',
-      articleUrl: '',
-      fabricUrl: '',
-      fabricWashingInstruction: this.fabric.washingInstruction,
-      fabricIroning: this.fabric.ironing,
-    };
-    this.selectedItem.unshift(items);
-  }
 
   onTailorSelectChange(event: any, item: any) {
     const isChecked = event.detail.checked;
@@ -536,19 +434,7 @@ export class ArticleDetailsPage implements OnInit {
         });
       return;
     }
-    if (localStorage.getItem('shopping_bag')) {
-      const currentBag: any = localStorage.getItem('shopping_bag');
-      const currentBagJson: any = JSON.parse(currentBag);
-      const filterCart = currentBagJson.find((item: any) => {
-        return item.artCatId == this.currentBag.artCatId;
-      });
-      if (!filterCart) {
-        const data = currentBagJson.concat(this.currentBag);
-        localStorage.setItem('shopping_bag', JSON.stringify(data));
-      }
-    } else {
-      localStorage.setItem('shopping_bag', JSON.stringify([this.currentBag]));
-    }
+    localStorage.setItem('shopping_bag', JSON.stringify([this.currentBag]));
     this.router.navigate(['/main/cart']);
   }
 
@@ -567,5 +453,114 @@ export class ArticleDetailsPage implements OnInit {
     }
   }
 
+  selectImage(img: any) {
+    this.selectedImage = img;
 
+    console.log(this.selectedImage);
+  }
+
+
+  /* selectedItems() {
+    const items = {
+      isChecked: false,
+      articleName: this.article ? this.article.articleName : '',
+      articleId: this.article ? this.article.articleId : '',
+      colorName: this.selectedColor?.colorName,
+      colorCode: this.selectedColor?.hexCode,
+      colorDescription: this.selectedColor.description,
+      quntity: 1,
+      fabricType: this.fabric?.fabricType,
+      price: this.fabric.pricePerMeter,
+      hrs: this.article.hrs,
+      articleUrl: this.article ? this.article.imageUrl : '',
+      fabricUrl: this.fabric.imageUrl,
+      fabricWashingInstruction: this.fabric.washingInstruction,
+      fabricIroning: this.fabric.ironing,
+    };
+    this.selectedItem.push(items);
+  } */
+
+  /* addItems() {
+    const items = {
+      isChecked: false,
+      articleName: '',
+      articleId: '',
+      colorName: this.selectedColor?.colorName,
+      colorCode: this.selectedColor?.hexCode,
+      colorDescription: this.selectedColor.description,
+      quntity: 1,
+      fabric: '',
+      price: '',
+      articleUrl: '',
+      fabricUrl: '',
+      fabricWashingInstruction: this.fabric.washingInstruction,
+      fabricIroning: this.fabric.ironing,
+    };
+    this.selectedItem.unshift(items);
+  } */
+
+
+  /* getColorTextureById(id: any) {
+    this.artCatTexture = this.masterService.getArticleCatTexture().filter((item: any) => {
+      return item.artCatId == id;
+    });
+    if (this.artCatTexture) {
+      this.colorTextures = this.artCatTexture[0]?.colorTexture[0];
+      this.colorTextures.selected = true;
+    }
+  } */
+  /* getArticleById(articleId: any) {
+    this.articles = this.masterService.getArticles();
+    this.article = this.articles.filter((artilce: any) => {
+      return artilce.articleId == articleId;
+    });
+    if (this.articles) {
+      this.article = this.article[0];
+      this.getArticleCategoryByArticleId(this.article);
+    }
+  } */
+
+  /* getArticleCategoryByArticleId(article: any) {
+    this.articlesCategories = this.masterService.getArticleCategory().filter((item: any) => {
+      return item.articleId == article.articleId;
+    });
+    this.articlesCategory = this.articlesCategories[0];
+    this.addToCurrentBag(article, this.articlesCategory, this.colorTextures);
+  } */
+
+
+  /* selectColor(color: any) {
+    this.selectedColor = color;
+    if (this.selectedItem.length == 1) {
+      this.selectedItem = [];
+      this.selectedItems();
+    }
+  } */
+
+  /* removeQuntity(article: any) {
+    if (article.quntity == 1) {
+      return;
+    }
+    article.quntity--;
+  } */
+
+  /* addQuntity(article: any) {
+    if (!article.articleId) {
+      this.alertService.showAlerCancel(
+        'Alrert!',
+        'Please select article first before add quantity',
+        'alert',
+      );
+      return;
+    }
+    article.quntity++;
+  } */
+  /* toggleSelection(color: any, index: number): void {
+    this.artCatTexture[0].colorTexture.forEach((element: any) => {
+      element.selected = false;
+    })
+    this.colorTextures = this.artCatTexture[0].colorTexture[index];
+    this.colorTextures.selected = true;
+    this.addToCurrentBag(this.article, this.articlesCategory, color);
+  } */
 }

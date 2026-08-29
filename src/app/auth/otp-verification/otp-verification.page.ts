@@ -6,6 +6,7 @@ import {
   ViewChildren,
 } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
+import { CommonService } from 'src/app/services/common/common.service';
 import { SharedModule } from 'src/app/sharedmodule/sharedmodule.module';
 
 @Component({
@@ -30,7 +31,8 @@ export class OtpVerificationPage implements OnInit {
   constructor(
     private router: Router,
     private activatedRoute: ActivatedRoute,
-  ) {}
+    private commomService: CommonService
+  ) { }
 
   ngOnInit() {
     this.activatedRoute.queryParams.subscribe((params) => {
@@ -79,45 +81,44 @@ export class OtpVerificationPage implements OnInit {
   verifyOtp() {
     const enteredOtp = this.otp.join('');
     console.log('Entered OTP:', enteredOtp);
-    const loggedUser = {
-      appRole: 'defaultRole',
-      phoneNumber: this.phoneNumber,
-      path: '/main',
-    };
-    let url = '/main';
-    // if (this.phoneNumber == '9999999999') {
-    //   // This is for Customer login mobile number
-    //   url = '/main';
-    //   loggedUser.appRole = 'Customer';
-    //   loggedUser.path = url;
-    // } else if (this.phoneNumber == '8888888888') {
-    //   // This is for Tailor login mobile number
-    //   url = '/main';
-    //   loggedUser.appRole = 'Tailor';
-    //   loggedUser.path = url;
-    // }
-
-    localStorage.setItem('loggedUser', JSON.stringify(loggedUser));
-    this.insertUser(loggedUser);
-    const redirectUrl = localStorage.getItem('redirectUrl');
-    if (redirectUrl) {
-      const navigatedData = localStorage.getItem('navigatedData');
-      if (navigatedData) {
-        this.router.navigate([decodeURIComponent(redirectUrl)], {
-          queryParams: {
-            navigatedData: navigatedData,
-          },
-        });
-        localStorage.removeItem('redirectUrl');
-        localStorage.removeItem('navigatedData');
-      } else {
-        this.router.navigate([decodeURIComponent(redirectUrl)]);
-      }
-    } else {
-      this.router.navigate([url]);
+    const payload = {
+      "mobile": this.phoneNumber,
+      "otp": "123456"
     }
+    this.commomService.verifyOtp(payload).subscribe(
+      (resp: any) => {
+        if (resp?.status == 200) {
+          localStorage.setItem('loggedUser', JSON.stringify(resp.body));
+          const token = resp.headers.get('Authorization');
+          localStorage.setItem('token', token);
+          let url = '/main';
+          const redirectUrl = localStorage.getItem('redirectUrl');
+          if (redirectUrl) {
+            const navigatedData = localStorage.getItem('navigatedData');
+            if (navigatedData) {
+              this.router.navigate([decodeURIComponent(redirectUrl)], {
+                queryParams: {
+                  navigatedData: navigatedData,
+                },
+              });
+              localStorage.removeItem('redirectUrl');
+              localStorage.removeItem('navigatedData');
+            } else {
+              this.router.navigate([decodeURIComponent(redirectUrl)]);
+            }
+          } else {
+            this.router.navigate([url]);
+          }
+          this.otp = [];
+        } else {
 
-    this.otp = [];
+        }
+      },
+      (error) => {
+
+      },
+    );
+
   }
 
   moveToNext(event: any, index: number) {

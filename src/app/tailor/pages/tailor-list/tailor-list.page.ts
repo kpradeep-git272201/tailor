@@ -37,10 +37,12 @@ export class TailorListPage implements OnInit {
   }
 
   ngOnInit() {
-    this.allTailors = this.commonService.getTopRatedTailor();
-    this.displayedTailors = this.allTailors.slice(0, this.initialDisplayCount);
-    console.log('Received data:', this.bookTailor);
-
+    /* this.allTailors = this.commonService.getTopRatedTailor(); */
+    this.commonService.getTailors().subscribe((resp: any) => {
+      this.allTailors = resp?.body.data;
+      this.displayedTailors = this.allTailors.slice(0, this.initialDisplayCount);
+      console.log('Received data:', this.bookTailor);
+    });
   }
 
   loadMore() {
@@ -53,16 +55,16 @@ export class TailorListPage implements OnInit {
     return this.displayedTailors.length < this.allTailors.length;
   }
 
- viewTailor(tailor: any) {
-  this.router.navigate(
-    ['/main/tailor/tailorList', tailor.tailorId],
-    {
-      state: {
-        tailor: tailor
+  viewTailor(tailor: any) {
+    this.router.navigate(
+      ['/main/tailor/tailorList', tailor.tailorId],
+      {
+        state: {
+          tailor: tailor
+        }
       }
-    }
-  );
-}
+    );
+  }
 
 
   async openSortOptions(title: any) {
@@ -139,20 +141,24 @@ export class TailorListPage implements OnInit {
   }
 
   async viewPriceList(tailor: any, ev: any) {
-    const stichingPrice = this.masterService.getTailorArticleRates().filter((rate: any) => {
-      return rate.tailorId == tailor.tailorId;
+    this.commonService.getStichingPriceByTailorId(tailor.tailorId).subscribe(async (res: any) => {
+      const stichingPrice = res.body.data;
+      if (res.body.data.length > 0) {
+        const popover = await this.popoverCtrl.create({
+          component: StichingPricePage,
+          event: ev,
+          translucent: true,
+          cssClass: 'price-popover',
+          componentProps: {
+            stichingPrice: stichingPrice,
+          },
+        });
+        await popover.present();
+      }
+
     })
 
-    const popover = await this.popoverCtrl.create({
-      component: StichingPricePage,
-      event: ev,
-      translucent: true,
-      cssClass: 'price-popover',
-      componentProps: {
-        stichingPrice: (stichingPrice) ? stichingPrice[0].rates : stichingPrice,
-      },
-    });
-    await popover.present();
+
   }
 }
 

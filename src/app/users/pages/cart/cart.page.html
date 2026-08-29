@@ -64,11 +64,11 @@
         <ion-list *ngIf="item?.tailor" style="background-color: cornsilk;">
           <ion-item lines="none" style="--ion-background-color: cornsilk;">
             <ion-avatar slot="start" style="height: 3.125rem; width: 3.125rem;">
-              <img [src]="item.tailor.imageUrl" alt="Tailor Image">
+              <img [src]="item.tailor.profileImage" alt="Tailor Image">
             </ion-avatar>
             <ion-label>
               <h3>Tailor</h3>
-              <p>{{ item.tailor.name }} | {{ item.tailor.experience }} yrs | ⭐ {{ item.tailor.rating }}/5</p>
+              <p>{{ item.tailor.fullName }} | {{ item.tailor.experienceYears }} yrs | ⭐ {{ item.tailor.averageRating }}/5</p>
               <p>Expected Delivery: {{item?.expectedDeliveryDate}}</p>
               <p>Stiching Price: {{item?.stitchingPrice | currency:'INR'}}</p>
             </ion-label>
@@ -105,7 +105,7 @@
               <h2><span style="font-weight: 600;">Grand Total</span></h2>
             </ion-col>
             <ion-col style="text-align: right;">
-              <h2><span style="font-weight: 600;">&#8377; {{calculateTotalPrice(9, item?.totalTailorCharge)}}</span>
+              <h2><span style="font-weight: 600;">&#8377; {{calculateTotalPrice(item?.totalTailorCharge, 9)}}</span>
               </h2>
             </ion-col>
           </ion-row>

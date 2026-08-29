@@ -2,7 +2,7 @@ import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Geolocation } from '@capacitor/geolocation';
-import { catchError, map, Observable, ObservableInput, of } from 'rxjs';
+import { catchError, map, Observable, ObservableInput, of, throwError } from 'rxjs';
 import { AppConfig } from 'src/app/app.config';
 
 
@@ -12,7 +12,9 @@ import { AppConfig } from 'src/app/app.config';
 export class CommonService {
 
   APP_KEY = 'AIzaSyAoYbrW-KNT-M5K4JvCf1JAVWVf49Iu6sQ';
-  handleError: ((err: any, caught: Observable<any>) => ObservableInput<any>) | any;
+  loggedIn: boolean = false;
+  handleError: ((err: any, caught: Observable<any>) => ObservableInput<any>) | undefined;
+
 
   constructor(
     private router: Router,
@@ -45,9 +47,7 @@ export class CommonService {
   getRequest(url: any): Observable<any[]> {
     const fullPath = AppConfig.BASE_API + url;
     const headers = new HttpHeaders().set('content-type', 'application/json').set('Accept', 'application/json');
-    return this.request<any[]>('GET', `${fullPath}`, { headers: headers, reportProgress: false, observe: 'response' }).pipe(
-      catchError((error) => of(error)),
-    );
+    return this.request<any[]>('GET', `${fullPath}`, { headers: headers, reportProgress: false, observe: 'response' });
   }
 
   getArticles() {
@@ -77,8 +77,74 @@ export class CommonService {
     const url = `${AppConfig.ENDPOINTS.MASTER.FABRIC_COLOR_BY_FABRIC_ID}/${fabricId}/colors`;
     return this.getRequest(url);
   }
-  
 
+  getAllArticleRatesByTailor(tailorId: any) {
+    const url = `${AppConfig.ENDPOINTS.PRIVATE.TAILOR_ARTICLE_RATES}/${tailorId}`;
+    return this.getRequest(url);
+  }
+  getArticleRatesByTailorAndArticle(tailorId: any, articleId:any) {
+    const url = `${AppConfig.ENDPOINTS.PRIVATE.TAILOR_ARTICLE_RATES}/${tailorId}/${articleId}`;
+    return this.getRequest(url);
+  }
+  getLast10DaysWorkHours(tailorId:any){
+    const url = `${AppConfig.ENDPOINTS.PRIVATE.WORK_HOURS_LAST10DAYS}/${tailorId}/work-hours/last10days`;
+    return this.getRequest(url);
+  }
+
+  getTailors() {
+    const url = `${AppConfig.ENDPOINTS.PRIVATE.TAILORS}`;
+    return this.getRequest(url);
+  }
+  getStichingPriceByTailorId(tailorId:any) {
+    const url = `${AppConfig.ENDPOINTS.PRIVATE.STICHINGPRICE}/${tailorId}`;
+    return this.getRequest(url);
+  }
+  
+  sendOtp(data: any): Observable<any> {
+    const url = `${AppConfig.BASE_API}${AppConfig.ENDPOINTS.AUTH.LOGIN}`;
+
+    const webHeaders = new HttpHeaders({
+      'Content-Type': 'application/json'
+    });
+
+    return this.http.post(url, data, {
+      headers: webHeaders,
+      responseType: 'text'   // IMPORTANT
+    }).pipe(
+      map((resp: any) => {
+        return { message: resp, status: 200 };
+      }),
+      catchError(error => {
+        alert('Web Error: ' + JSON.stringify(error));
+        return throwError(() => error);
+      })
+    );
+  }
+
+
+
+  verifyOtp(payload: any) {
+    const url = `${AppConfig.BASE_API}${AppConfig.ENDPOINTS.AUTH.VERIFY_OTP}`;
+    const headers = new HttpHeaders()
+      .set('content-type', 'application/json')
+      .set('Accept', 'application/json');
+
+    return this.request('POST', url, {
+      body: payload,
+      headers: headers,
+      reportProgress: false,
+      observe: 'response',
+    }).pipe(
+      map((resp) => {
+        this.loggedIn = true;
+        return resp;
+      }),
+      catchError((error) => {
+        this.loggedIn = false;
+        return of(false);
+      }),
+    );
+  }
   /************************ ************************************** */
 
   getMasterBrand() {

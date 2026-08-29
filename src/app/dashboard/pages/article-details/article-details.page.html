@@ -11,17 +11,16 @@
       <swiper-container class="carousel-container custom-carousel" slides-per-view="1" pagination="true"
         navigation="false" style="width: 100%; height: 250px">
         <swiper-slide *ngFor="let img of selectedFabricColor.images">
-          <img [src]="img.imageUrl" [alt]="selectedFabricColor.colorName" height="210px" width="455px" />
+          <img [src]="img.imageUrl" [alt]="selectedFabricColor.colorName" (ionChange)="selectImage(img)" height="210px" width="455px" />
         </swiper-slide>
       </swiper-container>
     </div>
 
     <ion-toolbar *ngIf="articleData && fabricCategory" class="heart-toolbar">
-      <ion-title style="text-align: left; padding-left: 15px; font-size: 14px;">{{articleData.articleName}} |
-        {{fabricCategory.categoryName}}
-        <br><span style="font-weight: 200;">MRP </span> <span style="font-weight: normal;">&#8377;{{
-          fabricCategory.pricePerMeter }}</span></ion-title>
-
+      <ion-title style="text-align: left; padding-left: 15px; font-size: 14px;">
+        {{articleData.articleName}} | {{fabricCategory.categoryName}}
+        <br><span style="font-weight: 200;">MRP </span> <span style="font-weight: normal;">
+          &#8377;{{fabricCategory.pricePerMeter }}</span></ion-title>
       <ion-buttons slot="end">
         <ion-button>
           <ion-icon id="share-outline" name="share-outline"></ion-icon>

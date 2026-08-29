@@ -73,11 +73,11 @@
      
         <ion-item>
           <ion-avatar slot="start">
-            <img [src]="item.tailor.imageUrl" alt="Tailor Image">
+            <img [src]="item.tailor.profileImage" alt="Tailor Image">
           </ion-avatar>
           <ion-label>
             <h3>Tailor</h3>
-            <p>{{ item.tailor.name }} | {{ item.tailor.experience }} yrs | ⭐ {{ item.tailor.rating }}/5</p>
+            <p>{{ item.tailor.fullName }} | {{ item.tailor.experienceYears }} yrs | ⭐ {{ item.tailor.averageRating }}/5</p>
           </ion-label>
         </ion-item>
          <ion-item line="none" *ngIf="item.trialDate || item.expectedDeliveryDate">
